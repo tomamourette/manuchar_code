@@ -1,0 +1,40 @@
+CREATE TABLE [DWH_dbo].[D_DATE] (
+    [PK_DATE]          INT             NULL,
+    [CALENDAR_DATE]    DATE            NULL,
+    [YEAR_WEEK_NR]     INT             NULL,
+    [YEAR_MONTH_NR]    INT             NULL,
+    [YEAR_WEEK_CODE]   NVARCHAR (MAX)  NULL,
+    [YEAR_MONTH_CODE]  NVARCHAR (MAX)  NULL,
+    [YEAR_NR]          INT             NULL,
+    [YEAR_OF_WEEK_NR]  INT             NULL,
+    [SEMESTER_NR]      INT             NULL,
+    [SEMESTER_NAME]    NVARCHAR (MAX)  NULL,
+    [QUARTER_NR]       INT             NULL,
+    [QUARTER_NAME]     NVARCHAR (MAX)  NULL,
+    [MONTH_NR]         INT             NULL,
+    [MONTH_NAME]       NVARCHAR (MAX)  NULL,
+    [MONTH_SHORT_NAME] NVARCHAR (MAX)  NULL,
+    [WEEK_NR]          INT             NULL,
+    [MONTH_DAY_NR]     INT             NULL,
+    [WEEK_DAY_NR]      INT             NULL,
+    [WEEK_DAY_NAME]    NVARCHAR (MAX)  NULL,
+    [YEAR_INDEX_NR]    INT             NULL,
+    [MONTH_INDEX_NR]   INT             NULL,
+    [WEEK_INDEX_NR]    INT             NULL,
+    [DATE_INDEX_NR]    INT             NULL,
+    [YTD_INDEX_NR]     INT             NULL,
+    [MTD_INDEX_NR]     INT             NULL,
+    [WTD_INDEX_NR]     INT             NULL,
+    [HASHED_KEY_SCD1]  NVARCHAR (MAX)  NULL,
+    [IS_CURRENT]       SMALLINT        NULL,
+    [INSERT_DATE]      DATETIME2 (6)   NULL,
+    [UPDATE_DATE]      DATETIME2 (6)   NULL,
+    [START_DATE]       DATETIME2 (6)   NULL,
+    [END_DATE]         DATETIME2 (6)   NULL,
+    [MISSING_RECORD]   VARBINARY (MAX) NULL,
+    [PACKAGERUNID]     INT             NULL
+);
+
+
+GO
+

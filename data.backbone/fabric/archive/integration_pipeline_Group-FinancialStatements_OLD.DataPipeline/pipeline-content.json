@@ -1,0 +1,686 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "integration_lakehouse",
+          "value": "a3c7dd8f-25f9-4aa9-aaad-981087e7d0d4"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_integration_lakehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "transformation_warehouse",
+          "value": "86563906-0212-4c50-9019-45c93eae5671"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_transformation_warehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "sql_connection_string",
+          "value": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_sql_connection_string",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "ingestion_timestamp",
+          "value": {
+            "value": "@{formatDateTime(utcNow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_ingestion_timestamp",
+        "dependsOn": [
+          {
+            "activity": "set_variable_integration_lakehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_transformation_warehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_sql_connection_string",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_orchestration_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "source_name": {
+              "value": "MDS",
+              "type": "Expression"
+            },
+            "integration_lakehouse": {
+              "value": "@variables('integration_lakehouse')",
+              "type": "Expression"
+            },
+            "ingestion_timestamp": {
+              "value": "@variables('ingestion_timestamp')",
+              "type": "Expression"
+            },
+            "database_name": "MDS",
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@variables('orchestration_run_id')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "4e2fe9e7-daf5-accc-466d-384a0f01e201",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_source_MDS",
+        "dependsOn": [
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "source_name": {
+              "value": "dbb_lakehouse",
+              "type": "Expression"
+            },
+            "integration_lakehouse": {
+              "value": "@variables('integration_lakehouse')",
+              "type": "Expression"
+            },
+            "ingestion_timestamp": {
+              "value": "@variables('ingestion_timestamp')",
+              "type": "Expression"
+            },
+            "database_name": "dbb_lakehouse",
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@variables('orchestration_run_id')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "d3cee145-2486-8004-4116-cf103c61eb15",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_source_dbb_lakehouse",
+        "dependsOn": [
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "027ea7bc-5e2f-8f87-49b1-60f3cae4480c",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "workspace_id": {
+              "value": {
+                "value": "@pipeline().DataFactory",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_id": {
+              "value": {
+                "value": "@variables('integration_lakehouse')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_type": {
+              "value": {
+                "value": "lakehouses",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "maintenance_notebook_metadata_refresh",
+        "dependsOn": [
+          {
+            "activity": "integration_pipeline_source_MDS",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          },
+          {
+            "activity": "integration_pipeline_source_dbb_lakehouse",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          },
+          {
+            "activity": "integration_pipeline_source_Mona",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "19276409-e1d1-89bd-4d10-7af091851b8c",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "workspace": {
+              "value": {
+                "value": "@pipeline().DataFactory",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "ingestion_timestamp": {
+              "value": {
+                "value": "@variables('ingestion_timestamp')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "monitoring_notebook_integration_validation",
+        "dependsOn": [
+          {
+            "activity": "wait_metadata_sync_trigger",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 60
+        },
+        "name": "wait_metadata_sync_trigger",
+        "dependsOn": [
+          {
+            "activity": "maintenance_notebook_metadata_refresh",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "SELECT \n  table_identifier,\n  source_name,\n  LEFT(schema_table_name, CHARINDEX('_', schema_table_name) - 1) AS schema_name,\n  SUBSTRING(schema_table_name, CHARINDEX('_', schema_table_name) + 1, LEN(schema_table_name)) AS table_name\nFROM dbb_warehouse.meta.monitoring_integration_validation\nWHERE [row_count] = 0\n  AND [source_name] <> 'unknown'\n  AND [timestamp] = (\n    SELECT MAX([timestamp])\n    FROM dbb_warehouse.meta.monitoring_integration_validation\n  )",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "6f877aa6_dabd_4200_ab45_7251f601c99b",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "@variables('transformation_warehouse')",
+              "endpoint": "@variables('sql_connection_string')",
+              "workspaceId": "@pipeline().DataFactory"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "check_empty_integration_tables",
+        "dependsOn": [
+          {
+            "activity": "monitoring_notebook_integration_validation",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@if(\n  greater(length(activity('check_empty_integration_tables').output.resultSets), 0),\n  activity('check_empty_integration_tables').output.resultSets[0].rows,\n  json('[]')\n)\n\n\n",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "InvokePipeline",
+              "typeProperties": {
+                "parameters": {
+                  "source_name": {
+                    "value": "@item().source_name",
+                    "type": "Expression"
+                  },
+                  "schema_name": {
+                    "value": "@item().schema_name",
+                    "type": "Expression"
+                  },
+                  "table_name": {
+                    "value": "@item().table_name",
+                    "type": "Expression"
+                  },
+                  "integration_lakehouse": {
+                    "value": "@variables('integration_lakehouse')",
+                    "type": "Expression"
+                  },
+                  "data_product": {
+                    "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+                    "type": "Expression"
+                  }
+                },
+                "waitOnCompletion": true,
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "pipelineId": "6106f0ae-e59e-bf4a-4f01-b0fa0e4991ef",
+                "operationType": "InvokeFabricPipeline"
+              },
+              "externalReferences": {
+                "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "integration_pipeline_table_SQL",
+              "dependsOn": []
+            },
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "LakehouseTableSource",
+                  "additionalColumns": [
+                    {
+                      "name": "validation_timestamp",
+                      "value": {
+                        "value": "@{formatDateTime(utcNow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}",
+                        "type": "Expression"
+                      }
+                    }
+                  ],
+                  "datasetSettings": {
+                    "type": "LakehouseTable",
+                    "typeProperties": {
+                      "table": {
+                        "value": "@{item().table_identifier}",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "dbb_lakehouse",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "87e7d0d4-9810-aaad-4aa9-25f9a3c7dd8f",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "rootFolder": "Tables"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "formatSettings": {
+                    "type": "DelimitedTextWriteSettings",
+                    "fileExtension": ".txt"
+                  },
+                  "storeSettings": {
+                    "type": "LakehouseWriteSettings"
+                  },
+                  "datasetSettings": {
+                    "type": "DelimitedText",
+                    "typeProperties": {
+                      "location": {
+                        "type": "LakehouseLocation",
+                        "folderPath": "monitoring/integration_validation",
+                        "fileName": {
+                          "value": "validation_copy_data_empty_check_@{item().table_identifier}_@{formatDateTime(utcNow(), 'yyyyMMddHHmmssffffff')}",
+                          "type": "Expression"
+                        }
+                      },
+                      "columnDelimiter": ",",
+                      "quoteChar": "\"",
+                      "escapeChar": "\\",
+                      "firstRowAsHeader": true
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "dbb_lakehouse",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "87e7d0d4-9810-aaad-4aa9-25f9a3c7dd8f",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "rootFolder": "Files"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": false
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "copy_data_integration_table_empty_check",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "112f64ca-6d76-a53a-4f30-692fdd7f37d9",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "table_identifier": {
+                    "value": {
+                      "value": "@{item().table_identifier}",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "validation_timestamp": {
+                    "value": {
+                      "value": "@{formatDateTime(utcNow(), 'yyyyMMddHHmmssffffff')}",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "notebook_integration_table_empty_check",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "retry_empty_integration_tables",
+        "dependsOn": [
+          {
+            "activity": "check_empty_integration_tables",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "SELECT \n  table_identifier\nFROM dbb_warehouse.meta.monitoring_integration_validation\nWHERE [row_count] = 0\n  AND [timestamp] = (\n    SELECT MAX([timestamp])\n    FROM dbb_warehouse.meta.monitoring_integration_validation\n  )",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "5f034225_7046_4c93_97a7_310c5e9abf0c",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "@variables('transformation_warehouse')",
+              "endpoint": "@variables('sql_connection_string')",
+              "workspaceId": "@pipeline().DataFactory"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "recheck_empty_integration_tables",
+        "dependsOn": [
+          {
+            "activity": "retry_empty_integration_tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": {
+            "value": "Empty integration tables retry failure in integration_pipeline",
+            "type": "Expression"
+          },
+          "errorCode": "500"
+        },
+        "name": "retry_empty_integration_tables_fail",
+        "dependsOn": [
+          {
+            "activity": "retry_empty_integration_tables",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "Data_Product": {
+              "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "Orchestration_Run_Id": {
+              "value": "@variables('orchestration_run_id')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "pipelineId": "b8b1722c-17ec-4324-94ba-de5abd55ed6d",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_source_Mona",
+        "dependsOn": [
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "orchestration_run_id",
+          "value": {
+            "value": "@{pipeline().parameters.orchestration_run_id}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_orchestration_run_id",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "orchestration_run_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "integration_lakehouse": {
+        "type": "String"
+      },
+      "transformation_warehouse": {
+        "type": "String"
+      },
+      "sql_connection_string": {
+        "type": "String"
+      },
+      "environment": {
+        "type": "String"
+      },
+      "ingestion_timestamp": {
+        "type": "String"
+      },
+      "maintenance_notebook_metadata_refresh": {
+        "type": "String",
+        "defaultValue": "cae4480c-60f3-49b1-8f87-5e2f027ea7bc"
+      },
+      "monitoring_notebook_integration_validation": {
+        "type": "String",
+        "defaultValue": "91851b8c-7af0-4d10-89bd-e1d119276409"
+      },
+      "orchestration_run_id": {
+        "type": "String"
+      }
+    }
+  }
+}

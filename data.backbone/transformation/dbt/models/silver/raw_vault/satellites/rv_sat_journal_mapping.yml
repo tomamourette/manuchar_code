@@ -1,0 +1,38 @@
+
+version: 2
+
+models:
+  - name: rv_sat_journal_mapping
+    enabled: false
+    tags:
+      - "Journal Mapping"
+      - "raw vault"
+      - "satellite"
+    description: "This model selects all columns from the journal_mapping source table, which includes various financial attributes and validity periods."
+    columns:
+      - name: bkey_journal_mapping_source
+        description: "The source key for the journal mapping."
+      - name: journal_mapping_code
+        description: "Code representing the journal mapping."
+      - name: allocation
+        description: "Details about the allocation process."
+      - name: bundle
+        description: "Information regarding the bundle."
+      - name: bundle_local_adjustments
+        description: "Local adjustments made to the bundle."
+      - name: conso_adjusted
+        description: "Adjusted consolidated financial data."
+      - name: conso_legal
+        description: "Legal consolidated financial data."
+      - name: intercompany
+        description: "Intercompany transaction details."
+      - name: manual
+        description: "Manual adjustments or entries."
+      - name: technical_eliminations
+        description: "Technical eliminations applied in the financial data."
+      - name: valid_from
+        description: "Start date from which the data is valid."
+      - name: valid_to
+        description: "End date until which the data is valid."
+      - name: is_current
+        description: "Indicator if the data is current."

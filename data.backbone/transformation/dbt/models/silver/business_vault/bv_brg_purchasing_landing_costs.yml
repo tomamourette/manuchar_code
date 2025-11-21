@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: bv_brg_purchasing_landing_costs
+    tags:
+      - "Purchasing Landing Costs"
+      - "business vault"
+    description: "This model is a template for filling the Bridge: Purchasing Landing Costs."
+    columns:
+      - name: bkey_purchase_invoice_line_cogs
+        description: ""
+      - name: bkey_created_date
+        description: ""
+      - name: bkey_accounting_date
+        description: ""
+      - name: bkey_product
+        description: ""
+      - name: bkey_company
+        description: ""
+      - name: bkey_supplier
+        description: ""
+      - name: bkey_incoterm
+        description: ""
+      - name: bkey_payment_term
+        description: ""
+      - name: bkey_country_origin
+        description: ""
+      - name: bkey_country_destination
+        description: ""
+      - name: file_number
+        description: ""
+      - name: lot_number
+        description: ""
+      - name: invoice_supplier_id
+        description: ""
+      - name: local_supplier_id
+        description: ""
+      - name: local_product
+        description: ""
+      - name: internal_invoice_id
+        description: ""
+      - name: purchase_id
+        description: ""
+      - name: line_number
+        description: ""
+      - name: adjusted_cogs_functional
+        description: ""
+      - name: adjusted_cogs_transactional
+        description: ""
+      - name: adjusted_cogs_group
+        description: ""
+      - name: cogs1_purchase_amount_functional
+        description: ""
+      - name: cogs1_purchase_amount_transactional
+        description: ""
+      - name: cogs1_purchase_amount_group
+        description: ""
+      - name: cogs1_freight_amount_functional
+        description: ""
+      - name: cogs1_freight_amount_transactional
+        description: ""
+      - name: cogs1_freight_amount_group
+        description: ""
+      - name: cogs1_other_amount_functional
+        description: ""
+      - name: cogs1_other_amount_transactional
+        description: ""
+      - name: cogs1_other_amount_group
+        description: ""

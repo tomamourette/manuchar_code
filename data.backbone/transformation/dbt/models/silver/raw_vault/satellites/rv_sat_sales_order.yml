@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: rv_sat_sales_order
+    enabled: false
+    tags:
+      - "Sales Order"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite sales order."
+    columns:
+      - name: bkey_sales_order_source
+        description: ""
+      - name: sales_order_sales_id
+        description: ""
+      - name: sales_order_sales_status
+        description: ""
+      - name: sales_order_currencycode
+        description: ""
+      - name: sales_order_cust_account
+        description: ""
+      - name: sales_order_invoice_account
+        description: ""
+      - name: sales_order_sales_amount_accrual
+        description: ""
+      - name: sales_order_sales_volume_accrual
+        description: ""
+      - name: sales_order_sales_accrual_accounting_date
+        description: ""
+      - name: sales_order_company
+        description: ""
+      - name: sales_order_ledger_account
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

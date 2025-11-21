@@ -1,0 +1,12 @@
+{
+    "table_name": "ProductGroupingMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Product Grouping Code_Code] as Product_Grouping_Code_Code, [Product Grouping Code_Name] as Product_Grouping_Code_Name, [Product Grouping Code_ID] as Product_Grouping_Code_ID, [Product Code_Code] as Product_Code_Code, [Product Code_Name] as Product_Code_Name, [Product Code_ID] as Product_Code_ID, Default_Code, Default_Name, Default_ID, Customer_Code, Customer_Name, Customer_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Product Grouping Mapping]"
+}

@@ -1,0 +1,274 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "LoadSTG-REF_SHP_GeoLoc_Country_STG",
+        "type": "Copy",
+        "state": "Active",
+        "dependsOn": [
+          {
+            "activity": "TruncateTable-REF_SHP_GeoLoc_Country_STG",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "SharePointOnlineListSource",
+            "httpRequestTimeout": "00:05:00",
+            "datasetSettings": {
+              "annotations": [],
+              "type": "SharePointOnlineListResource",
+              "schema": [],
+              "typeProperties": {
+                "listName": "DataRefCountry"
+              },
+              "externalReferences": {
+                "connection": "8a8cb34c-ed7e-4450-8aee-9f13322972ad"
+              }
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "allowCopyCommand": true,
+            "copyCommandSettings": {},
+            "tableOption": "autoCreate",
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "OSS_GenericData_MHQ_Warehouse",
+                "properties": {
+                  "annotations": [],
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "artifactId": "55458af9-f16a-4e4e-a886-fae76d51c555",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  }
+                }
+              },
+              "type": "DataWarehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "REF_SHP",
+                "table": "GeoLoc_Country_STG"
+              }
+            }
+          },
+          "enableStaging": true,
+          "enableSkipIncompatibleRow": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "Country_key",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "Country_key",
+                  "physicalType": "varchar",
+                  "length": "10"
+                }
+              },
+              {
+                "source": {
+                  "name": "Country_alpha2",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "Country_alpha2",
+                  "physicalType": "varchar",
+                  "length": "10"
+                }
+              },
+              {
+                "source": {
+                  "name": "Country_alpha3",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "Country_alpha3",
+                  "physicalType": "varchar",
+                  "length": "10"
+                }
+              },
+              {
+                "source": {
+                  "name": "Title",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "Country_name",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "GeoSubRegion_key",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "GeoSubRegion_key",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "GeoSubRegion_name",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "GeoSubRegion_name",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "GeoRegion_key",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "GeoRegion_key",
+                  "physicalType": "varchar",
+                  "length": "10"
+                }
+              },
+              {
+                "source": {
+                  "name": "GeoRegion_name",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "GeoRegion_name",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "Country_CommercialRegionValue",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "Country_CommercialRegion",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "Modified",
+                  "type": "DateTime"
+                },
+                "sink": {
+                  "name": "RowModifiedOn",
+                  "physicalType": "datetime2",
+                  "precision": 6
+                }
+              },
+              {
+                "source": {
+                  "name": "ModifiedById",
+                  "type": "Int32"
+                },
+                "sink": {
+                  "name": "RowModifiedBy",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "TruncateTable-REF_SHP_GeoLoc_Country_STG",
+        "type": "SqlServerStoredProcedure",
+        "state": "Active",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[Exec_TruncateTable]",
+          "database": "YourDatabaseName",
+          "storedProcedureParameters": {
+            "TableName": {
+              "value": "[REF_SHP].[GeoLoc_Country_STG]",
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OSS_GenericData_MHQ_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "artifactId": "55458af9-f16a-4e4e-a886-fae76d51c555",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            }
+          }
+        }
+      },
+      {
+        "name": "UpSertTable-REF_SHP_GeoLoc_Country_ODS",
+        "type": "SqlServerStoredProcedure",
+        "state": "Active",
+        "dependsOn": [
+          {
+            "activity": "LoadSTG-REF_SHP_GeoLoc_Country_STG",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[REF_SHP].[UpSert_GeoLoc_Country_ODS]",
+          "database": "YourDatabaseName"
+        },
+        "linkedService": {
+          "name": "OSS_GenericData_MHQ_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "artifactId": "55458af9-f16a-4e4e-a886-fae76d51c555",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

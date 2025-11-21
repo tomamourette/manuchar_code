@@ -1,0 +1,379 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "f7d8c4f1-733d-aa9c-4261-83581948ca97",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "environment": {
+              "value": {
+                "value": "@variables('environment')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "models": {
+              "value": {
+                "value": "@variables('models')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "data_product": {
+              "value": {
+                "value": "@variables('data_product')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "orchestration_run_id": {
+              "value": {
+                "value": "@variables('orchestration_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "transformation_pipeline_run_id": {
+              "value": {
+                "value": "@variables('transformation_pipeline_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "transformation_pipeline_id": {
+              "value": {
+                "value": "@variables('transformation_pipeline_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "transformation_notebook",
+        "description": "Notebook running the dbt.",
+        "dependsOn": [
+          {
+            "activity": "set_variable_models",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_data_product",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_warehouse_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_orchestration_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_transformation_pipeline_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_transformation_pipeline_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "SELECT\n    [environment]\nFROM [dbb_warehouse].[meta].[environments]\nWHERE [workspace_id] = '@{pipeline().DataFactory}'",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "dbb_warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_environment",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "cae4480c-60f3-49b1-8f87-5e2f027ea7bc",
+          "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+          "parameters": {
+            "workspace_id": {
+              "value": {
+                "value": "@pipeline().DataFactory",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_id": {
+              "value": {
+                "value": "@variables('warehouse_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_type": {
+              "value": {
+                "value": "warehouses",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "maintenance_notebook_metadata_refresh",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "transformation_notebook",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "warehouse_id",
+          "value": "86563906-0212-4c50-9019-45c93eae5671"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_warehouse_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "models",
+          "value": {
+            "value": "@concat('+tag:', pipeline().parameters.data_product)",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_models",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "data_product",
+          "value": {
+            "value": "@{pipeline().parameters.data_product}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_data_product",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "orchestration_run_id",
+          "value": {
+            "value": "@{pipeline().parameters.orchestration_run_id}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_orchestration_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(activity('transformation_notebook').output.status, 'Succeeded')",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [],
+          "ifFalseActivities": [
+            {
+              "type": "Fail",
+              "typeProperties": {
+                "message": {
+                  "value": "@activity('transformation_notebook').output",
+                  "type": "Expression"
+                },
+                "errorCode": "500"
+              },
+              "name": "transformation_notebook_failed",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "transformation_notebook_succeeded",
+        "dependsOn": [
+          {
+            "activity": "maintenance_notebook_metadata_refresh",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "transformation_pipeline_run_id",
+          "value": {
+            "value": "@{pipeline().RunId}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_transformation_pipeline_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "transformation_pipeline_id",
+          "value": {
+            "value": "@{pipeline().Pipeline}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_transformation_pipeline_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "environment",
+          "value": {
+            "value": "@toLower(activity('lookup_environment').output.firstRow.environment)",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_environment",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "data_product": {
+        "type": "string",
+        "defaultValue": "Group-FinancialStatements"
+      },
+      "orchestration_run_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "environment": {
+        "type": "String"
+      },
+      "warehouse_id": {
+        "type": "String"
+      },
+      "models": {
+        "type": "String"
+      },
+      "data_product": {
+        "type": "String"
+      },
+      "orchestration_run_id": {
+        "type": "String"
+      },
+      "transformation_pipeline_run_id": {
+        "type": "String"
+      },
+      "transformation_pipeline_id": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_hub_cost_center
+    tags:
+      - "Cost Center"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model is a template for filling business entity: Cost Center."
+    columns:
+      - name: bkey_cost_center_source
+        description: "The business key field plus source."
+      - name: bkey_cost_center
+        description: "The business key field."
+      - name: bkey_source
+        description: ""
+      - name: ldts
+        description: "Date & Time the Record was Created In the Source System."
+      - name: record_source
+        description: "Source system name."

@@ -1,0 +1,111 @@
+{
+  "properties": {
+    "jobMode": "CDC",
+    "source": {
+      "type": "AzureSqlTable",
+      "connectionSettings": {
+        "type": "AzureSqlDatabase",
+        "typeProperties": {
+          "database": "BE-SQL-DATAPLATFORM-T-SQLDB-01"
+        },
+        "externalReferences": {
+          "connection": "f0c69d8a-8ad6-4980-8eac-efb64487162f"
+        }
+      }
+    },
+    "destination": {
+      "type": "FabricSqlDatabaseTable",
+      "connectionSettings": {
+        "type": "FabricSqlDatabase",
+        "typeProperties": {
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "artifactId": "2ab845ba-4949-4267-890e-8483f50d8aec"
+        },
+        "externalReferences": {
+          "connection": "1b1a52ef-003f-4669-9fbd-2340706450d0"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "15e57837-852c-42e7-9034-1cd315cbf177",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl1"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental"
+          }
+        },
+        "destination": {
+          "tableOption": "autoCreate",
+          "upsertSettings": {
+            "useTempDB": true,
+            "keys": [
+              "DemoCDC_UpdateDate"
+            ]
+          },
+          "writeBehavior": "upsert",
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl1"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "64feed93-098e-43a8-a7fc-5896be9bb10d",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl2"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental"
+          }
+        },
+        "destination": {
+          "tableOption": "autoCreate",
+          "upsertSettings": {
+            "useTempDB": true,
+            "keys": [
+              "DemoCDC_UpdateDate"
+            ]
+          },
+          "writeBehavior": "upsert",
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl2"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

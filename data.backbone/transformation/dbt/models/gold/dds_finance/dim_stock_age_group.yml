@@ -1,0 +1,33 @@
+
+version: 2
+
+models:
+  - name: dim_stock_age_group
+    enabled: true
+    tags: 
+      - "Stock Age Group"
+      - "Dimension"
+    description: "This model provides the latest version of stock age group details, including keys, attributes, and history metadata."
+    columns:
+      - name: tkey_stock_age_group
+        description: "Technical key for the stock age group, generated as a row number."
+      - name: bkey_stock_age_group
+        description: "Business key for the stock age group, uniquely identifying each group."
+      - name: stock_age_group_code
+        description: "Code representing the stock age group."
+      - name: stock_age_group_name
+        description: "Name of the stock age group."
+      - name: stock_age_group_id
+        description: "Identifier for the stock age group."
+      - name: stock_age_group_min_days
+        description: "Minimum number of days for the stock age group."
+      - name: stock_age_group_max_days
+        description: "Maximum number of days for the stock age group."
+      - name: stock_age_group_sort
+        description: "Sort order for the stock age group."
+      - name: valid_from
+        description: "Start date from which the stock age group record is valid."
+      - name: valid_to
+        description: "End date until which the stock age group record is valid."
+      - name: is_current
+        description: "Flag indicating if the stock age group record is the current version."

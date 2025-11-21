@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: product_dynamics
+    tags:
+      - "product"
+      - "ERP Operations"
+      - "dynamics"
+    description: "This model builds a full product timeline by merging historical business unit changes (SCD2) with current static product and category data (SCD1). It derives fields such as product grouping, business unit (excluding dummy values), and a concatenated product grouping code, and flags active records."
+    columns:
+      - name: bkey_product_source
+        description: "Business key for the product, derived from a lowercase version of displayproductnumber plus source."
+      - name: bkey_product
+        description: "Business key for the product, derived from a lowercase version of displayproductnumber."
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: product_name
+        description: "Latest product search name from the current product data."
+      - name: product_group
+        description: "Derived product group based on business unit hierarchy."
+      - name: product_group_category
+        description: "Product category derived from the business unit hierarchy."
+      - name: product_group_subcategory
+        description: "Product subcategory from the business unit history."
+      - name: business_unit
+        description: "Calculated business unit value (excluding dummy values) derived from raw and parent business unit fields."
+      - name: product_grouping_code
+        description: "Concatenated code combining business unit and subcategory information to group products."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

@@ -1,0 +1,12 @@
+{
+    "table_name": "CustomerToMap",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Company Name_Code] as Company_Name_Code, [Company Name_Name] as Company_Name_Name, [Company Name_ID] as Company_Name_ID, [Customer ID] as Customer_ID, [Legal Number Original] as Legal_Number_Original, [Country Code_Code] as Country_Code_Code, [Country Code_Name] as Country_Code_Name, [Country Code_ID] as Country_Code_ID, Address, [ZIP Code] as ZIPCode, City, [Industry Type_Code] as Industry_Type_Code, [Industry Type_Name] as Industry_Type_Name, [Industry Type_ID] as Industry_Type_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Customer To Map]"
+}

@@ -1,0 +1,12 @@
+table_name,schema_name,load_enabled
+DIM_TEAMS,dbo,yes
+DIM_Employees,dbo,yes
+DIM_Products,dbo,yes
+DIM_Contacts_ALT,dbo,yes
+FILGRID,staging,yes
+FIL,staging,yes
+FILGRIDLINE,staging,yes
+FILGRIDVERSIONRATE,staging,yes
+PD,staging,yes
+SO,staging,yes
+SD,staging,yes

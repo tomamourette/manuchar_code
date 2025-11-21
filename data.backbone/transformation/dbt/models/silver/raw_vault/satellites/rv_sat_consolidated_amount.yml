@@ -1,0 +1,35 @@
+
+version: 2
+
+models:
+  - name: rv_sat_consolidated_amount
+    enabled: true
+    tags:
+      - "Consolidated Amount"
+      - "raw vault"
+      - "satellite"
+      - "CON"
+    description: "This model selects all columns from the consolidated_amount CTE, which sources data from the consolidated_amount_mona model."
+    columns:
+      - name: consolidated_account
+        description: "The account associated with the consolidated amount."
+      - name: consolidated_consolidation_code
+        description: "The code representing the consolidation process."
+      - name: consolidated_company_code
+        description: "The code identifying the company in the consolidation."
+      - name: consolidated_currency_code
+        description: "The currency code used in the consolidation."
+      - name: consolidated_partner_company_code
+        description: "The code for the partner company involved in the consolidation."
+      - name: consolidated_dimension_detail_code
+        description: "The code for detailed dimensions in the consolidation."
+      - name: consolidated_journal_type
+        description: "The type of journal entry in the consolidation."
+      - name: consolidated_journal_category
+        description: "The category of the journal entry in the consolidation."
+      - name: consolidatiod_amount
+        description: "The total amount consolidated."
+      - name: consolidated_bundle_local_adjustment_amount
+        description: "The local adjustment amount for the consolidated bundle."
+      - name: consolidated_bundle_local_amount
+        description: "The local amount for the consolidated bundle."

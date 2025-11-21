@@ -1,0 +1,12 @@
+{
+    "table_name": "Countries",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [ISO Alpha 3 Code] as ISO_Alpha_3_Code, [ISO Numeric Code] as ISO_Numeric_Code, [Commercial Region_Code] as Commercial_Region_Code, [Commercial Region_Name] as Commercial_Region_Name, [Commercial Region_ID] as Commercial_Region_ID, [Previous Region] as Previous_Region, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.Countries"
+}

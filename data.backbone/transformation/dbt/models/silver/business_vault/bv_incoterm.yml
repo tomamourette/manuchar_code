@@ -1,0 +1,22 @@
+version: 2
+ 
+models:
+  - name: bv_incoterm
+    tags:
+      - "Incoterm"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling business entity: Incoterm."
+    columns:
+      - name: bkey_incoterm
+        description: "The business key field."
+      - name: incoterm_code
+        description: "Incoterm code, sourced from the base incoterm key."
+      - name: incoterm_description
+        description: "Description of the incoterm."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

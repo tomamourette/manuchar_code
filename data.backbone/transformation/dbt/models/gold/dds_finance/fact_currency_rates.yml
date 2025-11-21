@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: fact_currency_rates
+    tags:
+      - "Currency Rates"
+      - "Fact"
+      - "Group-FinancialStatements"
+    description: "This model contains Currency Rates from Currency Code to USD, per MONA Consolidation Period"
+    columns:
+      - name: tkey_date
+        description: "The unique key representing the Date."
+      - name: tkey_currency
+        description: "The unique key representing the Currency."
+      - name: currency_rate_consolidation_code
+        description: ""
+      - name: currency_rate_reference_currency_code
+        description: ""
+      - name: currency_rate_closing_rate
+        description: ""
+      - name: currency_rate_average_rate
+        description: ""
+      - name: currency_rate_average_month
+        description: ""
+      - name: currency_rate_budget_closing_rate
+        description: ""
+      - name: currency_rate_budget_average_rate
+        description: ""
+      - name: currency_rate_budget_average_month
+        description: ""

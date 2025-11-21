@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: logistic_file_dynamics
+    tags:
+      - "Logistic File"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: tkey_logistic_file
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_logistic_file_source,
+        description: ""
+      - name: bkey_source,
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: logfile_company
+        description: ""
+      - name: logfile_filenumber
+        description: ""
+      - name: logfile_etsdate
+        description: ""
+      - name: logfile_etadate
+        description: ""
+      - name: logfile_bidate
+        description: ""
+      - name: logfile_cust_ref
+        description: ""
+      - name: logfile_transport_doc_nb
+        description: ""
+      - name: logfile_vesselid
+        description: ""
+      - name: logfile_voyage_number
+        description: ""
+      - name: logfile_loading_location
+        description: ""
+      - name: logfile_loading_countrycode
+        description: ""
+      - name: logfile_destination_location
+        description: ""
+      - name: logfile_destination_countrycode
+        description: ""
+      - name: logfile_finaldestincation_location
+        description: ""
+      - name: logfile_finaldestination_countrycode
+        description: ""
+      - name: logfile_purchase_order_id
+        description: ""
+      - name: logfile_sales_order_id
+        description: ""
+      - name: logfile_shipment_uom
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

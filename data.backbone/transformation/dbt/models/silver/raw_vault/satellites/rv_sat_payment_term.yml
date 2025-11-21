@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: rv_sat_payment_term
+    tags:
+      - "Payment Term"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model derives a composite payment term key by concatenating the base payment term key with its source, and includes key payment term details such as description, number of days, validity periods, and an active flag."
+    columns:
+      - name: bkey_payment_term_source
+        description: "Composite key for the payment term, created by concatenating bkey_payment_term and bkey_source."
+      - name: payment_term_code
+        description: "Payment term code, sourced from the base payment term key."
+      - name: payment_term_description
+        description: "Description of the payment term."
+      - name: payment_term_number_of_days
+        description: "Number of days associated with the payment term."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

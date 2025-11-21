@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "Kantox_MainPipeline"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "25b87433-102f-a014-4ea5-b45a2cbd986b"
+  }
+}

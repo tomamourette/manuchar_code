@@ -1,0 +1,310 @@
+{
+  "name": "{{Dataset_Name}}",
+  "compatibilityLevel": 1604,
+  "model": {
+    "name": "{{Dataset_Name}}",
+    "culture": "en-US",
+    "collation": "Latin1_General_100_BIN2_UTF8",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Anaplan_Budget",
+        "sourceLineageTag": "[dbo].[Anaplan_Budget]",
+        "columns": [
+          {
+            "name": "Period",
+            "dataType": "string",
+            "sourceColumn": "Period",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Period",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Plan",
+            "dataType": "string",
+            "sourceColumn": "Plan",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Plan",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Version",
+            "dataType": "string",
+            "sourceColumn": "Version",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Version",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MonthCode",
+            "dataType": "string",
+            "sourceColumn": "MonthCode",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MonthCode",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CompanyCode",
+            "dataType": "string",
+            "sourceColumn": "CompanyCode",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CompanyCode",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FK_Product",
+            "dataType": "string",
+            "sourceColumn": "FK_Product",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FK_Product",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FK_ProductGrouping",
+            "dataType": "string",
+            "sourceColumn": "FK_ProductGrouping",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FK_ProductGrouping",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FK_Customer",
+            "dataType": "string",
+            "sourceColumn": "FK_Customer",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FK_Customer",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "DestinationCountryCode",
+            "dataType": "string",
+            "sourceColumn": "DestinationCountryCode",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "DestinationCountryCode",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SalesAmountGroupCurrency",
+            "dataType": "string",
+            "sourceColumn": "SalesAmountGroupCurrency",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SalesAmountGroupCurrency",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "QuantityInMetricTon",
+            "dataType": "string",
+            "sourceColumn": "QuantityInMetricTon",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "QuantityInMetricTon",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "GrossProfitGroupCurrency",
+            "dataType": "string",
+            "sourceColumn": "GrossProfitGroupCurrency",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "GrossProfitGroupCurrency",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "COGSGroupCurrency",
+            "dataType": "string",
+            "sourceColumn": "COGSGroupCurrency",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "COGSGroupCurrency",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "COGS2GroupCurrency",
+            "dataType": "string",
+            "sourceColumn": "COGS2GroupCurrency",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "COGS2GroupCurrency",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "<<<Filter>>>",
+            "dataType": "string",
+            "sourceColumn": "<<<Filter>>>",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "<<<Filter>>>",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "To_Export",
+            "dataType": "string",
+            "sourceColumn": "To_Export",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "To_Export",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "<<<Tech>>>",
+            "dataType": "string",
+            "sourceColumn": "<<<Tech>>>",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "<<<Tech>>>",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Version_to_export",
+            "dataType": "string",
+            "sourceColumn": "Version_to_export",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Version_to_export",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Anaplan_Budget",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "kind": "m",
+        "expression": "let\n    database = {{TDS_Endpoint}}\nin\n    database\n"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "SourceLineageTagType",
+        "value": "DatabaseFullyQualifiedName"
+      }
+    ]
+  }
+}

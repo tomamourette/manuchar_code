@@ -1,0 +1,10 @@
+{
+    "table_name": "DIM_Contacts_ALT",
+    "schema_name": "dbo",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT contactalt_id, name_alt, country_alt, vendor_id, customer_id, street, zipCode, city, vatNumber, e10VatNumber, bank_id, is_redListed, delcredereNum, contact_id, ref_customer_id, contactstatus, remarksValidation FROM [dbo].[DIM_Contacts_ALT]"
+}

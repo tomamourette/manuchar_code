@@ -1,0 +1,56 @@
+
+version: 2
+models:
+  - name: fact_financial_statements
+    tags:
+      - "Financial Statements"
+      - "Fact"
+      - "Group-FinancialStatements"
+    description: "This model calculates financial statement metrics such as YTD amounts, currency conversion rates, and working days based on various dimensions and mappings."
+    columns:
+      - name: tkey_date
+        description: "The unique key representing the date dimension."
+      - name: tkey_account
+        description: "The unique key representing the account dimension."
+      - name: tkey_consolidation_period
+        description: "The unique key representing the consolidation period dimension."
+      - name: tkey_company
+        description: "The unique key representing the company dimension."
+      - name: tkey_partner_company
+        description: "The unique key representing the partner company dimension."
+      - name: tkey_currency
+        description: "The unique key representing the currency dimension."
+      - name: tkey_industry
+        description: "The unique key representing the industry dimension."
+      - name: amount
+        description: "The year-to-date amount in the financial statements."
+      - name: bundle_local_adjustment_in_local_currency_amount
+        description: "The YTD bundle local adjustment amount in local currency."
+      - name: bundle_local_in_local_currency_amount
+        description: "The YTD bundle local amount in local currency."
+      - name: allocation_amount
+        description: "The YTD allocation amount calculated for financial reporting."
+      - name: bundle_amount
+        description: "The YTD bundle amount calculated for financial reporting."
+      - name: conso_adjusted_amount
+        description: "The YTD consolidated adjusted amount for financial reporting."
+      - name: conso_legal_amount
+        description: "The YTD consolidated legal amount for financial reporting."
+      - name: intercompany_amount
+        description: "The YTD intercompany amount for financial reporting."
+      - name: manual_amount
+        description: "The YTD manual amount for financial reporting."
+      - name: technical_eliminations_amount
+        description: "The YTD technical eliminations amount for financial reporting."
+      - name: volume_amount
+        description: "The YTD volume amount for financial reporting."
+      - name: fte_amount
+        description: "The YTD full-time equivalent amount for financial reporting."
+      - name: fte_avg_amount
+        description: "The YTD average full-time equivalent amount for financial reporting."
+      - name: conversion_rate_local_home
+        description: "The conversion rate from local currency to home currency."
+      - name: conversion_rate_local_group
+        description: "The conversion rate from local currency to group currency."
+      - name: actual_workday_holidays_in_workweek
+        description: "The actual number of working days excluding holidays in the workweek."

@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_vessel
+    tags:
+      - "Vessel"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model fills the business entity: vessel."
+    columns:
+      - name: bkey_vessel_source
+        description: "Composite key for the vessel, created by concatenating bkey_vessel and 'dynamics'."
+      - name: bkey_vessel
+        description: "Base vessel key from Dynamics; trimmed and defaulted to 'N/A' if null."
+      - name: bkey_source
+        description: "Static source identifier, set to 'dynamics'."
+      - name: ldts
+        description: "Load timestamp from the Dynamics payment term data, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, statically set to 'Dynamics 365'."

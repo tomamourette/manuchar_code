@@ -1,0 +1,149 @@
+---
+find_replace:
+  
+  # Fabric Connections parameters
+  - find_value: feea8d0c-e063-48fb-acb2-30c207c3efab  ### dbb lakehouse connection id
+    replace_value:
+      acceptance: 852754d5-09d2-45bf-8997-7ced6d56c51b 
+      quality: dcfa0d26-97c8-46bc-ba7e-d33536b4b1a3
+      production: 2f0d48b7-ab10-4694-9757-2e4409be0456
+  - find_value: 11f966b8-4c93-4f4d-a976-557e88be2119  ### dbb warehouse connection id
+    replace_value:
+      acceptance: 6804d663-1434-4538-941a-84c07891f11e
+      quality: 95dc2b77-887f-4dfe-a100-a7671f3203fd
+      production: 9a166561-4a71-4718-9582-3560151595fc
+  - find_value: d01bb94c-d46f-4b37-baa5-6192223c06ad  ### OSS Dynamics MHQ connection id
+    replace_value:
+      acceptance: a7e702f9-e11e-44b8-b737-529e8f8b7475
+      quality: f41f8c26-7a3e-4a29-acd1-ea1d0c1d010b
+      production: f41f8c26-7a3e-4a29-acd1-ea1d0c1d010b
+  - find_value: 6f70c12d-dfec-4d44-9cd4-17f774d7f904  ### Boomi connection id
+    replace_value:
+      acceptance: 6f70c12d-dfec-4d44-9cd4-17f774d7f904
+      quality: 6f70c12d-dfec-4d44-9cd4-17f774d7f904
+      production: 6f70c12d-dfec-4d44-9cd4-17f774d7f904
+  - find_value: 6455f9b6-b9f3-45fb-a617-8e57a000ee09  ### DWH connection id
+    replace_value:
+      acceptance: 6455f9b6-b9f3-45fb-a617-8e57a000ee09
+      quality: 6455f9b6-b9f3-45fb-a617-8e57a000ee09
+      production: 6455f9b6-b9f3-45fb-a617-8e57a000ee09
+  - find_value: c75610ac-4f9d-43e7-b94a-6e00b139f854  ### LOG connection id
+    replace_value:
+      acceptance: c75610ac-4f9d-43e7-b94a-6e00b139f854
+      quality: c75610ac-4f9d-43e7-b94a-6e00b139f854
+      production: c75610ac-4f9d-43e7-b94a-6e00b139f854
+  - find_value: 806402bd-0732-411b-8f48-7de0365d8f49  ### MDS connection id
+    replace_value:
+      acceptance: 806402bd-0732-411b-8f48-7de0365d8f49
+      quality: 806402bd-0732-411b-8f48-7de0365d8f49
+      production: 806402bd-0732-411b-8f48-7de0365d8f49
+  - find_value: 44e54521-c90d-45cd-822f-4402ed45139e  ### MTM connection id
+    replace_value:
+      acceptance: 44e54521-c90d-45cd-822f-4402ed45139e
+      quality: 44e54521-c90d-45cd-822f-4402ed45139e
+      production: 44e54521-c90d-45cd-822f-4402ed45139e
+  - find_value: 23ca159e-f3dc-48b9-a5ac-0371e5202592  ### STG connection id
+    replace_value:
+      acceptance: 23ca159e-f3dc-48b9-a5ac-0371e5202592
+      quality: 23ca159e-f3dc-48b9-a5ac-0371e5202592
+      production: 23ca159e-f3dc-48b9-a5ac-0371e5202592
+
+  # Data BackBone [env] parameters
+  - find_value: 913a2dc2-5f68-4fb7-ab07-631a84561fd6  ### workspace id (Data BackBone [env])
+    replace_value:
+      acceptance: $workspace.id
+      quality: $workspace.id
+      production: $workspace.id
+  - find_value: hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com  ### sql analytics endpoint
+    replace_value:
+      acceptance: $items.Lakehouse.dbb_lakehouse.sqlendpoint
+      quality: $items.Lakehouse.dbb_lakehouse.sqlendpoint
+      production: $items.Lakehouse.dbb_lakehouse.sqlendpoint
+  - find_value: 86563906-0212-4c50-9019-45c93eae5671  ### dbb warehouse id
+    replace_value:
+      acceptance: $items.Warehouse.dbb_warehouse.id 
+      quality: $items.Warehouse.dbb_warehouse.id
+      production: $items.Warehouse.dbb_warehouse.id
+  - find_value: a3c7dd8f-25f9-4aa9-aaad-981087e7d0d4  ### dbb lakehouse id
+    replace_value:
+      acceptance: $items.Lakehouse.dbb_lakehouse.id  
+      quality: $items.Lakehouse.dbb_lakehouse.id
+      production: $items.Lakehouse.dbb_lakehouse.id
+
+  # Finance Group Reporting [env] parameters
+  - find_value: 4361af73-85af-49c9-8a8b-aee26af975f2  ### workspace id (Finance Group Reporting [env])
+    replace_value:
+      acceptance: 93db3aa1-f39c-4410-b2ac-246b9132e5a4
+      quality: f8652841-c3a5-4bbb-846f-03e370059b98
+      production: 6babf929-7844-4264-bb87-282f2d5a6c2e
+  - find_value: a9430796-25b3-4378-83dd-ab632b82aac6  ### semantic model id (Group-FinancialStatements)
+    replace_value:
+      acceptance: f6c2e5a7-b6f6-4971-a1cb-30a66b215ea6
+      quality: 87e187b1-46e7-42c6-99aa-7e31cd4338d3
+      production: 0d470807-2011-477f-8552-14866b33be5c
+
+  # Operational Integration Layer [env] parameters
+  - find_value: 5c450b57-bfb8-4fc6-b34c-e6fe494e12c1  ### workspace id (Operational Integration Layer [env])
+    replace_value:
+      acceptance: d271b6b3-5966-42f1-85fb-b9c16f6c6ba6
+      quality: 0a77569d-f495-4786-920f-c2dd14cf0ec2
+      production: 0a77569d-f495-4786-920f-c2dd14cf0ec2
+  - find_value: 26d71613-5ee6-4522-a720-0f4dfa85c17b  ### OSS Dynamics MHQ Lakehouse id (Operational Integration Layer [env])
+    replace_value:
+      acceptance: 5e069c3e-4082-4712-a849-1d374882137e
+      quality: 771f9b4c-fd35-4325-b23c-fd5e182e24e6
+      production: 771f9b4c-fd35-4325-b23c-fd5e182e24e6
+  - find_value: 55458af9-f16a-4e4e-a886-fae76d51c555  ### OSS GenericData MHQ Warehouse id (Operational Integration Layer [env])
+    replace_value:
+      acceptance: b29ef7a1-625a-4ecc-9c03-9aaa77239afa
+      quality: 0279d1fe-0958-4669-9fc2-28f20883e91f
+      production: 0279d1fe-0958-4669-9fc2-28f20883e91f 
+  - find_value: 1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2  ### OSS MonaData MHQ Warehouse id (Operational Integration Layer [env])
+    replace_value:
+      acceptance: bf2c6558-ae5b-45e0-abfa-10c706b6c624
+      quality: 9cf8672d-80a7-46d0-85ea-888a7eb79a2a
+      production: 9cf8672d-80a7-46d0-85ea-888a7eb79a2a
+  - find_value: b8b1722c-17ec-4324-94ba-de5abd55ed6d  ### MonaOnPrem_HourlyLoad Pipeline id (Operational Integration Layer [env])
+    replace_value:
+      acceptance: dfeade6d-976e-4f6f-b679-e69bd72afa19
+      quality: bcd16b74-a496-49dc-b997-74688b4345a0
+      production: bcd16b74-a496-49dc-b997-74688b4345a0
+      
+
+  # Data BackBone [env] Eventstream parameters
+  - find_value: 3a1dc3f9-6f1e-48ae-a4bb-d3ca273d203a  ### MonaOnPrem_MainPipeline Pipeline id  
+    replace_value:
+      acceptance: 7385a9cd-3f14-47a9-9605-54f7ac277a71
+      quality: 7f692702-9081-42d7-bbb0-dc5b37a2cbfc
+      production: 7f692702-9081-42d7-bbb0-dc5b37a2cbfc
+    item_type: "Eventstream"
+  - find_value: 0f01e201-384a-466d-accc-daf54e2fe9e7  ### MDS Integration Pipeline id  
+    replace_value:
+      acceptance: f1ff599e-7190-4c82-b936-c7dff5c30c65
+      quality: 0b759864-0bf9-4692-bbaf-b308adae4651
+      production: 24dc4250-c17f-4d93-b359-a5e251122492
+    item_type: "Eventstream"
+  - find_value: 3d2b949c-77b4-442e-a97c-a18f5e4deb94  ### Transformation Pipeline id  
+    replace_value:
+      acceptance: 201dcb1a-ebef-420f-b54c-0c4c93691c31
+      quality: c1bd6b38-8a15-442b-83cd-267c2831e49b
+      production: 3cf4bddd-ed37-4352-8624-55dfca536944
+    item_type: "Eventstream"
+  - find_value: 679658e9-7adf-4206-98a6-0d71eed23b10 ### Reconciliation Pipeline id  
+    replace_value:
+      acceptance: 3531c257-c8f6-4975-a033-6a6452ad820f
+      quality: 71612550-f54c-4b2f-80fa-908c1e99f9b1
+      production: 1e59dfe3-bb89-468e-802a-7c2a4df76b2d # needs update when MTP is done!
+    item_type: "Eventstream"
+  - find_value: 8e9c80bb-763b-4b9e-aec6-95b84b40684d ### Data Product Refresh Pipeline id 
+    replace_value:
+      acceptance: 7f94f225-a0ca-4cf1-9a73-3e109e142746
+      quality: e8dc4930-afb1-4585-b0c3-6f5a6aa93203
+      production: e8dc4930-afb1-4585-b0c3-6f5a6aa93203 # needs update when MTP is done!
+    item_type: "Eventstream"
+  - find_value: f3efaf8b-6696-4e48-8a05-d9b8e3742c3b ### Orchestration Pipeline id  
+    replace_value:
+      acceptance: cbbae51f-210a-4f6b-80c3-fbd5f3c43536
+      quality: 0e61885e-3848-4569-821f-024b009665c5
+      production: 87ad1213-47f2-4118-90ae-1ec79b9c2959
+    item_type: "Eventstream"

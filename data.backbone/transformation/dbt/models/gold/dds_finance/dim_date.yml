@@ -1,0 +1,112 @@
+version: 2
+ 
+models:
+  - name: dim_date
+    tags:
+      - "Date"
+      - "Dimension"
+      - "Group-FinancialStatements"
+    description: "This model is a template for filling the dimension: Date."
+    columns:
+      - name: tkey_date
+        description: ""
+      - name: bkey_date
+        description: ""
+      - name: date
+        description: ""
+      - name: year
+        description: ""
+      - name: previous_year
+        description: ""
+      - name: number_of_days_in_year
+        description: ""
+      - name: number_of_work_days_in_year
+        description: ""
+      - name: semester
+        description: ""
+      - name: previous_semester
+        description: ""
+      - name: semester_description_short
+        description: ""
+      - name: semester_description_long
+        description: ""
+      - name: previous_semester_description_short
+        description: ""
+      - name: previous_semester_description_long
+        description: ""
+      - name: number_of_days_in_semester
+        description: ""
+      - name: number_of_work_days_in_semester
+        description: ""
+      - name: quarter
+        description: ""
+      - name: previous_quarter
+        description: ""
+      - name: quarter_description_short
+        description: ""
+      - name: quarter_description_long
+        description: ""
+      - name: previous_quarter_description_short
+        description: ""
+      - name: previous_quarter_description_long
+        description: ""
+      - name: number_of_days_in_quarter
+        description: ""
+      - name: number_of_work_days_in_quarter
+        description: ""
+      - name: month_key
+        description: ""
+      - name: month
+        description: ""
+      - name: previous_month
+        description: ""
+      - name: month_description_short
+        description: ""
+      - name: month_description_long
+        description: ""
+      - name: previous_month_description_short
+        description: ""
+      - name: previous_month_description_long
+        description: ""
+      - name: number_of_days_in_month
+        description: ""
+      - name: number_of_work_days_in_month
+        description: ""
+      - name: week
+        description: ""
+      - name: previous_week
+        description: ""
+      - name: week_description_short
+        description: ""
+      - name: week_description_long
+        description: ""
+      - name: previous_week_description_short
+        description: ""
+      - name: previous_week_description_long
+        description: ""
+      - name: day
+        description: ""
+      - name: day_description_short
+        description: ""
+      - name: day_description_long
+        description: ""
+      - name: day_in_year
+        description: ""
+      - name: day_in_semester
+        description: ""
+      - name: day_in_quarter
+        description: ""
+      - name: day_in_week
+        description: ""
+      - name: working_day_in_year
+        description: ""
+      - name: working_day_in_semester
+        description: ""
+      - name: working_day_in_quarter
+        description: ""
+      - name: working_day_in_month
+        description: ""
+      - name: day_name_short
+        description: ""
+      - name: day_name_long
+        description: ""

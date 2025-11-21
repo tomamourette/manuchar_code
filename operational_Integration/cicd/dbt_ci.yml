@@ -1,0 +1,36 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - name: dbt_core_version
+    value: '1.8.9'
+  - name: dbt_fabric_version
+    value: '1.8.8'
+
+steps:
+  - checkout: self
+    persistCredentials: true
+
+  - task: Bash@3
+    displayName: Install dbt core and dbt fabric
+    inputs:
+      targetType: 'inline'
+      script: |
+        pip install dbt-core=="$(dbt_core_version)" dbt-fabric=="$(dbt_fabric_version)"
+
+  - task: Bash@3
+    displayName: merge into code_test branch
+    inputs:
+      targetType: 'inline'
+      script: |
+        git checkout code_test
+        git merge $(Build.SourceBranchName)
+        
+  - task: Bash@3
+    displayName: DBT compile test
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo 'here we will execute dbt compile test once we have our service principal'

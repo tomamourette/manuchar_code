@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SQLDatabase",
+    "displayName": "ODS_Affiliate_Connect"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bac1d7dd-c372-905e-43fc-2be4996be29b"
+  }
+}

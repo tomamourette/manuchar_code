@@ -1,0 +1,12 @@
+{
+    "table_name": "ProductAffiliateMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, Company_Code, Company_Name, Company_ID, Product_Code, Product_Name, Product_ID, Grade_Code, Grade_Name, Grade_ID, [Packaging Type_Code] as Packaging_Type_Code, [Packaging Type_Name] as Packaging_Type_Name, [Packaging Type_ID] as Packaging_Type_ID, Form_Code, Form_Name, Form_ID, [Packaging Size] as Packaging_Size, [Packaging UOM_Code] as Packaging_UOM_Code, [Packaging UOM_Name] as Packaging_UOM_Name, [Packaging UOM_ID] as Packaging_UOM_ID, Quality, [Local Product Code] as Local_Product_Code, Specification, [HS Code] as HS_Code, CAS, Chemwatch, [MSDS Date] as MSDS_Date, [IMDG Classification] as IMDG_Classification, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Product Affiliate Mapping]"
+}

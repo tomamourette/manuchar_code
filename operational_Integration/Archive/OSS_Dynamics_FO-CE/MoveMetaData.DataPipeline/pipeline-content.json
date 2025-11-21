@@ -1,0 +1,116 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Script1",
+        "type": "Script",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "scripts": [
+            {
+              "type": "NonQuery",
+              "text": {
+                "value": "INSERT INTO [dbo].[LOG_TABLE_DELTAS]\n\t(\n\t\tLoadDateTime,\n\t\tLastUpdateDateTime,\n\t\tSchemaName,\n\t\tTableName,\n\t\tDeltaFormat\n\t)\nSELECT GETUTCDATE() AS [LoadDateTime],\n\t   GETUTCDATE() AS [LastUpdateDateTime],\n\t   S.[name] AS [SchemaName],\n\t   O.[name] AS [TableName],\n\t   'DATETIME' AS [DeltaFormat]\n\t  FROM [dbb_lakehouse].[sys].[objects] O INNER JOIN [dbb_lakehouse].[sys].[schemas] S\n\t    ON O.[schema_id] = S.[schema_id]\n\t WHERE O.[type] IN (N'U')\n\t   AND O.[name] LIKE 'Dynamics%'",
+                "type": "Expression"
+              }
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00",
+          "database": "dbb_warehouse"
+        },
+        "externalReferences": {
+          "connection": "feea8d0c-e063-48fb-acb2-30c207c3efab"
+        }
+      },
+      {
+        "name": "Copy data1",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "Script1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "c0774a54_2761_4163_b817_eb1d14a1f8dc",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                    "artifactId": "@activity('Script1').output",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "dbo",
+                "table": "LOG_TABLE_DELTAS"
+              }
+            }
+          },
+          "sink": {
+            "type": "FabricSqlDatabaseSink",
+            "writeBehavior": "insert",
+            "sqlWriterUseTableLock": false,
+            "datasetSettings": {
+              "annotations": [],
+              "connectionSettings": {
+                "name": "ODS_Dynamics_FO-CE",
+                "properties": {
+                  "annotations": [],
+                  "type": "FabricSqlDatabase",
+                  "typeProperties": {
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                    "artifactId": "514398aa-5957-4442-9f6d-10262ddbb9b6"
+                  },
+                  "externalReferences": {
+                    "connection": "0c206a39-936f-4e24-a4fd-8d8f86c456fb"
+                  }
+                }
+              },
+              "type": "FabricSqlDatabaseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "dbo",
+                "table": "LOG_TABLE_DELTAS"
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

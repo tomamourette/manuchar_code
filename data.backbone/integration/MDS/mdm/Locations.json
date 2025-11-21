@@ -1,0 +1,12 @@
+{
+    "table_name": "Locations",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, Company_Code, Company_Name, Company_ID, [Location Type_Code] as Location_Type_Code, [Location Type_Name] as Location_Type_Name, [Location Type_ID] as Location_Type_ID, Country_Code, Country_Name, Country_ID, Address, [ZIP Code] as ZIP_Code, City, Longitude, latitude, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.Locations"
+}

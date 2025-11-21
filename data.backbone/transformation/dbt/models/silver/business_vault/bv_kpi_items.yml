@@ -1,0 +1,30 @@
+
+version: 2
+
+models:
+  - name: bv_kpi_items
+    enabled: false
+    tags: 
+      - "KPI Items"
+      - "business vault"
+      - "REF"
+    description: "This model retrieves the KPI details from the kpi item satellite."
+    columns:
+      - name: tkey_kpi
+        description: "Unique key representing each KPI."
+      - name: bkey_kpi
+        description: "Unique key representing each KPI."
+      - name: bkey_source
+        description: ""
+      - name: kpi_name
+        description: "Name of the KPI."
+      - name: kpi_sort_number
+        description: "Sort Number of the KPI."
+      - name: kpi_type
+        description: "Type of the KPI."
+      - name: valid_from
+        description: "Start date and time from which the data is valid."
+      - name: valid_to
+        description: End date and time until which the data is valid."
+      - name: is_current
+        description: "Indicator if the record is the current version."

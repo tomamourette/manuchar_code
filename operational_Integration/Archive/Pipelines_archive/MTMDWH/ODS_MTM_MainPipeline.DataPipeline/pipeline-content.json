@@ -1,0 +1,527 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "ForEach MTM table",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "Filter MTMDWH tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Filter MTMDWH tables').output.Value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "name": "Invoke MTM Per Table",
+              "type": "ExecutePipeline",
+              "state": "Inactive",
+              "onInactiveMarkAs": "Failed",
+              "dependsOn": [],
+              "policy": {
+                "secureInput": false
+              },
+              "typeProperties": {
+                "pipeline": {
+                  "referenceName": "96340133-c694-4457-bf31-43cf32328076",
+                  "type": "PipelineReference"
+                },
+                "waitOnCompletion": true,
+                "parameters": {
+                  "Source_Table": {
+                    "value": "@item().DataProc_Source_Table",
+                    "type": "Expression"
+                  },
+                  "DataProc_Run_Id": {
+                    "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                    "type": "Expression"
+                  },
+                  "Source": {
+                    "value": "@item().DataProc_Source",
+                    "type": "Expression"
+                  },
+                  "Table_LoadType": {
+                    "value": "@item().DataProc_Source_Table_LoadType",
+                    "type": "Expression"
+                  },
+                  "Watermark_Column": {
+                    "value": "@item().DataProc_Source_Watermark_Column",
+                    "type": "Expression"
+                  },
+                  "Watermark_Value": {
+                    "value": "@item().DataProc_Source_Watermark_Value",
+                    "type": "Expression"
+                  },
+                  "Stg_Schema": {
+                    "value": "@item().DataProc_TargetSchema",
+                    "type": "Expression"
+                  },
+                  "Source_Schema": {
+                    "value": "@item().DataProc_Source_Schema",
+                    "type": "Expression"
+                  },
+                  "Ods_Schema": {
+                    "value": "@item().DataProc_ODS_Schema",
+                    "type": "Expression"
+                  }
+                }
+              }
+            },
+            {
+              "name": "Log ProcessRun Failed",
+              "type": "SqlServerStoredProcedure",
+              "state": "Inactive",
+              "onInactiveMarkAs": "Succeeded",
+              "dependsOn": [
+                {
+                  "activity": "Invoke MTM Per Table",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+                "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+                "storedProcedureParameters": {
+                  "DataProc_Run_Id": {
+                    "value": {
+                      "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                      "type": "Expression"
+                    },
+                    "type": "Int16"
+                  },
+                  "DataProc_Id": {
+                    "value": {
+                      "value": "@pipeline().parameters.DataProc_Id",
+                      "type": "Expression"
+                    },
+                    "type": "Int16"
+                  },
+                  "DataProc_Context": {
+                    "value": {
+                      "value": "@pipeline().parameters.DataProc_Context",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "DataProc_Run_Status": {
+                    "value": "Failed",
+                    "type": "String"
+                  },
+                  "DataProc_Run_DateStart": {
+                    "value": {
+                      "value": "@pipeline().TriggerTime",
+                      "type": "Expression"
+                    },
+                    "type": "Datetime"
+                  },
+                  "DataProc_Run_DateEnd": {
+                    "value": {
+                      "value": "@formatDateTime(utcNow())",
+                      "type": "Expression"
+                    },
+                    "type": "Datetime"
+                  },
+                  "Run_NonCompletenessCheckCount": {
+                    "value": ""
+                  },
+                  "DataProc_Run_Output": {
+                    "value": {
+                      "value": "@string(activity('Invoke MTM Per Table').output.pipelineReturnValue)",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "UpdateBy": {
+                    "value": {
+                      "value": "@pipeline().PipelineName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "externalReferences": {
+                "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Lookup Config Data SourceList",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "Log ProcessRun Start",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "annotations": [],
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                },
+                "externalReferences": {
+                  "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                }
+              }
+            },
+            "type": "FabricSqlDatabaseTable",
+            "schema": [],
+            "typeProperties": {
+              "schema": "03DataSys",
+              "table": "Config_DataProcess_SourceList"
+            }
+          }
+        }
+      },
+      {
+        "name": "Filter MTMDWH tables",
+        "type": "Filter",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config Data SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup Config Data SourceList').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().DataProc_Id, 4)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Log ProcessRun Start",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Get Max ID on Log Process Run",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Running",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": ""
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        }
+      },
+      {
+        "name": "Log ProcessRun End Success",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "ForEach MTM table",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Successful",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        }
+      },
+      {
+        "name": "Log ProcessRun End Failed",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "ForEach MTM table",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Failed",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": null,
+              "type": "String"
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        }
+      },
+      {
+        "name": "Get Max ID on Log Process Run",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "sqlReaderQuery": "SELECT MAX(DataProc_Run_Id) as MaxID FROM [03DataSys].[Log_DataProcess_Run]",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": true,
+          "datasetSettings": {
+            "annotations": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "annotations": [],
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                },
+                "externalReferences": {
+                  "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                }
+              }
+            },
+            "type": "FabricSqlDatabaseTable",
+            "schema": [],
+            "typeProperties": {}
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "DataProc_Id": {
+        "type": "string",
+        "defaultValue": "4"
+      },
+      "DataProc_Context": {
+        "type": "string",
+        "defaultValue": "SourceSync - MTM DWH"
+      }
+    }
+  }
+}

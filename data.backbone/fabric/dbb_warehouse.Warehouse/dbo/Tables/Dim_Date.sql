@@ -1,0 +1,56 @@
+CREATE TABLE [dbo].[Dim_Date] (
+
+	[DateKey] date NOT NULL, 
+	[Year] int NOT NULL, 
+	[PreviousYear] int NOT NULL, 
+	[NumberOfDaysInYear] int NOT NULL, 
+	[NumberOfWorkDaysInYear] int NOT NULL, 
+	[Semester] smallint NOT NULL, 
+	[PreviousSemester] smallint NOT NULL, 
+	[SemesterDescriptionShort] varchar(5) NOT NULL, 
+	[SemesterDescriptionLong] varchar(10) NOT NULL, 
+	[PreviousSemesterDescriptionShort] varchar(5) NOT NULL, 
+	[PreviousSemesterDescriptionLong] varchar(10) NOT NULL, 
+	[NumberOfDaysInSemester] int NOT NULL, 
+	[NumberOfWorkDaysInSemester] int NOT NULL, 
+	[Quarter] smallint NOT NULL, 
+	[PreviousQuarter] smallint NOT NULL, 
+	[QuarterDescriptionShort] varchar(2) NOT NULL, 
+	[QuarterDescriptionLong] varchar(10) NOT NULL, 
+	[PreviousQuarterDescriptionShort] varchar(2) NOT NULL, 
+	[PreviousQuarterDescriptionLong] varchar(10) NOT NULL, 
+	[NumberOfDaysInQuarter] int NOT NULL, 
+	[NumberOfWorkDaysInQuarter] int NOT NULL, 
+	[MonthKey] int NOT NULL, 
+	[Month] smallint NOT NULL, 
+	[PreviousMonth] smallint NOT NULL, 
+	[MonthDescriptionShort] varchar(3) NOT NULL, 
+	[MonthDescriptionLong] varchar(10) NOT NULL, 
+	[PreviousMonthDescriptionShort] varchar(3) NOT NULL, 
+	[PreviousMonthDescriptionLong] varchar(10) NOT NULL, 
+	[NumberOfDaysInMonth] int NOT NULL, 
+	[NumberOfWorkDaysInMonth] int NOT NULL, 
+	[Week] smallint NOT NULL, 
+	[PreviousWeek] smallint NOT NULL, 
+	[WeekDescriptionShort] varchar(3) NOT NULL, 
+	[WeekDescriptionLong] varchar(10) NOT NULL, 
+	[PreviousWeekDescriptionShort] varchar(3) NOT NULL, 
+	[PreviousWeekDescriptionLong] varchar(10) NOT NULL, 
+	[Day] datetime2(6) NOT NULL, 
+	[DayDescriptionShort] varchar(11) NOT NULL, 
+	[DayDescriptionLong] varchar(25) NOT NULL, 
+	[DayInYear] int NOT NULL, 
+	[DayInSemester] int NOT NULL, 
+	[DayInQuarter] int NOT NULL, 
+	[DayInWeek] smallint NOT NULL, 
+	[WorkingDayInYear] int NOT NULL, 
+	[WorkingDayInSemester] int NOT NULL, 
+	[WorkingDayInQuarter] int NOT NULL, 
+	[WorkingDayInMonth] int NOT NULL, 
+	[DayNameShort] varchar(3) NOT NULL, 
+	[DayNameLong] varchar(10) NOT NULL
+);
+
+
+GO
+ALTER TABLE [dbo].[Dim_Date] ADD CONSTRAINT PK_Dim_Date primary key NONCLUSTERED ([DateKey]);

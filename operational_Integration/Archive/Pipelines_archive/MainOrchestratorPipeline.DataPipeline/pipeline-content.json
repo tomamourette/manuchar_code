@@ -1,0 +1,167 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "AzureSqlTable",
+            "typeProperties": {
+              "schema": "03DataSys",
+              "table": "Config_DataProcess",
+              "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969"
+            },
+            "schema": [],
+            "externalReferences": {
+              "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup Config DataProcess",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup Config DataProcess').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().DataProc_Code",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "ODS_REF1",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "f75c378d-c073-b84c-4019-a3ef086a0d80",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {},
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke Ref Pipeline",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "ODS_D365",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "47646fe1-1d9c-a974-4a68-a2b25b47f441",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {
+                            "DataProc_Id": {
+                              "value": "@item().DataProc_Id",
+                              "type": "Expression"
+                            },
+                            "DataProc_Context": {
+                              "value": "@item().DataProc_Name",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke ODS_D365 MainPipeline",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "ODS_Aff_File_v1",
+                    "activities": [
+                      {
+                        "type": "Wait",
+                        "typeProperties": {
+                          "waitTimeInSeconds": 1
+                        },
+                        "name": "ODS_Affiliate_Pipeline",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "ODS_MTM",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "77580931-3112-8518-4cd1-c0d128bda9b9",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {
+                            "DataProc_Id": {
+                              "value": "@item().DataProc_Id",
+                              "type": "Expression"
+                            },
+                            "DataProc_Context": {
+                              "value": "@item().DataProc_Name",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke MTM Pipeline",
+                        "dependsOn": []
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": []
+              },
+              "name": "Switch based on the DataProc_Id",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "For each DataProcess_Id",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config DataProcess",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

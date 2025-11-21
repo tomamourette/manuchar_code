@@ -1,0 +1,25 @@
+version: 2
+ 
+models:
+  - name: incoterm_dynamics
+    tags:
+      - "Incoterm"
+      - "intermediate layer"
+      - "REF"
+      - "dynamics"
+    description: "This model fills the intermediate layer of the business entity Incoterm."
+    columns:
+      - name: bkey_incoterm_source
+        description: ""
+      - name: bkey_incoterm
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: incoterm_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_hub_business_unit
+    tags:
+      - "Business Unit"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model is a template for filling business entity: Business Unit."
+    columns:
+      - name: bkey_business_unit_source
+        description: "The business key field plus source."
+      - name: bkey_business_unit
+        description: "The business key field."
+      - name: bkey_source
+        description: ""
+      - name: ldts
+        description: "Date & Time the Record was Created In the Source System."
+      - name: record_source
+        description: "Source system name."

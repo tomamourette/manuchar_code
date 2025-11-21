@@ -1,0 +1,26 @@
+CREATE TABLE [10REF_dwh].[dbo.F_EXCHANGERATES] (
+    [PK_EXCHANGERATES]          INT             NULL,
+    [BK_CLOSINGDATE]            NVARCHAR (MAX)  NULL,
+    [BK_CURRENCY_CODE]          NVARCHAR (MAX)  NULL,
+    [BK_CURRENCY_CODE_REF]      NVARCHAR (MAX)  NULL,
+    [FK_DATES_CLOSING]          INT             NULL,
+    [FK_CURRENCIES_CURRENCY]    INT             NULL,
+    [FK_CURRENCIES_REFCURRENCY] INT             NULL,
+    [M_ROX_AVERAGERATE]         DECIMAL (24, 8) NULL,
+    [M_ROX_AVERAGEMONTH]        DECIMAL (24, 8) NULL,
+    [M_ROX_CLOSINGRATE]         DECIMAL (24, 8) NULL,
+    [M_ROX_BUDGET_AVERAGERATE]  DECIMAL (24, 8) NULL,
+    [M_ROX_BUDGET_AVERAGEMONTH] DECIMAL (24, 8) NULL,
+    [M_ROX_BUDGET_CLOSINGRATE]  DECIMAL (24, 8) NULL,
+    [IS_CURRENT]                SMALLINT        NULL,
+    [INSERT_DATE]               DATETIME2 (6)   NULL,
+    [UPDATE_DATE]               DATETIME2 (6)   NULL,
+    [START_DATE]                DATETIME2 (6)   NULL,
+    [END_DATE]                  DATETIME2 (6)   NULL,
+    [MISSING_RECORD]            VARBINARY (MAX) NULL,
+    [PACKAGERUNID]              INT             NULL
+);
+
+
+GO
+

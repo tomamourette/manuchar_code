@@ -1,0 +1,10 @@
+{
+    "table_name": "CONSOLIDATED",
+    "schema_name": "MON",
+    "source_name": "STG",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Number, Account, Company, Year, Month, Category, CategoryName, Version, B001, E001, M001, M002, M003, M004, M005, M006, M007, M008, M015, M050, M060, T075, T077, T079, T081, T083, T085, T087, T089, T090, T093, Pov, PovName, PovSegment, PovOrder, SegmentOrder, ConsoMethod, CountryCode, CurrCode, UnitsOf, NbrDec, GroupPerc, MinorPerc, GroupCtrlPerc, NbrFinRightsIssued, NbrVotingRightsIssued, ConsolidatingCompany, AvailableForSale, ConsolidatedCompany, CalculateDeferredTax, DeferredTaxRate, ConsolidationCompanyCode, ConversionMethod, FlagDiscontinuing, [B001_Overdue], [T077_Overdue], [T079_Overdue], [Bundle in Local Curr] AS BundleLocalCurr, [Bundle_Local Adj in LC] AS BundleLocalAdjLC, [B001_StockAging], [T079_StockAging], [B001_StockAging_Bis], [T079_StockAging_Bis] FROM mon.consolidated"
+}

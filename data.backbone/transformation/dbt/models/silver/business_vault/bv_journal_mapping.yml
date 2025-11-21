@@ -1,0 +1,37 @@
+
+version: 2
+
+models:
+  - name: bv_journal_mapping
+    enabled: false
+    tags:
+      - "Journal Mapping"
+      - "business vault"
+    description: "This model combines journal mapping data from different sources, generates non-overlapping time ranges, and selects leading source attributes for each entity."
+    columns:
+      - name: bkey_journal_mapping
+        description: "Unique key representing the journal mapping entity."
+      - name: journal_mapping_code
+        description: "Code identifying the journal mapping."
+      - name: allocation
+        description: "Allocation details associated with the journal mapping."
+      - name: bundle
+        description: "Bundle information related to the journal mapping."
+      - name: bundle_local_adjustments
+        description: "Local adjustments made to the bundle."
+      - name: conso_adjusted
+        description: "Adjusted consolidated figures for the journal mapping."
+      - name: conso_legal
+        description: "Legal consolidated figures for the journal mapping."
+      - name: intercompany
+        description: "Intercompany transactions related to the journal mapping."
+      - name: manual
+        description: "Manual entries associated with the journal mapping."
+      - name: technical_eliminations
+        description: "Technical eliminations applied to the journal mapping."
+      - name: valid_from
+        description: "Start date and time from which the journal mapping is valid."
+      - name: valid_to
+        description: "End date and time until which the journal mapping is valid."
+      - name: is_current
+        description: "Indicator if the journal mapping is the current version."

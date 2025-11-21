@@ -1,0 +1,27 @@
+CREATE TABLE [MonaOnPrem].[TS017R0__STG] (
+
+	[CurrencyRateID] int NULL, 
+	[ConsoID] int NULL, 
+	[CurrCode] varchar(8000) NULL, 
+	[ReferenceCurrCode] varchar(8000) NULL, 
+	[ClosingRate] decimal(28,12) NULL, 
+	[AverageRate] decimal(28,12) NULL, 
+	[AverageMonth] decimal(28,12) NULL, 
+	[CreatedBy] varchar(8000) NULL, 
+	[CreatedDate] datetime2(6) NULL, 
+	[ModifiedBy] varchar(8000) NULL, 
+	[ModifiedDate] datetime2(6) NULL, 
+	[ODSConsoYear] smallint NULL, 
+	[ODSConsoMonth] int NULL, 
+	[ODSKey] varchar(61) NULL, 
+	[ODSVersion] varchar(8000) NULL, 
+	[ODSRecordStatus] varchar(8000) NULL, 
+	[ODSActive] varchar(8000) NULL, 
+	[ODSDeleted] varchar(8000) NULL, 
+	[ODSModifiedOn] varchar(8000) NULL, 
+	[ODSModifiedBy] varchar(8000) NULL, 
+	[ODSIngestionDate] varchar(8000) NULL, 
+	[ODSStartDate] varchar(8000) NULL, 
+	[ODSEndDate] varchar(8000) NULL, 
+	[ODSHash] varchar(8000) NULL
+);

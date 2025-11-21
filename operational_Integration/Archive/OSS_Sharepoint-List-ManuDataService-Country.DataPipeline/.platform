@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "OSS_Sharepoint-List-ManuDataService-Country",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5672b31d-96df-8164-40d5-b5aca5eb81c2"
+  }
+}

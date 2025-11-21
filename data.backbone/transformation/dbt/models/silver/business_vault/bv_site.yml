@@ -1,0 +1,54 @@
+
+version: 2
+
+models:
+  - name: bv_site
+    enabled: true
+    tags: 
+      - "Site"
+      - "business vault"
+      - "REF"
+    description: "This model combines site data from different sources into a unified timeline, selecting the leading source for each attribute."
+    columns:
+      - name: bkey_site
+        description: "Unique identifier for the site."
+      - name: site_code
+        description: "Code representing the site."
+      - name: site_name
+        description: "Name of the site."
+      - name: site_status
+        description: "Current status of the site."
+      - name: site_main_activity
+        description: "Main activity conducted at the site."
+      - name: site_property_type
+        description: "Type of property the site is categorized as."
+      - name: site_latitude
+        description: "Geographical latitude of the site."
+      - name: site_longitude
+        description: "Geographical longitude of the site."
+      - name: site_is_bonded
+        description: "Indicates if the site is bonded."
+      - name: site_location_code
+        description: "Code representing the location of the site."
+      - name: site_location_name
+        description: "Name of the location where the site is situated."
+      - name: site_location_status
+        description: "Current status of the site's location."
+      - name: site_location_type
+        description: "Type of location the site is categorized as."
+      - name: site_location_property_type
+        description: "Property type of the site's location."
+      - name: site_location_size
+        description: "Size of the site's location."
+      - name: site_storage_type
+        description: "Type of storage available at the site."
+      - name: site_dry_storage_capacity
+        description: "Capacity for dry storage at the site."
+      - name: site_liquid_storage_capacity
+        description: "Capacity for liquid storage at the site."
+      - name: valid_from
+        description: "Start date and time from which the data is valid."
+      - name: valid_to
+        description: "End date and time until which the data is valid."
+      - name: is_current
+        description: "Indicates if the data is the most current version."

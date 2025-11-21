@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: supplier_mds
+    tags:
+      - "supplier"
+      - "MDS"
+      - "Intermediate Layer"
+    description: "This model builds a full supplier timeline from the BusinessPartnerCompanies table."
+    columns:
+      - name: bkey_supplier_source
+        description: "Business key for the supplier, derived as CONCAT(Code, '_', Local_ID) plus source."
+      - name: bkey_supplier
+        description: "Business key for the supplier, derived as CONCAT(Code, '_', Local_ID)."
+      - name: bkey_source
+        description: "Source identifier for the supplier record, statically set to 'MDS'."
+      - name: supplier_group_code
+        description: ""
+      - name: supplier_group_description
+        description: ""
+      - name: supplier_name
+        description: "Supplier name from current business partner companies data."
+      - name: supplier_street_address
+        description: "Supplier street address from current business partner companies data."
+      - name: supplier_city
+        description: "Supplier city from current business partner companies data."
+      - name: supplier_zip_code
+        description: "Supplier zip code from ccurrent business partner companies data."
+      - name: supplier_affiliate
+        description: ""
+      - name: supplier_country_code
+        description: ""
+      - name: supplier_legal_number
+        description: "Supplier legal number (VAT number) from current business partner companies data."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active (1 if valid_to equals '2999-12-31 23:59:59.999999', otherwise 0)."

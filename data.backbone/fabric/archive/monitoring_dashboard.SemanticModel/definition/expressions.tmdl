@@ -1,0 +1,24 @@
+expression ServerParameter = "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com" meta [IsParameterQuery=true, List={"hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com"}, DefaultValue="hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 8018c427-1833-4ffb-94f1-32c7f7c60783
+	queryGroup: PARAMETERS
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression WarehouseParameter = "dbb_warehouse" meta [IsParameterQuery=true, List={"dbb_warehouse"}, DefaultValue="dbb_warehouse", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: f5e663bc-ca8a-44db-9df3-6f6c000f16c3
+	queryGroup: PARAMETERS
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression LakehouseParameter = "dbb_lakehouse" meta [IsParameterQuery=true, List={"dbb_lakehouse"}, DefaultValue="dbb_lakehouse", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9f4cfa25-6bda-4968-85c5-bba736c5bfd4
+	queryGroup: PARAMETERS
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

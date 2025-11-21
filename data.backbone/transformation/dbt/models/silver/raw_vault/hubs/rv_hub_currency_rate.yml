@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_currency_rate
+    enabled: false
+    tags: 
+      - "Currency Rate"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model selects the latest valid currency rate records from deduplicated sources."
+    columns:
+      - name: bkey_currency_rate_source
+        description: "The business key representing the source of the currency rate."
+      - name: bkey_currency_rate
+        description: "The business key representing the currency rate."
+      - name: bkey_source
+        description: "The business key representing the source system."
+      - name: ldts
+        description: "The timestamp indicating when the currency rate is valid from."
+      - name: record_source
+        description: "The source system identifier for the record, hardcoded as 'MONA'."

@@ -1,0 +1,294 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "If Watermark Value Exists",
+        "type": "IfCondition",
+        "dependsOn": [],
+        "typeProperties": {
+          "expression": {
+            "value": "@not(empty(pipeline().parameters.watermarkValue))",
+            "type": "Expression"
+          },
+          "ifFalseActivities": [
+            {
+              "name": "Full Copy to SQL databank",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "AzureSqlSource",
+                  "sqlReaderQuery": {
+                    "value": "@concat('SELECT * FROM ', pipeline().parameters.schemaName, '.', pipeline().parameters.tableName)",
+                    "type": "Expression"
+                  },
+                  "queryTimeout": "02:00:00",
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "type": "AzureSqlTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "database": "MTMDWH"
+                    },
+                    "externalReferences": {
+                      "connection": "bb4028aa-60bd-458e-a825-4303e9f657fa"
+                    }
+                  }
+                },
+                "sink": {
+                  "type": "FabricSqlDatabaseSink",
+                  "writeBehavior": "insert",
+                  "sqlWriterUseTableLock": false,
+                  "tableOption": "autoCreate",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "connectionSettings": {
+                      "name": "OperationalDataSources_Sql",
+                      "properties": {
+                        "annotations": [],
+                        "type": "FabricSqlDatabase",
+                        "typeProperties": {
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                          "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                        },
+                        "externalReferences": {
+                          "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                        }
+                      }
+                    },
+                    "type": "FabricSqlDatabaseTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.targetSchemaName",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@pipeline().parameters.tableName",
+                        "type": "Expression"
+                      }
+                    }
+                  }
+                },
+                "enableStaging": false,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              }
+            }
+          ],
+          "ifTrueActivities": [
+            {
+              "name": "Copy Incremental Table to STG",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "AzureSqlSource",
+                  "sqlReaderQuery": {
+                    "value": "@concat('SELECT * FROM ', pipeline().parameters.tableName, ' WHERE ', pipeline().parameters.watermarkColumn, ' > (SELECT MAX(', pipeline().parameters.watermarkColumn, ') FROM ', pipeline().parameters.tableName, ')')\n",
+                    "type": "Expression"
+                  },
+                  "queryTimeout": "02:00:00",
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "type": "AzureSqlTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "database": "dbb_dynamics_lakehouse"
+                    },
+                    "externalReferences": {
+                      "connection": "9c650803-becc-4ad9-8556-90114c7bd86f"
+                    }
+                  }
+                },
+                "sink": {
+                  "type": "FabricSqlDatabaseSink",
+                  "writeBehavior": "insert",
+                  "sqlWriterUseTableLock": false,
+                  "tableOption": "autoCreate",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "connectionSettings": {
+                      "name": "OperationalDataSources_Sql",
+                      "properties": {
+                        "annotations": [],
+                        "type": "FabricSqlDatabase",
+                        "typeProperties": {
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                          "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                        },
+                        "externalReferences": {
+                          "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                        }
+                      }
+                    },
+                    "type": "FabricSqlDatabaseTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.targetSchemaName",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@pipeline().parameters.tableName",
+                        "type": "Expression"
+                      }
+                    }
+                  }
+                },
+                "enableStaging": false,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Update Watermark Value",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Get Max Date on Watermark Column",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_SourceList_Watermark_Value]",
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureParameters": {
+            "tableName": {
+              "value": {
+                "value": "@pipeline().parameters.tableName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "watermarkValue": {
+              "value": {
+                "value": "@formatDateTime(activity('Get Max Date on Watermark Column').output.firstRow.MaxDate)",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        }
+      },
+      {
+        "name": "Get Max Date on Watermark Column",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "If Watermark Value Exists",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "sqlReaderQuery": {
+              "value": "@concat('SELECT MAX(', pipeline().parameters.watermarkColumn, ') AS MaxDate FROM [', pipeline().parameters.targetSchemaName, '].[', pipeline().parameters.tableName, ']')",
+              "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": true,
+          "datasetSettings": {
+            "annotations": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "annotations": [],
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                },
+                "externalReferences": {
+                  "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                }
+              }
+            },
+            "type": "FabricSqlDatabaseTable",
+            "schema": [],
+            "typeProperties": {}
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "tableName": {
+        "type": "string",
+        "defaultValue": "DIM_Employees"
+      },
+      "source": {
+        "type": "string",
+        "defaultValue": "MTMDWH"
+      },
+      "schemaName": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "targetSchemaName": {
+        "type": "string",
+        "defaultValue": "22MTM_stg"
+      },
+      "watermarkColumn": {
+        "type": "string"
+      },
+      "watermarkValue": {
+        "type": "string"
+      }
+    }
+  }
+}

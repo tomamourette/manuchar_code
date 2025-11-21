@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_hub_consolidation_period
+    tags:
+      - "Consolidation Period"
+      - "raw vault"
+      - "hub"
+      - "CON"
+    description: "This model is a template for filling business entity: Consolidation Period."
+    columns:
+      - name: bkey_consolidation_period_source
+        description: "The business key field plus source."
+      - name: bkey_consolidation_period
+        description: "The business key field."
+      - name: bkey_source
+        description: ""
+      - name: ldts
+        description: "Date & Time the Record was Created In the Source System."
+      - name: record_source
+        description: "Source system name."

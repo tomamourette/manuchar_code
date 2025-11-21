@@ -1,0 +1,334 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "DelimitedTextSource",
+            "formatSettings": {
+              "type": "DelimitedTextReadSettings",
+              "skipLineCount": 0
+            },
+            "storeSettings": {
+              "type": "AzureBlobStorageReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            },
+            "datasetSettings": {
+              "type": "DelimitedText",
+              "typeProperties": {
+                "location": {
+                  "type": "AzureBlobStorageLocation",
+                  "container": "anaplan-poc",
+                  "fileName": {
+                    "value": "@variables('filename')",
+                    "type": "Expression"
+                  }
+                },
+                "columnDelimiter": ",",
+                "quoteChar": "",
+                "escapeChar": "",
+                "firstRowAsHeader": false
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "001aab27-1b90-4c67-8427-6a00a8fedfb2"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": true,
+              "fileExtension": ".txt"
+            },
+            "storeSettings": {
+              "type": "LakehouseWriteSettings",
+              "copyBehavior": "FlattenHierarchy"
+            },
+            "datasetSettings": {
+              "type": "DelimitedText",
+              "typeProperties": {
+                "location": {
+                  "type": "LakehouseLocation",
+                  "folderPath": "Anaplan/Anaplan2LKH",
+                  "fileName": {
+                    "value": "@concat('Anaplan-Export-',formatDateTime(utcnow(),'yyyymmdd-hh:mm'), '. csv') ",
+                    "type": "Expression"
+                  }
+                },
+                "columnDelimiter": ",",
+                "quoteChar": "\"",
+                "escapeChar": "\\",
+                "firstRowAsHeader": true
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "LKH_SmallGenericSources_DIH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "1aa655ad-01cf-862d-4405-8ebbe13efc5a",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Files"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 1
+                },
+                "sink": {
+                  "name": "Column1",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 2
+                },
+                "sink": {
+                  "name": "Column2",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 3
+                },
+                "sink": {
+                  "name": "Column3",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 4
+                },
+                "sink": {
+                  "name": "Column4",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 5
+                },
+                "sink": {
+                  "name": "Column5",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 6
+                },
+                "sink": {
+                  "name": "Column6",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 7
+                },
+                "sink": {
+                  "name": "Column7",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 8
+                },
+                "sink": {
+                  "name": "Column8",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 9
+                },
+                "sink": {
+                  "name": "Column9",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 10
+                },
+                "sink": {
+                  "name": "Column10",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 11
+                },
+                "sink": {
+                  "name": "Column11",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 12
+                },
+                "sink": {
+                  "name": "Column12",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 13
+                },
+                "sink": {
+                  "name": "Column13",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 14
+                },
+                "sink": {
+                  "name": "Column14",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 15
+                },
+                "sink": {
+                  "name": "Column15",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 16
+                },
+                "sink": {
+                  "name": "Column16",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 17
+                },
+                "sink": {
+                  "name": "Column17",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              },
+              {
+                "source": {
+                  "type": "String",
+                  "ordinal": 18
+                },
+                "sink": {
+                  "name": "Column18",
+                  "physicalType": "nvarchar",
+                  "length": "MAX"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Insert_Data_into_ODS_Anaplan",
+        "dependsOn": [
+          {
+            "activity": "Set variable1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "filename",
+          "value": {
+            "value": "@pipeline()?.TriggerEvent?.FileName",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Set variable1",
+        "dependsOn": []
+      }
+    ],
+    "variables": {
+      "filename": {
+        "type": "String"
+      }
+    }
+  }
+}

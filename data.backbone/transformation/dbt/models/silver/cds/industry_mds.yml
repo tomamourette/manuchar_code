@@ -1,0 +1,25 @@
+version: 2
+ 
+models:
+  - name: industry_mds
+    tags:
+      - "Industry"
+      - "intermediate layer"
+      - "REF"
+      - "mds"
+    description: "This model fills the intermediate layer of the business entity Industry."
+    columns:
+      - name: bkey_industry_source
+        description: ""
+      - name: bkey_industry
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: industry_name
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

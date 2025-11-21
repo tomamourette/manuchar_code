@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_purchase_order_line
+    tags:
+      - "Purchase Order Line"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model fills the business entity: purchase order line."
+    columns:
+      - name: bkey_purchase_order_line_source
+        description: "The business key field plus source."
+      - name: bkey_purchase_order_line
+        description: "The business key field."
+      - name: bkey_source
+        description: "Source identifier 'DYNAMICS'."
+      - name: ldts
+        description: "Load timestamp from the source, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label 'Dynamics 365'."

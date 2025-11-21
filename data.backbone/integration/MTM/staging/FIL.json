@@ -1,0 +1,10 @@
+{
+    "table_name": "FIL",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, file_id, fileNumber, traderJunior_id, traderSenior_id, respUser, team_id, intCompany, fileStatus, fileDate, coordinator, creationUser, modDate, firstBLDate, sentE9PrecalcDate, productGroup, mrep_quantity, uom, mrep_turnoverCust, mrep_turnoverCustCurr, mrep_turnoverCustEur, mrep_marginBeforeShare, mrep_marginPercBeforeShare, mrep_margin, mrep_marginPerc, mrep_ROCE, actualQuantity, mrep_ROCEdays, mrep_fileInterest, isFromArchive, businessType_id, industryType_id, fileRemarks FROM staging.FIL"
+}

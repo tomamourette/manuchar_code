@@ -1,0 +1,106 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "42dc50c7-bd73-83ee-4c4f-15e6225c7505",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "environment": {
+              "value": {
+                "value": "@variables('environment')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "maintenance_notebook_lakehouse_optimization",
+        "dependsOn": [
+          {
+            "activity": "set_variable_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "SELECT\n    [environment],\n    [workspace_id],\n    [lakehouse_id],\n    [warehouse_id],\n    [sql_connection_string]\nFROM [dbb_warehouse].[meta].[environments]\nWHERE [workspace_id] = '@{pipeline().DataFactory}'",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "dbb_warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_environment_variables",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "environment",
+          "value": {
+            "value": "@toLower(activity('lookup_environment_variables').output.firstRow.environment)",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_environment",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "environment": {
+        "type": "String"
+      }
+    }
+  }
+}

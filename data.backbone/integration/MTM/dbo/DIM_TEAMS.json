@@ -1,0 +1,10 @@
+{
+    "table_name": "DIM_TEAMS",
+    "schema_name": "dbo",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT team_id, name, coordinator FROM dbo.DIM_TEAMS"
+}

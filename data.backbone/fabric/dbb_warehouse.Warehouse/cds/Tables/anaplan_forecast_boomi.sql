@@ -1,0 +1,25 @@
+CREATE TABLE [cds].[anaplan_forecast_boomi] (
+
+	[tkey_forecast_transaction] varchar(8000) NOT NULL, 
+	[bkey_forecast_transaction_source] varchar(8000) NOT NULL, 
+	[bkey_forecast_transaction] varchar(8000) NOT NULL, 
+	[bkey_source] varchar(5) NOT NULL, 
+	[Period] varchar(8000) NULL, 
+	[Plan] varchar(8000) NULL, 
+	[Version] varchar(8000) NULL, 
+	[CompanyCode] varchar(8000) NULL, 
+	[MonthCode] varchar(8000) NULL, 
+	[DestinationCountryCode] varchar(8000) NULL, 
+	[SalesAmountGroupCurrency] varchar(8000) NULL, 
+	[QuantityInMetricTon] varchar(8000) NULL, 
+	[COGSGroupCurrency] varchar(8000) NULL, 
+	[COGS2GroupCurrency] varchar(8000) NULL, 
+	[GrossProfitGroupCurrency] varchar(8000) NULL, 
+	[HomeCurrency] varchar(8000) NULL, 
+	[PlanRate] varchar(8000) NULL, 
+	[ProductCode] varchar(8000) NULL, 
+	[CustomerCode] varchar(8000) NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

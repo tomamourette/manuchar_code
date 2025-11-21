@@ -1,0 +1,522 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Filter ODS_365 tables').output.Value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "ExecutePipeline",
+              "typeProperties": {
+                "pipeline": {
+                  "referenceName": "a475ca54-76b7-8798-4ce2-b2edd0dd6981",
+                  "type": "PipelineReference"
+                },
+                "parameters": {
+                  "Source_Table": {
+                    "value": "@item().DataProc_Source_Table",
+                    "type": "Expression"
+                  },
+                  "DataProc_Run_Id": {
+                    "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                    "type": "Expression"
+                  },
+                  "Source": {
+                    "value": "@item().DataProc_Source",
+                    "type": "Expression"
+                  },
+                  "Table_LoadType": {
+                    "value": "@item().DataProc_Source_Table_LoadType",
+                    "type": "Expression"
+                  },
+                  "Watermark_Column": {
+                    "value": "@item().DataProc_Source_Watermark_Column",
+                    "type": "Expression"
+                  },
+                  "Watermark_Value": {
+                    "value": "@item().DataProc_Source_Watermark_Value",
+                    "type": "Expression"
+                  },
+                  "Stg_Schema": {
+                    "value": "@item().DataProc_TargetSchema",
+                    "type": "Expression"
+                  },
+                  "Source_Schema": {
+                    "value": "@item().DataProc_Source_Schema",
+                    "type": "Expression"
+                  },
+                  "Ods_Schema": {
+                    "value": "@item().DataProc_ODS_Schema",
+                    "type": "Expression"
+                  }
+                },
+                "waitOnCompletion": true
+              },
+              "policy": {
+                "secureInput": false
+              },
+              "name": "Invoke D365 Per Table",
+              "dependsOn": []
+            },
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+                "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+                "storedProcedureParameters": {
+                  "DataProc_Run_Id": {
+                    "value": {
+                      "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                      "type": "Expression"
+                    },
+                    "type": "Int16"
+                  },
+                  "DataProc_Id": {
+                    "value": {
+                      "value": "@pipeline().parameters.DataProc_Id",
+                      "type": "Expression"
+                    },
+                    "type": "Int16"
+                  },
+                  "DataProc_Context": {
+                    "value": {
+                      "value": "@pipeline().parameters.DataProc_Context",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "DataProc_Run_Status": {
+                    "value": "Failed",
+                    "type": "String"
+                  },
+                  "DataProc_Run_DateStart": {
+                    "value": {
+                      "value": "@pipeline().TriggerTime",
+                      "type": "Expression"
+                    },
+                    "type": "Datetime"
+                  },
+                  "DataProc_Run_DateEnd": {
+                    "value": {
+                      "value": "@formatDateTime(utcNow())",
+                      "type": "Expression"
+                    },
+                    "type": "Datetime"
+                  },
+                  "Run_NonCompletenessCheckCount": {
+                    "value": ""
+                  },
+                  "DataProc_Run_Output": {
+                    "value": {
+                      "value": "@string(activity('Invoke D365 Per Table').output.pipelineReturnValue)",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "UpdateBy": {
+                    "value": {
+                      "value": "@pipeline().PipelineName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "externalReferences": {
+                "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Log ProcessRun Failed",
+              "dependsOn": [
+                {
+                  "activity": "Invoke D365 Per Table",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "ForEach ODS_365 table",
+        "dependsOn": [
+          {
+            "activity": "Filter ODS_365 tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "FabricSqlDatabaseTable",
+            "typeProperties": {
+              "schema": "03DataSys",
+              "table": "Config_DataProcess_SourceList"
+            },
+            "schema": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "externalReferences": {
+                  "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup Config Data SourceList",
+        "dependsOn": [
+          {
+            "activity": "Log ProcessRun Start",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Filter",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup Config Data SourceList').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().DataProc_Id, 2)",
+            "type": "Expression"
+          }
+        },
+        "name": "Filter ODS_365 tables",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config Data SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Running",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": ""
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun Start",
+        "dependsOn": [
+          {
+            "activity": "Get Max ID on Log Process Run",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Successful",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun End Success",
+        "dependsOn": [
+          {
+            "activity": "ForEach ODS_365 table",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@add(activity('Get Max ID on Log Process Run').output.firstRow.MaxID, 1)",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Context",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Failed",
+              "type": "String"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": null,
+              "type": "String"
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun End Failed",
+        "dependsOn": [
+          {
+            "activity": "ForEach ODS_365 table",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "sqlReaderQuery": "SELECT MAX(DataProc_Run_Id) as MaxID FROM [03DataSys].[Log_DataProcess_Run]",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "FabricSqlDatabaseTable",
+            "schema": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "externalReferences": {
+                  "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Max ID on Log Process Run",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "DataProc_Id": {
+        "type": "string",
+        "defaultValue": "2"
+      },
+      "DataProc_Context": {
+        "type": "string",
+        "defaultValue": "SourceSync - Dynamics365 Fo/Ce"
+      }
+    }
+  }
+}

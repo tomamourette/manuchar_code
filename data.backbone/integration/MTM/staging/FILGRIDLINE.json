@@ -1,0 +1,10 @@
+{
+    "table_name": "FILGRIDLINE",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, filegridline_id, filegrid_id, [group], type, unitPrice, amount, amountEUR, amountGrossIncomeEUR, amountIncFinEUR, actualQtyNet, actualQtyGross, interestEUR, curr, description, company, comment, daysFinFromBL, gridDate FROM staging.FILGRIDLINE"
+}

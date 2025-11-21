@@ -1,0 +1,25 @@
+
+version: 2
+
+models:
+  - name: dim_vessel
+    enabled: true
+    tags: 
+      - "Vessel"
+      - "Dimension"
+    description: "This model provides the latest version of vessel details including keys, attributes, and history metadata."
+    columns:
+      - name: tkey_vessel
+        description: "A unique technical key for each vessel, generated as a row number."
+      - name: bkey_vessel
+        description: "The business key for the vessel, representing its unique identifier."
+      - name: vessel_id
+        description: "The identifier for the vessel."
+      - name: vessel_description
+        description: "A description of the vessel."
+      - name: valid_from
+        description: "The start date from which the vessel record is valid."
+      - name: valid_to
+        description: "The end date until which the vessel record is valid."
+      - name: is_current
+        description: "A flag indicating whether the vessel record is the latest version."

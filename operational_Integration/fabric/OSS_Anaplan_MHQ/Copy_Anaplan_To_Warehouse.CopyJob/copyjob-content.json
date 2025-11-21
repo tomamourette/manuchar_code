@@ -1,0 +1,284 @@
+{
+  "properties": {
+    "jobMode": "CDC",
+    "source": {
+      "type": "Parquet",
+      "connectionSettings": {
+        "type": "AzureBlobStorage",
+        "externalReferences": {
+          "connection": "ab979a1a-0b3d-459a-9a39-c87d27c7eeff"
+        }
+      }
+    },
+    "destination": {
+      "type": "DataWarehouseTable",
+      "connectionSettings": {
+        "type": "DataWarehouse",
+        "typeProperties": {
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "artifactId": "d216b4c5-e09d-492e-ad4b-2a822ae74a78",
+          "endPoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "42e9599c-cc5d-4fed-a575-b75f4b02f620",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "location": {
+              "type": "AzureBlobStorageLocation",
+              "folderPath": "Anaplan_Budget/Anaplan/Anaplan_Budget",
+              "container": "raw"
+            },
+            "compressionCodec": "none"
+          },
+          "changeDataSettings": {},
+          "storeSettings": {
+            "recursive": true,
+            "enablePartitionDiscovery": false
+          }
+        },
+        "destination": {
+          "datasetSettings": {
+            "schema": "dbo",
+            "table": "Anaplan_Budget"
+          }
+        },
+        "enableStaging": true,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "Period",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "Period",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "Plan",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "Plan",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "Version",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "Version",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "MonthCode",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "MonthCode",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "CompanyCode",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "CompanyCode",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "FK_Product",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "FK_Product",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "FK_ProductGrouping",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "FK_ProductGrouping",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "FK_Customer",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "FK_Customer",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "DestinationCountryCode",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "DestinationCountryCode",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "SalesAmountGroupCurrency",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "SalesAmountGroupCurrency",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "QuantityInMetricTon",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "QuantityInMetricTon",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "GrossProfitGroupCurrency",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "GrossProfitGroupCurrency",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "COGSGroupCurrency",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "COGSGroupCurrency",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "COGS2GroupCurrency",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "COGS2GroupCurrency",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "<<<Filter>>>",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "<<<Filter>>>",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "To_Export",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "To_Export",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "<<<Tech>>>",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "<<<Tech>>>",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            },
+            {
+              "source": {
+                "name": "Version_to_export",
+                "type": "String",
+                "physicalType": "STRING"
+              },
+              "destination": {
+                "name": "Version_to_export",
+                "physicalType": "varchar",
+                "length": "8000"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

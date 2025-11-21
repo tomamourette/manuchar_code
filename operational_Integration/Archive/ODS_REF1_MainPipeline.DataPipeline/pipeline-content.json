@@ -1,0 +1,173 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Filter ODS_REF1 tables').output.Value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().DataProc_Source_Table_LoadType",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "Incremental",
+                    "activities": [
+                      {
+                        "type": "Wait",
+                        "typeProperties": {
+                          "waitTimeInSeconds": 1
+                        },
+                        "name": "Incremental",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Full",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "2ccef67c-6418-880f-455e-d770ba3496bc",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {
+                            "tableName": {
+                              "value": "@item().DataProc_Source_Table",
+                              "type": "Expression"
+                            },
+                            "source": {
+                              "value": "@item().DataProc_Source",
+                              "type": "Expression"
+                            },
+                            "schemaName": {
+                              "value": "@item().DataProc_Source_Schema",
+                              "type": "Expression"
+                            },
+                            "targetSchemaName": {
+                              "value": "@item().DataProc_TargetSchema\n",
+                              "type": "Expression"
+                            },
+                            "SQLQuery": {
+                              "value": "@item().DataProc_Source_TableName_SQLQuery",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke REF1_Full Load",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "RecoveryScope",
+                    "activities": [
+                      {
+                        "type": "Wait",
+                        "typeProperties": {
+                          "waitTimeInSeconds": 1
+                        },
+                        "name": "RecoveryScope",
+                        "dependsOn": []
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": []
+              },
+              "name": "Switch Depending on the LoadType",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach ODS_REF1 table",
+        "dependsOn": [
+          {
+            "activity": "Filter ODS_REF1 tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "FabricSqlDatabaseTable",
+            "typeProperties": {
+              "schema": "03DataSys",
+              "table": "Config_DataProcess_SourceList"
+            },
+            "schema": [],
+            "connectionSettings": {
+              "name": "OperationalDataSources_Sql",
+              "properties": {
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "externalReferences": {
+                  "connection": "7fabbca4-0ca2-4f48-b999-09b7214445fc"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup tables in Data_SourceList",
+        "dependsOn": []
+      },
+      {
+        "type": "Filter",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup tables in Data_SourceList').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().DataProc_Id, 1)",
+            "type": "Expression"
+          }
+        },
+        "name": "Filter ODS_REF1 tables",
+        "dependsOn": [
+          {
+            "activity": "Lookup tables in Data_SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

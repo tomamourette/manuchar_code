@@ -1,0 +1,152 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "orchestration_run_id": {
+              "value": "@{pipeline().RunId}",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "7f2f9ecf-8f29-b836-441c-fae4ec8a98ec",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_Group-FinancialStatements",
+        "description": "Integration pipeline that ingests all the tables needed in Group Financial Statements.",
+        "dependsOn": []
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'orchestration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@{pipeline().RunId}",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "5e4deb94-a18f-a97c-442e-77b43d2b949c",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "transformation_pipeline_DBB",
+        "description": "A generic transformation pipeline that automatically builds the Data Product related dbt models once the corresponding source tables have been successfully ingested.",
+        "dependsOn": [
+          {
+            "activity": "integration_pipeline_Group-FinancialStatements",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'orchestration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@{pipeline().RunId}",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "4b40684d-95b8-aec6-4b9e-763b8e9c80bb",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "data_product_refresh_DBB",
+        "description": "Refresh of the data product related semantic model(s) upon successful completion of preceding jobs.",
+        "dependsOn": [
+          {
+            "activity": "reconciliation_pipeline_DBB",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'orchestration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@{pipeline().RunId}",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "eed23b10-0d71-98a6-4206-7adf679658e9",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "reconciliation_pipeline_DBB",
+        "description": "Reconciliation checks to validate the quality of transformed data against the source.",
+        "dependsOn": [
+          {
+            "activity": "transformation_pipeline_DBB",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "concurrency": 1
+  }
+}

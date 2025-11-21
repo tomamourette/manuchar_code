@@ -1,0 +1,26 @@
+
+version: 2
+
+models:
+  - name: rv_sat_public_holiday
+    enabled: false
+    tags: 
+      - "Public Holiday"
+      - "raw vault"
+      - "satellite"
+    description: "This model selects all columns from the public holiday data in the lakehouse."
+    columns:
+      - name: tkey_publicholiday_lakehouse
+        description: "The unique key for each public holiday record in the lakehouse."
+      - name: date
+        description: "The date of the public holiday."
+      - name: country_region_code
+        description: "The code representing the country or region where the holiday is observed."
+      - name: country_or_region
+        description: "The name of the country or region where the holiday is observed."
+      - name: holiday_name
+        description: "The name of the public holiday."
+      - name: normalized_holiday_name
+        description: "The standardized name of the public holiday."
+      - name: is_paid_time_off
+        description: "Indicates whether the public holiday is considered paid time off."

@@ -1,0 +1,110 @@
+version: 2
+
+models:
+  - name: rv_sat_purchase_invoice
+    enabled: false
+    tags:
+      - "Purchase Invoice"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite purchase invoice."
+    columns:
+      - name: bkey_purchase_invoice_source
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: purchase_invoice_id
+        description: ""
+      - name: purchase_invoice_supplier_id
+        description: ""
+      - name: purchase_invoice_order_supplier_id
+        description: ""
+      - name: purchase_invoice_company
+        description: ""
+      - name: purchase_invoice_closure_date
+        description: ""
+      - name: purchase_invoice_transactional_currency_code
+        description: ""
+      - name: purchase_invoice_group_currency_code
+        description: ""
+      - name: purchase_invoice_functional_currency_code
+        description: ""
+      - name: purchase_invoice_date
+        description: ""
+      - name: purchase_invoice_document_date
+        description: ""
+      - name: purchase_invoice_due_date
+        description: ""
+      - name: purchase_invoice_amount_trans_cur
+        description: ""
+      - name: purchase_invoice_amount_func_cur
+        description: ""
+      - name: purchase_invoice_amount_group_cur_conso_eom
+        description: ""
+      - name: purchase_invoice_amount_group_cur_conso_avg
+        description: ""
+      - name: purchase_invoice_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_invoice_open_amount_trans_cur
+        description: ""
+      - name: purchase_invoice_open_amount_func_cur
+        description: ""
+      - name: purchase_invoice_open_amount_group_cur_conso_eom
+        description: ""
+      - name: purchase_invoice_open_amount_group_cur_conso_avg
+        description: ""
+      - name: purchase_invoice_open_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_invoice_settled_amount_trans_cur
+        description: ""
+      - name: purchase_invoice_settled_amount_func_cur
+        description: ""
+      - name: purchase_invoice_settled_amount_group_cur_conso_eom
+        description: ""
+      - name: purchase_invoice_settled_amount_group_cur_conso_avg
+        description: ""
+      - name: purchase_invoice_settled_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_invoice_group_cur_conso_eom_rate
+        description: ""
+      - name: purchase_invoice_group_cur_conso_avg_rate
+        description: ""
+      - name: purchase_invoice_func_cur_rate
+        description: ""
+      - name: purchase_invoice_ledger_voucher
+        description: ""
+      - name: purchase_invoice_legal_number
+        description: ""
+      - name: purchase_invoice_payment
+        description: ""
+      - name: purchase_invoice_payment_schedule
+        description: ""
+      - name: purchase_invoice_logistic_file_id
+        description: ""
+      - name: purchase_invoice_tax_amount
+        description: ""
+      - name: purchase_invoice_purchase_id
+        description: ""
+      - name: purchase_invoice_reporting_currency_exchange_rate
+        description: ""
+      - name: purchase_invoice_exchange_rate
+        description: ""
+      - name: purchase_invoice_quantity
+        description: ""
+      - name: purchase_invoice_internal_invoice_id
+        description: ""
+      - name: purchase_invoice_account_number
+        description: ""
+      - name: purchase_invoice_file_number
+        description: ""
+      - name: purchase_invoice_industry_code
+        description: ""
+      - name: purchase_invoice_closed
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

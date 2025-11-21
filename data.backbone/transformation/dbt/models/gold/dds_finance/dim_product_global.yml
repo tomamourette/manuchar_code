@@ -1,0 +1,35 @@
+
+version: 2
+
+models:
+  - name: dim_product_global
+    enabled: true
+    tags:
+      - "Product Global Master"
+      - "Dimension"
+    description: "This model selects the latest version of global product attributes and metadata."
+    columns:
+      - name: tkey_product_global
+        description: "A unique technical key for each global product record."
+      - name: bkey_product_global
+        description: "The business key representing the global product."
+      - name: product_global_code
+        description: "The code associated with the global product."
+      - name: product_group
+        description: "The group classification of the product."
+      - name: product_group_category
+        description: "The category within the product group."
+      - name: product_group_subcategory
+        description: "The subcategory within the product group category."
+      - name: product_business_unit
+        description: "The business unit responsible for the product."
+      - name: product_global_name
+        description: "The name of the global product."
+      - name: product_core
+        description: "Indicates whether the product is a core product."
+      - name: valid_from
+        description: "The start date from which the product record is valid."
+      - name: valid_to
+        description: "The end date until which the product record is valid."
+      - name: is_current
+        description: "Indicates if the product record is the current version."

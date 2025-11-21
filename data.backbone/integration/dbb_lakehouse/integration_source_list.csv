@@ -1,0 +1,4 @@
+table_name,schema_name,load_enabled
+enum_Segments,dbo,yes
+enum_costcenter,dbo,yes
+enum_d365accounts_report,dbo,yes

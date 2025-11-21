@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "DataWarehouseTable",
+      "connectionSettings": {
+        "type": "DataWarehouse",
+        "typeProperties": {
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+          "endPoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com"
+        }
+      }
+    },
+    "destination": {
+      "type": "DataWarehouseTable",
+      "connectionSettings": {
+        "type": "DataWarehouse",
+        "typeProperties": {
+          "workspaceId": "0a77569d-f495-4786-920f-c2dd14cf0ec2",
+          "artifactId": "9cf8672d-80a7-46d0-85ea-888a7eb79a2a",
+          "endPoint": "hm4kihleqcae3ljgp3reucweo4-tvlhocuv6sdepeqpylorjtyoyi.datawarehouse.fabric.microsoft.com"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "62714cd4-df6b-4d43-909a-ec0627f0fe28",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "DataSys",
+            "table": "Config_SourceList"
+          }
+        },
+        "destination": {
+          "tableOption": "autoCreate",
+          "datasetSettings": {
+            "schema": "DataSys",
+            "table": "Config_SourceList"
+          }
+        },
+        "enableStaging": true,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

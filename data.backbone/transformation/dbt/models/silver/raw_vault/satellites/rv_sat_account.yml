@@ -1,0 +1,27 @@
+version: 2
+ 
+models:
+  - name: rv_sat_account
+    tags:
+      - "Account"
+      - "raw vault"
+      - "satellite"
+      - "CON"
+    description: "This model is a template for filling satellite: Account."
+    columns:
+      - name: bkey_account_source
+        description: "The business key field."
+      - name: account_description
+        description: ""
+      - name: account_category
+        description: ""
+      - name: report_sign
+        description: ""
+      - name: running_total_sign
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

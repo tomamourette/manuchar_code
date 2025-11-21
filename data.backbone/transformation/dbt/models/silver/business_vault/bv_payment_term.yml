@@ -1,0 +1,24 @@
+version: 2
+ 
+models:
+  - name: bv_payment_term
+    tags:
+      - "Payment Term"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling business entity: Payment Term."
+    columns:
+      - name: bkey_payment_term
+        description: "The business key field."
+      - name: payment_term_code
+        description: "Payment term code, sourced from the base payment term key."
+      - name: payment_term_description
+        description: "Description of the payment term."
+      - name: number_of_days
+        description: "Number of days associated with the payment term."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

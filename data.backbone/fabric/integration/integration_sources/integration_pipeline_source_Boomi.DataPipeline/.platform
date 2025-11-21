@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "integration_pipeline_source_Boomi"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3cba1931-b47c-8fcb-4a80-102603dcd61a"
+  }
+}

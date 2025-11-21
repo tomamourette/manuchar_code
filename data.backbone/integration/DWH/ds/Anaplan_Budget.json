@@ -1,0 +1,10 @@
+{
+    "table_name": "Anaplan_Budget",
+    "schema_name": "ds",
+    "source_name": "DWH",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Period, Plan, Version, MonthCode, CompanyCode, FK_Product, FK_ProductGrouping, FK_Customer, DestinationCountryCode, SalesAmountGroupCurrency, QuantityInMetricTon, COGSGroupCurrency, COGS2GroupCurrency, GrossProfitGroupCurrency, HomeCurrency, PlanRate, [<<<Filter>>>] AS Filter, [To Export] AS ToExport, [<<<Tech>>>] AS Tech, [Version to export] AS VersionToExport, [L Version Anaplan] AS LVersionAnaplan, KDP_checksum, KDP_executionId, KDP_loadDT, KDP_DQ, KDP_CLEAN, KDP_IsBlocked FROM [ds].[Anaplan_Budget]"
+}

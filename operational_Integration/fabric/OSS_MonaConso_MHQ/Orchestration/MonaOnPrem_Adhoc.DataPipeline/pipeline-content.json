@@ -1,0 +1,43 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "DataProc_Id": 2,
+            "DataProc_Context": "Sync OnPrem MonaConso",
+            "DataLoadQuery": {
+              "value": "@pipeline().parameters.DataLoadQuery",
+              "type": "Expression"
+            },
+            "DeleteQuery": "AND ((ods.ODSConsoYear = YEAR(GETDATE()) AND ods.ODSConsoMonth = MONTH(GETDATE())) OR (ods.ODSConsoYear = YEAR(GETDATE())    AND ods.ODSConsoMonth = MONTH(GETDATE()) - 1 AND MONTH(GETDATE()) > 1) OR (ods.ODSConsoYear = YEAR(DATEADD(MONTH, -1, GETDATE())) AND ods.ODSConsoMonth = MONTH(DATEADD(MONTH, -1, GETDATE()))))",
+            "Data_Product": "Group-FinancialStatements"
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "273d203a-d3ca-a4bb-48ae-6f1e3a1dc3f9",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Invoke Mona On Prem Main Pipeline",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "DataLoadQuery": {
+        "type": "String"
+      }
+    },
+    "concurrency": 1
+  }
+}

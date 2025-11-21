@@ -1,0 +1,25 @@
+CREATE TABLE [meta].[monitoring_transformation_dbt] (
+
+	[item_name] varchar(255) NOT NULL, 
+	[invocation_id] varchar(255) NOT NULL, 
+	[status] varchar(50) NULL, 
+	[thread_id] varchar(100) NULL, 
+	[execution_time] float NULL, 
+	[failures] varchar(8000) NULL, 
+	[compiled] bit NULL, 
+	[relation_name] varchar(500) NULL, 
+	[adapter_message] varchar(8000) NULL, 
+	[rows_affected] bigint NULL, 
+	[process_stage] varchar(100) NULL, 
+	[process_started_at] datetime2(6) NULL, 
+	[process_completed_at] datetime2(6) NULL, 
+	[duration] bigint NULL, 
+	[generated_at] datetime2(6) NULL, 
+	[environment] varchar(8000) NOT NULL, 
+	[build_models] varchar(8000) NOT NULL, 
+	[orchestration_run_id] varchar(255) NULL, 
+	[data_product] varchar(255) NULL, 
+	[transformation_pipeline_run_id] varchar(255) NULL, 
+	[workspace_id] varchar(255) NULL, 
+	[transformation_pipeline_id] varchar(255) NULL
+);

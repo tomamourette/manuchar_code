@@ -1,0 +1,28 @@
+CREATE TABLE [dds_finance].[dim_supplier] (
+
+	[tkey_supplier] bigint NULL, 
+	[bkey_supplier] varchar(255) NULL, 
+	[bkey_supplier_global] varchar(255) NULL, 
+	[supplier_code] varchar(255) NULL, 
+	[supplier_global_code] varchar(255) NULL, 
+	[supplier_group] varchar(255) NULL, 
+	[supplier_group_description] varchar(255) NULL, 
+	[supplier_name] varchar(255) NULL, 
+	[supplier_id] varchar(255) NULL, 
+	[supplier_address] varchar(255) NULL, 
+	[supplier_city] varchar(255) NULL, 
+	[supplier_zipcode] varchar(255) NULL, 
+	[supplier_affiliate] varchar(3) NOT NULL, 
+	[supplier_country_code] varchar(3) NULL, 
+	[supplier_legal_number] varchar(255) NULL, 
+	[supplier_country_name] varchar(255) NULL, 
+	[supplier_country_sort] int NULL, 
+	[supplier_iso_code] varchar(255) NULL, 
+	[supplier_region_level_1] varchar(255) NULL, 
+	[supplier_region_level_1_sort] int NULL, 
+	[supplier_region_level_2] varchar(255) NULL, 
+	[supplier_region_level_2_sort] int NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] bit NULL
+);

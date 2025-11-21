@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "DataProc_Id": 2,
+            "DataProc_Context": "Sync OnPrem MonaConso",
+            "DataLoadQuery": "vconso.ConsoYear = year(getdate())"
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "273d203a-d3ca-a4bb-48ae-6f1e3a1dc3f9",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Invoke Mona On Prem Main Pipeline",
+        "dependsOn": []
+      }
+    ],
+    "concurrency": 1
+  }
+}

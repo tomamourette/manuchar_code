@@ -1,0 +1,31 @@
+
+version: 2
+
+models:
+  - name: rv_sat_product_global
+    enabled: false
+    tags: 
+      - "Product Global"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model consolidates product global data from dynamics and mds sources, providing a unified view of product attributes and their validity periods."
+    columns:
+      - name: bkey_product_global_source
+        description: "The business key for the product global source, uniquely identifying each product entry."
+      - name: product_global_name
+        description: "The name of the global product."
+      - name: product_group
+        description: "The group to which the product belongs."
+      - name: product_group_category
+        description: "The category of the product group."
+      - name: product_group_subcategory
+        description: "The subcategory of the product group."
+      - name: product_business_unit
+        description: "The business unit associated with the product."
+      - name: valid_from
+        description: "The start date from which the product data is valid."
+      - name: valid_to
+        description: "The end date until which the product data is valid."
+      - name: is_current
+        description: "Indicates whether the product data is currently active."

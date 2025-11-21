@@ -1,0 +1,42 @@
+version: 2
+ 
+models:
+  - name: dim_company
+    tags:
+      - "Company"
+      - "Dimension"
+      - "Group-FinancialStatements"
+    description: "This model is a template for filling the dimension: Company."
+    columns:
+      - name: tkey_company
+        description: ""
+      - name: bkey_company
+        description: ""
+      - name: company_code
+        description: ""
+      - name: company_name
+        description: ""
+      - name: company_conso_method
+        description: ""
+      - name: company_active_flag
+        description: ""
+      - name: company_local_currency
+        description: ""
+      - name: company_local_currency_description
+        description: ""
+      - name: company_group_percentage
+        description: ""
+      - name: company_minor_percentage
+        description: ""
+      - name: company_group_control_percentage
+        description: ""
+      - name: subsegment
+        description: ""
+      - name: segment
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

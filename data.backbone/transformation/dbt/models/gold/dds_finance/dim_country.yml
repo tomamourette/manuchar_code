@@ -1,0 +1,35 @@
+version: 2
+ 
+models:
+  - name: dim_country
+    tags:
+      - "Country"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Country."
+    columns:
+      - name: tkey_country
+        description: ""
+      - name: bkey_country
+        description: ""
+      - name: country_code
+        description: ""
+      - name: country_name
+        description: ""
+      - name: country_sort
+        description: ""
+      - name: iso_code
+        description: ""
+      - name: region_level1
+        description: ""
+      - name: region_level1_sort
+        description: ""
+      - name: region_level2
+        description: ""
+      - name: region_level2_sort
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

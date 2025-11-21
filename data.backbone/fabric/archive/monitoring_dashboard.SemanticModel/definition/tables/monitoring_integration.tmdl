@@ -1,0 +1,165 @@
+table monitoring_integration
+	lineageTag: 2381c580-2a99-4bbd-b0a0-5e120d28dc98
+
+	measure integration_loads = COUNTROWS(monitoring_integration)
+		formatString: 0
+		lineageTag: c611b2c2-bad0-416b-9b3b-eeebdf795556
+
+	column table_name
+		dataType: string
+		lineageTag: 7610130e-ba63-44b8-bcec-e6d3421ad9da
+		summarizeBy: none
+		sourceColumn: table_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_name
+		dataType: string
+		lineageTag: 43fd1d8b-3781-412b-bb7b-a3a8a6ca9a84
+		summarizeBy: none
+		sourceColumn: schema_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_type
+		dataType: string
+		lineageTag: 300f1b5c-bb8c-4c2c-a3d2-0c11eea783c7
+		summarizeBy: none
+		sourceColumn: source_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column load_type
+		dataType: string
+		lineageTag: 71df54e4-91de-47a4-8aa2-012a6cac29da
+		summarizeBy: none
+		sourceColumn: load_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: a9236f60-7eba-4553-8d3b-ff3f21436086
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: dd5aafea-db6c-4a81-9306-9a8a8343dd3a
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 6aef3ee9-0263-4ec3-b7bd-a56e8556e28d
+		summarizeBy: sum
+		sourceColumn: duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column throughput
+		dataType: double
+		lineageTag: 8d366aba-be68-4cdf-a390-1c502e96bff8
+		summarizeBy: sum
+		sourceColumn: throughput
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_read
+		dataType: int64
+		formatString: 0
+		lineageTag: bfbc3ee3-8b1f-4c59-987b-6d806ea07cca
+		summarizeBy: sum
+		sourceColumn: data_read
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_written
+		dataType: int64
+		formatString: 0
+		lineageTag: deff033b-ab66-463d-a5c7-70015e861699
+		summarizeBy: sum
+		sourceColumn: data_written
+
+		annotation SummarizationSetBy = Automatic
+
+	column rows_read
+		dataType: int64
+		formatString: 0
+		lineageTag: fac8c3a8-b5cc-468c-8066-d510d6be5c58
+		summarizeBy: sum
+		sourceColumn: rows_read
+
+		annotation SummarizationSetBy = Automatic
+
+	column rows_written
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cb5a453-0a9e-4d22-819f-13ba0037f0e7
+		summarizeBy: sum
+		sourceColumn: rows_written
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9653733f-1014-4c18-9b0e-de5cacef418a
+		summarizeBy: none
+		sourceColumn: timestamp_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column timestamp_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 430c6923-d6f3-49a5-b3ba-9e7a56d7e659
+		summarizeBy: none
+		sourceColumn: timestamp_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column workspace
+		dataType: string
+		lineageTag: 41a0b146-528b-458a-9e43-188b14a902ae
+		summarizeBy: none
+		sourceColumn: workspace
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_name
+		dataType: string
+		lineageTag: 635b3c1a-b02c-42f1-800f-b02775c32f7e
+		summarizeBy: none
+		sourceColumn: source_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition monitoring_integration = m
+		mode: import
+		queryGroup: MONITORING
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    monitoring = Source{[Schema="meta",Item="monitoring_integration"]}[Data],
+				    timestamp_date = Table.AddColumn(monitoring, "timestamp_date", each DateTime.Date([timestamp]), type date),
+				    timestamp_time = Table.AddColumn(timestamp_date, "timestamp_time", each DateTime.Time([timestamp]), type time)
+				in
+				    timestamp_time
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

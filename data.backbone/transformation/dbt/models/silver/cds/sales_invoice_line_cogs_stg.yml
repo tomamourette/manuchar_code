@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: sales_invoice_line_cogs_stg
+    tags:
+      - "Sales Invoice Line COGS"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: tkey_sales_invoice_line_cogs
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_sales_invoice_line_cogs_source
+        description: ""
+      - name: bkey_sales_invoice_line_cogs
+        description: ""
+      - name: bkey_sales_invoice
+        description: ""
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: sales_invoice_line_cogs_company
+        description: ""
+      - name: sales_invoice_line_cogs_invoice_id
+        description: ""
+      - name: sales_invoice_line_cogs_line_num
+        description: ""
+      - name: sales_invoice_line_cogs_quantity
+        description: ""
+      - name: sales_invoice_line_cogs_uom
+        description: ""
+      - name: sales_invoice_line_cogs_currency_code
+        description: ""
+      - name: sales_invoice_line_product_id
+        description: ""
+      - name: csv_sales_amount_m_local
+        description: ""
+      - name: csv_sales_amount_m_home
+        description: ""
+      - name: erp_sales_amount_m_local
+        description: ""
+      - name: erp_sales_amount_m_home
+        description: ""
+      - name: erp_cost_amount_posted
+        description: ""
+      - name: erp_cogs1_purchase_amount_m_local
+        description: ""
+      - name: erp_cogs1_purchase_amount_m_local_currency
+        description: ""
+      - name: erp_cogs1_purchase_amount_m_home
+        description: ""
+      - name: erp_cogs1_purchase_amount_m_group
+        description: ""
+      - name: erp_cogs1_freight_amount_m_local
+        description: ""
+      - name: erp_cogs1_freight_amount_m_local_currency
+        description: ""
+      - name: erp_cogs1_freight_amount_m_home
+        description: ""
+      - name: erp_cogs1_freight_amount_m_group
+        description: ""
+      - name: erp_cogs1_other_amount_m_local
+        description: ""
+      - name: erp_cogs1_other_amount_m_local_currency
+        description: ""
+      - name: erp_cogs1_other_amount_m_home
+        description: ""
+      - name: erp_cogs1_other_amount_m_group
+        description: ""
+      - name: erp_cogs1_amount_m_local
+        description: ""
+      - name: erp_cogs1_amount_m_local_currency
+        description: ""
+      - name: erp_cogs1_amount_m_home
+        description: ""
+      - name: erp_cogs1_amount_m_group
+        description: ""
+      - name: erp_cogs2_internal_transport_amount_m_local
+        description: ""
+      - name: erp_cogs2_internal_transport_amount_m_local_currency
+        description: ""
+      - name: erp_cogs2_internal_transport_amount_m_home
+        description: ""
+      - name: erp_cogs2_internal_transport_amount_m_group
+        description: ""
+      - name: erp_cogs2_external_transport_amount_m_local
+        description: ""
+      - name: erp_cogs2_external_transport_amount_m_local_currency
+        description: ""
+      - name: erp_cogs2_external_transport_amount_m_home
+        description: ""
+      - name: erp_cogs2_external_transport_amount_m_group
+        description: ""
+      - name: erp_cogs2_other_amount_m_local
+        description: ""
+      - name: erp_cogs2_other_amount_m_local_currency
+        description: ""
+      - name: erp_cogs2_other_amount_m_home
+        description: ""
+      - name: erp_cogs2_other_amount_m_group
+        description: ""
+      - name: csv_cogs1_amount
+        description: ""
+      - name: csv_external_transport_amount
+        description: ""
+      - name: csv_internal_transport_amount
+        description: ""
+      - name: csv_other_cogs2_amount
+        description: ""
+      - name: csv_cogs2_amount
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

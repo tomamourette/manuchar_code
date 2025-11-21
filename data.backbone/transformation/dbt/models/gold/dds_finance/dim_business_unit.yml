@@ -1,0 +1,23 @@
+version: 2
+ 
+models:
+  - name: dim_business_unit
+    tags:
+      - "Business Unit"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Business Unit."
+    columns:
+      - name: tkey_business_unit
+        description: ""
+      - name: bkey_business_unit
+        description: ""
+      - name: business_unit_code
+        description: ""
+      - name: business_unit_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

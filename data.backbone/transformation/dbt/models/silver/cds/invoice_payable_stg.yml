@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: invoice_payable_stg
+    tags:
+      - "Invoice Payable"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: bkey_invoice_payable_source
+        description: ""
+      - name: bkey_invoice_payable
+        description: ""
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'STG_AP'."
+      - name: invoice_payable_invoice_id
+        description: ""
+      - name: invoice_payable_supplier_id
+        description: ""
+      - name: invoice_payable_company
+        description: ""
+      - name: invoice_payable_local_currency_code
+        description: ""
+      - name: invoice_payable_invoice_date
+        description: ""
+      - name: invoice_payable_due_date
+        description: ""
+      - name: invoice_payable_closure_date
+        description: ""
+      - name: invoice_payable_local_amount
+        description: ""
+      - name: invoice_payable_payment_schedule
+        description: ""
+      - name: invoice_payable_file_name
+        description: ""
+      - name: invoice_payable_open_amount_invoice_currency
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

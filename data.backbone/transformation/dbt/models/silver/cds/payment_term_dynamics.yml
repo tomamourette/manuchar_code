@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: payment_term_dynamics
+    tags:
+      - "payment_term"
+      - "model shared reference"
+      - "dynamics"
+    description: "This model constructs a full timeline for payment term records by retrieving the latest record per payment term (SCD1) and recalculating the valid_to timestamp using window functions. It captures key payment term details including description, number of days, and an active flag."
+    columns:
+      - name: bkey_payment_term_source
+        description: "Business key for the payment term, derived from paymtermid plus source."
+      - name: bkey_payment_term
+        description: "Business key for the payment term, derived from paymtermid."
+      - name: bkey_source
+        description: "Source identifier for the payment term, statically set to 'DYNAMICS'."
+      - name: payment_term_description
+        description: "Description of the payment term."
+      - name: payment_term_number_of_days
+        description: "Number of days associated with the payment term."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

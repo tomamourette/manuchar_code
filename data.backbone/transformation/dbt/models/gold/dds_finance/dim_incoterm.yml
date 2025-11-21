@@ -1,0 +1,23 @@
+version: 2
+ 
+models:
+  - name: dim_incoterm
+    tags:
+      - "Incoterm"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Incoterm."
+    columns:
+      - name: tkey_incoterm
+        description: ""
+      - name: bkey_incoterm
+        description: ""
+      - name: incoterm_code
+        description: ""
+      - name: incoterm_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

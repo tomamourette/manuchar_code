@@ -1,0 +1,425 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Filter ODS_365 tables').output.Value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().DataProc_Source_Table_LoadType",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "Incremental",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "6045b9cb-81b1-8f22-40f4-19d833dee4f8",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {
+                            "tableName": {
+                              "value": "@item().DataProc_Source_Table",
+                              "type": "Expression"
+                            },
+                            "source": {
+                              "value": "@item().DataProc_Source",
+                              "type": "Expression"
+                            },
+                            "schemaName": {
+                              "value": "@item().DataProc_Source_Schema",
+                              "type": "Expression"
+                            },
+                            "targetSchemaName": {
+                              "value": "@item().DataProc_TargetSchema",
+                              "type": "Expression"
+                            },
+                            "watermarkColumn": {
+                              "value": "@item().DataProc_Source_Watermark_Column",
+                              "type": "Expression"
+                            },
+                            "watermarkValue": {
+                              "value": "@item().DataProc_Source_Watermark_Value",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke Incremental Load",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Full",
+                    "activities": [
+                      {
+                        "type": "ExecutePipeline",
+                        "typeProperties": {
+                          "pipeline": {
+                            "referenceName": "9a9fe0fe-a47f-a558-4f45-bd8b3f849ab3",
+                            "type": "PipelineReference"
+                          },
+                          "parameters": {
+                            "tableName": {
+                              "value": "@item().DataProc_Source_Table",
+                              "type": "Expression"
+                            },
+                            "source": {
+                              "value": "@item().DataProc_Source",
+                              "type": "Expression"
+                            },
+                            "schemaName": {
+                              "value": "@item().DataProc_Source_Schema",
+                              "type": "Expression"
+                            },
+                            "targetSchemaName": {
+                              "value": "@item().DataProc_TargetSchema",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true
+                        },
+                        "policy": {
+                          "secureInput": false
+                        },
+                        "name": "Invoke D365_Full Load",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "RecoveryScope",
+                    "activities": [
+                      {
+                        "type": "Wait",
+                        "typeProperties": {
+                          "waitTimeInSeconds": 1
+                        },
+                        "name": "RecoveryScope",
+                        "dependsOn": []
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": []
+              },
+              "name": "Switch Depending on the LoadType",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach ODS_365 table",
+        "dependsOn": [
+          {
+            "activity": "Filter ODS_365 tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "typeProperties": {
+              "schema": "03DataSys",
+              "table": "Config_DataProcess_SourceList"
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "OperationalDataSources_WrH",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup Config Data SourceList",
+        "dependsOn": [
+          {
+            "activity": "Log ProcessRun Start",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Filter",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup Config Data SourceList').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().DataProc_Id, 2)",
+            "type": "Expression"
+          }
+        },
+        "name": "Filter ODS_365 tables",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config Data SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": "1",
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": "2",
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": "SourceSync - Dynamics365 Fo/Ce",
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Running"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              }
+            },
+            "DataProc_Run_DateEnd": {
+              "value": ""
+            },
+            "DataProc_Run_DurationSec": {
+              "value": ""
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": ""
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OperationalDataSources_WrH",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun Start",
+        "dependsOn": []
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": "3",
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": "2",
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": "SourceSync - Dynamics365 Fo/Ce",
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Successful"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              }
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@utcNow()",
+                "type": "Expression"
+              }
+            },
+            "DataProc_Run_DurationSec": {
+              "value": ""
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": ""
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OperationalDataSources_WrH",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun End Success",
+        "dependsOn": [
+          {
+            "activity": "ForEach ODS_365 table",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": "2",
+              "type": "Int16"
+            },
+            "DataProc_Id": {
+              "value": "2",
+              "type": "Int16"
+            },
+            "DataProc_Context": {
+              "value": "SourceSync - Dynamics365 Fo/Ce",
+              "type": "String"
+            },
+            "DataProc_Run_Status": {
+              "value": "Failed"
+            },
+            "DataProc_Run_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              }
+            },
+            "DataProc_Run_DateEnd": {
+              "value": {
+                "value": "@utcNow()",
+                "type": "Expression"
+              }
+            },
+            "DataProc_Run_DurationSec": {
+              "value": ""
+            },
+            "Run_NonCompletenessCheckCount": {
+              "value": ""
+            },
+            "DataProc_Run_Output": {
+              "value": {
+                "value": "@activity('Switch Depending on the LoadType').output",
+                "type": "Expression"
+              }
+            },
+            "UpdateBy": {
+              "value": ""
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OperationalDataSources_WrH",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Log ProcessRun End Failed",
+        "dependsOn": [
+          {
+            "activity": "ForEach ODS_365 table",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

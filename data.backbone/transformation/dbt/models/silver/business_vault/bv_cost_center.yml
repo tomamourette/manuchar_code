@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: bv_cost_center
+    tags:
+      - "Cost Center"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling business entity: Cost Center."
+    columns:
+      - name: bkey_cost_center
+        description: "Business key for the cost center, derived from the Code column."
+      - name: cost_center_code
+        description: "Alias for the cost center code, identical to bkey_cost_center."
+      - name: description
+        description: "Description of the cost center."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: ""

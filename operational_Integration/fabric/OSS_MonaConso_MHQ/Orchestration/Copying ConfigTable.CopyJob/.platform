@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "Copying ConfigTable"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ad8e339d-83ff-a8ec-4d07-fb97ee98d65a"
+  }
+}

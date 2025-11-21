@@ -1,0 +1,121 @@
+table monitoring_maintenance
+	lineageTag: 5eb01350-15c9-4b6a-b4cd-f43306dec866
+
+	measure maintenance_loads = COUNTROWS(monitoring_maintenance)
+		formatString: 0
+		lineageTag: e5394efb-c377-40ee-9e7c-cb213484cc48
+
+	column table_name
+		dataType: string
+		lineageTag: ff859083-4d66-44a1-80d3-86f198b3150f
+		summarizeBy: none
+		sourceColumn: table_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_name
+		dataType: string
+		lineageTag: 6fb01bb7-4379-4c9f-89f9-484fc2c20b3f
+		summarizeBy: none
+		sourceColumn: schema_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_name
+		dataType: string
+		lineageTag: 407670f0-35f6-4b32-9f33-9331e28401d9
+		summarizeBy: none
+		sourceColumn: source_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column environment
+		dataType: string
+		lineageTag: 9769d546-6546-4b35-8fad-97f9129e07d4
+		summarizeBy: none
+		sourceColumn: environment
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 90c1d3d0-8636-4ded-ab89-fbef11cab1a7
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column maintenance_type
+		dataType: string
+		lineageTag: c5f6a224-6b39-4389-8eb8-d62709387c56
+		summarizeBy: none
+		sourceColumn: maintenance_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration
+		dataType: double
+		lineageTag: fe680ea1-11c4-4fdb-93da-9b41d038c6fc
+		summarizeBy: sum
+		sourceColumn: duration
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column maintenance_timestamp
+		dataType: string
+		lineageTag: f6423670-c8a6-4433-b27b-b8690e24019c
+		summarizeBy: none
+		sourceColumn: maintenance_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 757536ef-64a7-48b9-9f38-116e0120a35a
+		summarizeBy: none
+		sourceColumn: timestamp_datetime
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c566c75a-e8c6-42b9-8021-eca0d95c72ca
+		summarizeBy: none
+		sourceColumn: timestamp_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column timestamp_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 27ede5b3-c877-42f0-b48b-7be81412861f
+		summarizeBy: none
+		sourceColumn: timestamp_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition monitoring_maintenance = m
+		mode: import
+		queryGroup: MONITORING
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    monitoring = Source{[Schema="meta",Item="monitoring_maintenance"]}[Data],
+				    monitoring_timestamp = Table.AddColumn(monitoring, "timestamp_datetime", each DateTime.FromText([maintenance_timestamp]), type datetime),
+				    timestamp_date = Table.AddColumn(monitoring_timestamp, "timestamp_date", each DateTime.Date([timestamp_datetime]), type date),
+				    timestamp_time = Table.AddColumn(timestamp_date, "timestamp_time", each DateTime.Time([timestamp_datetime]), type time)
+				in
+				    timestamp_time
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

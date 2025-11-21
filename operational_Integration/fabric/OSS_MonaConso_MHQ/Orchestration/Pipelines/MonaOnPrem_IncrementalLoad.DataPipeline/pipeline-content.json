@@ -1,0 +1,907 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": {
+              "value": "@concat(\n    'SELECT tab.*, vconso.ConsoYear as ODSConsoYear, vconso.ConsoMonth as ODSConsoMonth, ', \n    activity('Create the ODSKey').output.resultSets[0].rows[0].ConcatExpression, \n    ' as ODSKey FROM ', \n    pipeline().parameters.Schema, \n    '.', \n    pipeline().parameters.TableName, \n    ' tab left join dbo.V_CONSO vconso on tab.consoid = vconso.consoid',\n    if(\n        equals(activity('Check if Table Exists').output.resultSets[0].rows[0].TableExists, 1),\n        if(\n            empty(pipeline().parameters.DataLoadQuery),\n                '',\n            concat(' where ', pipeline().parameters.DataLoadQuery)\n        ),\n        ''\n    )\n)",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "additionalColumns": [
+              {
+                "name": "ODSVersion",
+                "value": "0"
+              },
+              {
+                "name": "ODSRecordStatus",
+                "value": "A"
+              },
+              {
+                "name": "ODSActive",
+                "value": "1"
+              },
+              {
+                "name": "ODSDeleted",
+                "value": "0"
+              },
+              {
+                "name": "ODSModifiedOn",
+                "value": {
+                  "value": "@pipeline().TriggerTime",
+                  "type": "Expression"
+                }
+              },
+              {
+                "name": "ODSModifiedBy",
+                "value": {
+                  "value": "@pipeline().PipelineName",
+                  "type": "Expression"
+                }
+              },
+              {
+                "name": "ODSIngestionDate",
+                "value": {
+                  "value": "@pipeline().TriggerTime",
+                  "type": "Expression"
+                }
+              },
+              {
+                "name": "ODSStartDate",
+                "value": {
+                  "value": "@pipeline().TriggerTime",
+                  "type": "Expression"
+                }
+              },
+              {
+                "name": "ODSEndDate",
+                "value": {
+                  "value": "@formatDateTime('9999-12-31', 'yyyy-MM-dd HH:mm:ss')",
+                  "type": "Expression"
+                }
+              },
+              {
+                "name": "ODSHash",
+                "value": "ODSHash"
+              }
+            ],
+            "datasetSettings": {
+              "type": "SqlServerTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().parameters.Schema",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@pipeline().parameters.TableName",
+                  "type": "Expression"
+                },
+                "database": "Mona"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d645f75d-9fd8-4e67-910d-22fee4b0900c"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "tableOption": "autoCreate",
+            "preCopyScript": {
+              "value": "@concat('DROP TABLE IF EXISTS ', pipeline().parameters.DestinationSchema, '.', pipeline().parameters.TableName, '__STG')",
+              "type": "Expression"
+            },
+            "allowCopyCommand": true,
+            "copyCommandSettings": {},
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().parameters.DestinationSchema",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@concat(pipeline().parameters.TableName, '__STG')",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Incremental Copy to STG",
+        "dependsOn": [
+          {
+            "activity": "Check if Table Exists",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Create the ODSKey",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "@{activity('Generate HashKey Query').output.result.exitValue};",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "OSS_MonaConso_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Run HashKey Query",
+        "dependsOn": [
+          {
+            "activity": "Generate HashKey Query",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "297ae926-e902-8761-470c-1270a4a0ceee",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "db_table": {
+              "value": {
+                "value": "@concat(pipeline().parameters.DestinationSchema, '.', pipeline().parameters.TableName, '__STG')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "columns_raw": {
+              "value": {
+                "value": "@activity('LookUp hashing columns').output.resultSets[0].rows[0].ColumnList",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Generate HashKey Query",
+        "dependsOn": [
+          {
+            "activity": "LookUp hashing columns",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "SELECT STRING_AGG(COLUMN_NAME, ',') AS ColumnList\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.DestinationSchema}'\n  AND TABLE_NAME = '@{pipeline().parameters.TableName}__STG' \n AND COLUMN_NAME NOT LIKE '%ODS%'",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "OSS_MonaConso_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "LookUp hashing columns",
+        "dependsOn": [
+          {
+            "activity": "Incremental Copy to STG",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "IF EXISTS (\n    SELECT 1\n    FROM INFORMATION_SCHEMA.TABLES\n    WHERE TABLE_SCHEMA = '@{pipeline().parameters.DestinationSchema}'\n      AND TABLE_NAME = '@{pipeline().parameters.TableName}__ODS' \n)\n    SELECT 1 AS TableExists;\nELSE\n    SELECT 0 AS TableExists;",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "OSS_MonaConso_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Check if Table Exists",
+        "dependsOn": []
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "DECLARE @Columns NVARCHAR(MAX) = '@{pipeline().parameters.Watermark}';  \nDECLARE @ConcatExpr NVARCHAR(MAX) = '';\nDECLARE @Delim NVARCHAR(10) = '';\nDECLARE @Column NVARCHAR(128);\nDECLARE @Pos INT;\n\n-- Replace token if passed with extra quotes\nSET @Columns = REPLACE(@Columns, '\"', '');\n\nWHILE LEN(@Columns) > 0\nBEGIN\n    SET @Pos = CHARINDEX(', ', @Columns);\n\n    IF @Pos > 0\n    BEGIN\n        SET @Column = LTRIM(RTRIM(LEFT(@Columns, @Pos - 1)));\n        SET @Columns = SUBSTRING(@Columns, @Pos + 1, LEN(@Columns));\n    END\n    ELSE\n    BEGIN\n        SET @Column = LTRIM(RTRIM(@Columns));\n        SET @Columns = '';\n    END\n\n    -- Append to the final expression\n    SET @ConcatExpr = @ConcatExpr + \n        @Delim + 'CAST(tab.[' + @Column + '] AS VARCHAR)';\n\n    SET @Delim = ' + ''-'' + ';\nEND\n\n-- Return the expression as output\nSELECT @ConcatExpr AS ConcatExpression;\n",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "OSS_MonaConso_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Create the ODSKey",
+        "dependsOn": []
+      },
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(activity('Check if Table Exists').output.resultSets[0].rows[0].TableExists, 1)",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "INSERT INTO  @{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS \nSELECT * FROM\n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG\nWHERE ODSRecordStatus IN ('N', 'C');",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Insert New and Changed Rows",
+              "dependsOn": [
+                {
+                  "activity": "Check for Deleted Rows",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "UPDATE stg\nSET stg.ODSRecordStatus = 'N'\nFROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG stg\nLEFT JOIN \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS ods\nON stg.ODSKey = ods.ODSKey \nWHERE ods.ODSKey IS NULL;",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Check for New Rows",
+              "description": "",
+              "dependsOn": []
+            },
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "UPDATE stg\nSET stg.ODSRecordStatus = 'C',\n    stg.ODSVersion = ods.MaxODSVersion + 1\nFROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG stg\nCROSS APPLY (\n    SELECT TOP 1 \n        o.ODSHash,\n        o.ODSKey,\n        o.ODSVersion AS MaxODSVersion\n    FROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS AS o\n    WHERE \n        o.ODSKey      = stg.ODSKey      -- per-row join\n        AND o.ODSActive  = 1\n        AND o.ODSDeleted = 0\n    ORDER BY o.ODSVersion DESC          -- most recent active record\n) AS ods\nWHERE stg.ODSHash <> ods.ODSHash\nAND ods.ODSKey  = stg.ODSKey ;",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Check for Changed Rows",
+              "dependsOn": [
+                {
+                  "activity": "Check for New Rows",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "IF EXISTS (\n    SELECT 1\n    FROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG \n    WHERE ODSRecordStatus = 'C'\n)\nBEGIN\n    UPDATE ods\n    SET ods.ODSActive = 0,\n        ods.ODSEndDate = CAST(GETDATE() AS DATE)\n    FROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS ods\n    INNER JOIN \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG stg\n        ON stg.ODSKey = ods.ODSKey\n    WHERE stg.ODSRecordStatus = 'C' AND ods.ODSActive = 1;\nEND",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "If Changed Exists",
+              "dependsOn": [
+                {
+                  "activity": "Check for Changed Rows",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "UPDATE stg\nSET stg.ODSRecordStatus = 'E'\nFROM \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG stg\nINNER JOIN \n@{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS ods\n    ON stg.ODSKey = ods.ODSKey\nWHERE stg.ODSHash = ods.ODSHash;",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Mark as Existing",
+              "dependsOn": [
+                {
+                  "activity": "If Changed Exists",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Script",
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "text": {
+                      "value": "UPDATE ods\nSET \n    ods.ODSDeleted = 1,\n    ods.ODSActive = 0,\n    ods.ODSRecordStatus = 'D',\n    ods.ODSEndDate = CAST(GETDATE() AS DATE)\nFROM @{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__ODS ods\nLEFT JOIN @{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG stg\n    ON ods.ODSKey = stg.ODSKey    \nWHERE stg.ODSKey IS NULL\nAND ods.ODSActive = 1\nAND ods.ODSDeleted = 0\n@{pipeline().parameters.DeleteClause}",
+                      "type": "Expression"
+                    },
+                    "type": "Query"
+                  }
+                ],
+                "scriptBlockExecutionTimeout": "02:00:00"
+              },
+              "linkedService": {
+                "name": "OSS_MonaConso_MHQ_Warehouse",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Check for Deleted Rows",
+              "dependsOn": [
+                {
+                  "activity": "Mark as Existing",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ],
+          "ifFalseActivities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "DataWarehouseSource",
+                  "partitionOption": "None",
+                  "queryTimeout": "02:00:00",
+                  "datasetSettings": {
+                    "type": "DataWarehouseTable",
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.DestinationSchema",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@concat(pipeline().parameters.TableName, '__STG')",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "OSS_MonaConso_MHQ_Warehouse",
+                      "properties": {
+                        "type": "DataWarehouse",
+                        "typeProperties": {
+                          "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                          "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "DataWarehouseSink",
+                  "tableOption": "autoCreate",
+                  "preCopyScript": {
+                    "value": "@concat('DROP TABLE IF EXISTS ', pipeline().parameters.DestinationSchema, '.', pipeline().parameters.TableName, '__ODS')",
+                    "type": "Expression"
+                  },
+                  "allowCopyCommand": true,
+                  "copyCommandSettings": {},
+                  "datasetSettings": {
+                    "type": "DataWarehouseTable",
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.DestinationSchema",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@concat(pipeline().parameters.TableName, '__ODS')",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "OSS_MonaConso_MHQ_Warehouse",
+                      "properties": {
+                        "type": "DataWarehouse",
+                        "typeProperties": {
+                          "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                          "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": true
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Full Copy from STG to ODS",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "If Table Exists",
+        "dependsOn": [
+          {
+            "activity": "Run HashKey Query",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Check if Table Exists",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "TRUNCATE TABLE @{pipeline().parameters.DestinationSchema}.@{pipeline().parameters.TableName}__STG",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "OSS_MonaConso_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Truncate STG table",
+        "dependsOn": [
+          {
+            "activity": "Monitoring Integration Success",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "INSERT INTO [dbb_warehouse].[meta].[monitoring_integration] (\n    table_name,\n    schema_name,\n    source_name,\n    source_type,\n    load_type,\n    workspace,\n    status,\n    timestamp,\n    duration,\n    throughput,\n    data_read,\n    data_written,\n    rows_read,\n    rows_written,\n    data_product,\n    orchestration_run_id,\n    integration_pipeline_source_run_id,\n    integration_pipeline_id\n)\nVALUES (\n    '@{pipeline().parameters.TableName}',\n    '@{pipeline().parameters.DestinationSchema}',\n    'Mona',\n    'SQL',\n    'Incremental',\n    '@{pipeline().DataFactory}',\n    'Succeeded',\n    '@{formatDateTime(pipeline().TriggerTime, 'yyyy-MM-dd HH:mm:ss.ffffff')}',\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    '@{pipeline().parameters.DataProduct}',\n    '@{pipeline().parameters.OrchestrationRunId}',\n    '@{pipeline().parameters.MonaMainPipelineRunId}',\n    '@{pipeline().parameters.MonaMainPipelineId}'\n);",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "connectionSettings": {
+          "name": "dbb_warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+            },
+            "externalReferences": {
+              "connection": "d3fd0f81-8be0-46fa-9e13-fb5808f93ec0"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Monitoring Integration Success",
+        "dependsOn": [
+          {
+            "activity": "If Table Exists",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "INSERT INTO [dbb_warehouse].[meta].[monitoring_integration] (\n    table_name,\n    schema_name,\n    source_name,\n    source_type,\n    load_type,\n    workspace,\n    status,\n    timestamp,\n    duration,\n    throughput,\n    data_read,\n    data_written,\n    rows_read,\n    rows_written,\n    data_product,\n    orchestration_run_id,\n    integration_pipeline_source_run_id,\n    integration_pipeline_id\n)\nVALUES (\n    '@{pipeline().parameters.TableName}',\n    '@{pipeline().parameters.DestinationSchema}',\n    'Mona',\n    'SQL',\n    'Incremental',\n    '@{pipeline().DataFactory}',\n    'Failed',\n    '@{formatDateTime(pipeline().TriggerTime, 'yyyy-MM-dd HH:mm:ss.ffffff')}',\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    NULL,\n    '@{pipeline().parameters.DataProduct}',\n    '@{pipeline().parameters.OrchestrationRunId}',\n    '@{pipeline().parameters.MonaMainPipelineRunId}',\n    '@{pipeline().parameters.MonaMainPipelineId}'\n);",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "connectionSettings": {
+          "name": "dbb_warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+            },
+            "externalReferences": {
+              "connection": "d3fd0f81-8be0-46fa-9e13-fb5808f93ec0"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Monitoring Integration Fail",
+        "dependsOn": [
+          {
+            "activity": "If Table Exists",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "Schema": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "TableName": {
+        "type": "string",
+        "defaultValue": "TD030E0"
+      },
+      "DataLoadQuery": {
+        "type": "string",
+        "defaultValue": "((vconso.ConsoYear = year(getdate()) and vconso.consomonth = month(getdate())) OR (vconso.ConsoYear = year(dateadd(month,-1,getdate())) and vconso.consomonth = month(dateadd(month,-1,getdate()))))"
+      },
+      "Watermark": {
+        "type": "string",
+        "defaultValue": "ConsoID, LocalAdjustmentsHeaderID"
+      },
+      "DestinationSchema": {
+        "type": "string",
+        "defaultValue": "MonaOnPrem"
+      },
+      "DeleteClause": {
+        "type": "string",
+        "defaultValue": "AND ((ods.ODSConsoYear = YEAR(GETDATE()) AND ods.ODSConsoMonth = MONTH(GETDATE())) OR (ods.ODSConsoYear = YEAR(GETDATE())    AND ods.ODSConsoMonth = MONTH(GETDATE()) - 1 AND MONTH(GETDATE()) > 1) OR (ods.ODSConsoYear = YEAR(DATEADD(MONTH, -1, GETDATE())) AND ods.ODSConsoMonth = MONTH(DATEADD(MONTH, -1, GETDATE()))))"
+      },
+      "DataProduct": {
+        "type": "string",
+        "defaultValue": "Group-FinancialStatements"
+      },
+      "OrchestrationRunId": {
+        "type": "string"
+      },
+      "MonaMainPipelineId": {
+        "type": "string"
+      },
+      "MonaMainPipelineRunId": {
+        "type": "string"
+      }
+    }
+  }
+}

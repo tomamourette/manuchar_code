@@ -1,0 +1,765 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Run_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Run_Context": {
+              "value": {
+                "value": "@pipeline().parameters.Source_Table",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_RunStep_Status": {
+              "value": "Running",
+              "type": "String"
+            },
+            "DataProc_RunStep_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_DateEnd": {
+              "value": ""
+            },
+            "DataProc_RunStep_LogLastTransUpdateDate": {
+              "value": ""
+            },
+            "RunStep_CheckCompleteness_SourceValue": {
+              "value": "0",
+              "type": "Int16"
+            },
+            "RunStep_CheckCompleteness_ControlValue": {
+              "value": "0",
+              "type": "Int16"
+            },
+            "DataProc_RunStep_UpdateContext": {
+              "value": "Starting to process the table.",
+              "type": "String"
+            },
+            "DataProc_RunStep_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Start ProcessRunStep",
+        "dependsOn": []
+      },
+      {
+        "type": "Switch",
+        "typeProperties": {
+          "on": {
+            "value": "@pipeline().parameters.Table_LoadType",
+            "type": "Expression"
+          },
+          "cases": [
+            {
+              "value": "Incremental",
+              "activities": [
+                {
+                  "type": "ExecutePipeline",
+                  "typeProperties": {
+                    "pipeline": {
+                      "referenceName": "a62dec51-1a56-af71-4b27-2427e6d654b2",
+                      "type": "PipelineReference"
+                    },
+                    "parameters": {
+                      "tableName": {
+                        "value": "@pipeline().parameters.Source_Table",
+                        "type": "Expression"
+                      },
+                      "source": {
+                        "value": "@pipeline().parameters.Source",
+                        "type": "Expression"
+                      },
+                      "schemaName": {
+                        "value": "@pipeline().parameters.Source_Schema",
+                        "type": "Expression"
+                      },
+                      "targetSchemaName": {
+                        "value": "@pipeline().parameters.Stg_Schema",
+                        "type": "Expression"
+                      },
+                      "watermarkColumn": {
+                        "value": "@pipeline().parameters.Watermark_Column",
+                        "type": "Expression"
+                      },
+                      "watermarkValue": {
+                        "value": "@pipeline().parameters.Watermark_Value",
+                        "type": "Expression"
+                      }
+                    },
+                    "waitOnCompletion": true
+                  },
+                  "policy": {
+                    "secureInput": false
+                  },
+                  "name": "D365 Incremental Load",
+                  "dependsOn": []
+                },
+                {
+                  "type": "SqlServerStoredProcedure",
+                  "typeProperties": {
+                    "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+                    "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+                    "storedProcedureParameters": {
+                      "DataProc_Run_Id": {
+                        "value": {
+                          "value": "@pipeline().parameters.DataProc_Run_Id",
+                          "type": "Expression"
+                        },
+                        "type": "Int16"
+                      },
+                      "DataProc_Run_Context": {
+                        "value": {
+                          "value": "@pipeline().parameters.Source_Table",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_Status": {
+                        "value": "Failed",
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_DateStart": {
+                        "value": {
+                          "value": "@pipeline().TriggerTime",
+                          "type": "Expression"
+                        },
+                        "type": "Datetime"
+                      },
+                      "DataProc_RunStep_DateEnd": {
+                        "value": {
+                          "value": "@formatDateTime(utcNow())",
+                          "type": "Expression"
+                        },
+                        "type": "Datetime"
+                      },
+                      "DataProc_RunStep_LogLastTransUpdateDate": {
+                        "value": ""
+                      },
+                      "RunStep_CheckCompleteness_SourceValue": {
+                        "value": "",
+                        "type": "Int16"
+                      },
+                      "RunStep_CheckCompleteness_ControlValue": {
+                        "type": "Int16"
+                      },
+                      "DataProc_RunStep_UpdateContext": {
+                        "value": "Error loading the table to ODS.",
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_Output": {
+                        "value": {
+                          "value": "@string(activity('D365 Incremental Load').output.pipelineReturnValue)",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      },
+                      "UpdateBy": {
+                        "value": {
+                          "value": "@pipeline()?.TriggeredByPipelineName",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      }
+                    }
+                  },
+                  "externalReferences": {
+                    "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+                  },
+                  "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureInput": false,
+                    "secureOutput": false
+                  },
+                  "name": "Incr Failed ProcessRunStep",
+                  "dependsOn": [
+                    {
+                      "activity": "D365 Incremental Load",
+                      "dependencyConditions": [
+                        "Failed"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "Full",
+              "activities": [
+                {
+                  "type": "Copy",
+                  "typeProperties": {
+                    "source": {
+                      "type": "LakehouseTableSource",
+                      "additionalColumns": [
+                        {
+                          "name": "Ingestion_Timestamp",
+                          "value": {
+                            "value": "@pipeline().TriggerTime",
+                            "type": "Expression"
+                          }
+                        }
+                      ],
+                      "datasetSettings": {
+                        "type": "LakehouseTable",
+                        "typeProperties": {
+                          "table": {
+                            "value": "@pipeline().parameters.Source_Table",
+                            "type": "Expression"
+                          }
+                        },
+                        "schema": [],
+                        "linkedService": {
+                          "name": "dbb_dynamics_lakehouse",
+                          "properties": {
+                            "type": "Lakehouse",
+                            "typeProperties": {
+                              "artifactId": "00693b59-6dcb-4f19-bbd6-2b772ce5f838",
+                              "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+                              "rootFolder": "Tables"
+                            },
+                            "annotations": []
+                          }
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "sink": {
+                      "type": "FabricSqlDatabaseSink",
+                      "preCopyScript": {
+                        "value": "@concat('DROP TABLE IF EXISTS [',pipeline().parameters.Stg_Schema, '].', pipeline().parameters.Source_Table)",
+                        "type": "Expression"
+                      },
+                      "sqlWriterUseTableLock": false,
+                      "writeBehavior": "insert",
+                      "tableOption": "autoCreate",
+                      "datasetSettings": {
+                        "type": "FabricSqlDatabaseTable",
+                        "typeProperties": {
+                          "schema": {
+                            "value": "@pipeline().parameters.Stg_Schema",
+                            "type": "Expression"
+                          },
+                          "table": {
+                            "value": "@pipeline().parameters.Source_Table",
+                            "type": "Expression"
+                          }
+                        },
+                        "schema": [],
+                        "connectionSettings": {
+                          "name": "OperationalDataSources_Sql",
+                          "properties": {
+                            "type": "FabricSqlDatabase",
+                            "typeProperties": {
+                              "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969",
+                              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                            },
+                            "externalReferences": {
+                              "connection": "e0e17fde-9b4f-48f2-a7eb-2affdf63aa3d"
+                            },
+                            "annotations": []
+                          }
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "translator": {
+                      "type": "TabularTranslator",
+                      "typeConversion": true,
+                      "typeConversionSettings": {
+                        "allowDataTruncation": true,
+                        "treatBooleanAsNumber": false
+                      }
+                    },
+                    "enableStaging": false
+                  },
+                  "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureInput": false,
+                    "secureOutput": false
+                  },
+                  "name": "Full Copy to STG SQL databank",
+                  "dependsOn": []
+                },
+                {
+                  "type": "SqlServerStoredProcedure",
+                  "typeProperties": {
+                    "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+                    "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+                    "storedProcedureParameters": {
+                      "DataProc_Run_Id": {
+                        "value": {
+                          "value": "@pipeline().parameters.DataProc_Run_Id",
+                          "type": "Expression"
+                        },
+                        "type": "Int16"
+                      },
+                      "DataProc_Run_Context": {
+                        "value": {
+                          "value": "@pipeline().parameters.Source_Table",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_Status": {
+                        "value": "Failed",
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_DateStart": {
+                        "value": {
+                          "value": "@pipeline().TriggerTime",
+                          "type": "Expression"
+                        },
+                        "type": "Datetime"
+                      },
+                      "DataProc_RunStep_DateEnd": {
+                        "value": {
+                          "value": "@formatDateTime(utcNow())",
+                          "type": "Expression"
+                        },
+                        "type": "Datetime"
+                      },
+                      "DataProc_RunStep_LogLastTransUpdateDate": {
+                        "value": ""
+                      },
+                      "RunStep_CheckCompleteness_SourceValue": {
+                        "value": "",
+                        "type": "Int16"
+                      },
+                      "RunStep_CheckCompleteness_ControlValue": {
+                        "type": "Int16"
+                      },
+                      "DataProc_RunStep_UpdateContext": {
+                        "value": "Error loading the table to ODS.",
+                        "type": "String"
+                      },
+                      "DataProc_RunStep_Output": {
+                        "value": {
+                          "value": "@string(activity('Full Copy to STG SQL databank').output)",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      },
+                      "UpdateBy": {
+                        "value": {
+                          "value": "@pipeline()?.TriggeredByPipelineName",
+                          "type": "Expression"
+                        },
+                        "type": "String"
+                      }
+                    }
+                  },
+                  "externalReferences": {
+                    "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+                  },
+                  "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureInput": false,
+                    "secureOutput": false
+                  },
+                  "name": "Full Failed ProcessRunStep",
+                  "dependsOn": [
+                    {
+                      "activity": "Full Copy to STG SQL databank",
+                      "dependencyConditions": [
+                        "Failed"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "RecoveryScope",
+              "activities": [
+                {
+                  "type": "Wait",
+                  "typeProperties": {
+                    "waitTimeInSeconds": 1
+                  },
+                  "name": "RecoveryScope",
+                  "dependsOn": []
+                }
+              ]
+            }
+          ],
+          "defaultActivities": []
+        },
+        "name": "Switch Depending on the LoadType",
+        "dependsOn": [
+          {
+            "activity": "Start ProcessRunStep",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": {
+            "value": "@concat(pipeline().parameters.Ods_Schema,'.usp_Insert', pipeline().parameters.Source_Table)",
+            "type": "Expression"
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "SP STG to ODS",
+        "dependsOn": [
+          {
+            "activity": "Switch Depending on the LoadType",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Run_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Run_Context": {
+              "value": {
+                "value": "@pipeline().parameters.Source_Table",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_RunStep_Status": {
+              "value": "Successful",
+              "type": "String"
+            },
+            "DataProc_RunStep_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_LogLastTransUpdateDate": {
+              "value": ""
+            },
+            "RunStep_CheckCompleteness_SourceValue": {
+              "value": "0",
+              "type": "Int16"
+            },
+            "RunStep_CheckCompleteness_ControlValue": {
+              "value": "0",
+              "type": "Int16"
+            },
+            "DataProc_RunStep_UpdateContext": {
+              "value": "Successfully loaded the table to ODS.",
+              "type": "String"
+            },
+            "DataProc_RunStep_Output": {
+              "value": ""
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Success End ProcessRunStep",
+        "dependsOn": [
+          {
+            "activity": "SP STG to ODS",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Run_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Run_Context": {
+              "value": {
+                "value": "@pipeline().parameters.Source_Table",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_RunStep_Status": {
+              "value": "Failed",
+              "type": "String"
+            },
+            "DataProc_RunStep_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_LogLastTransUpdateDate": {
+              "value": ""
+            },
+            "RunStep_CheckCompleteness_SourceValue": {
+              "value": "",
+              "type": "Int16"
+            },
+            "RunStep_CheckCompleteness_ControlValue": {
+              "type": "Int16"
+            },
+            "DataProc_RunStep_UpdateContext": {
+              "value": "Error loading the table to ODS.",
+              "type": "String"
+            },
+            "DataProc_RunStep_Output": {
+              "value": {
+                "value": "@string(activity('SP STG to ODS').output)",
+                "type": "Expression"
+              }
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Failed End ProcessRunStep",
+        "dependsOn": [
+          {
+            "activity": "SP STG to ODS",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "database": "OperationalDataSources_Sql-6abf6d4e-d280-44cd-879b-22e93fb97969",
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_RunStep]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": {
+                "value": "@pipeline().parameters.DataProc_Run_Id",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "DataProc_Run_Context": {
+              "value": {
+                "value": "@pipeline().parameters.Source_Table",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataProc_RunStep_Status": {
+              "value": "Failed",
+              "type": "String"
+            },
+            "DataProc_RunStep_DateStart": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_DateEnd": {
+              "value": {
+                "value": "@formatDateTime(utcNow())",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataProc_RunStep_LogLastTransUpdateDate": {
+              "value": ""
+            },
+            "RunStep_CheckCompleteness_SourceValue": {
+              "value": "",
+              "type": "Int16"
+            },
+            "RunStep_CheckCompleteness_ControlValue": {
+              "type": "Int16"
+            },
+            "DataProc_RunStep_UpdateContext": {
+              "value": "Error loading the table to ODS.",
+              "type": "String"
+            },
+            "DataProc_RunStep_Output": {
+              "value": {
+                "value": "@string(activity('Switch Depending on the LoadType').output)",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "UpdateBy": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "de03c326-ee30-49a1-9a8a-f756ee8558ed"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Failed ProcessRunStep Switch",
+        "dependsOn": [
+          {
+            "activity": "Switch Depending on the LoadType",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "Source_Table": {
+        "type": "string",
+        "defaultValue": "generalaccountentry"
+      },
+      "DataProc_Run_Id": {
+        "type": "int",
+        "defaultValue": 22
+      },
+      "Source": {
+        "type": "string",
+        "defaultValue": "Dynamics"
+      },
+      "Table_LoadType": {
+        "type": "string",
+        "defaultValue": "Incremental"
+      },
+      "Watermark_Column": {
+        "type": "string",
+        "defaultValue": "modifiedon"
+      },
+      "Watermark_Value": {
+        "type": "string",
+        "defaultValue": "1900-01-01"
+      },
+      "Stg_Schema": {
+        "type": "string",
+        "defaultValue": "21D365_stg"
+      },
+      "Source_Schema": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "Ods_Schema": {
+        "type": "string",
+        "defaultValue": "21D365_ods"
+      }
+    }
+  }
+}

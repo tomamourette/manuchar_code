@@ -1,0 +1,10 @@
+{
+    "table_name": "SO",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, salesOrder_id, orderNum, orderDate, internalCompany, contact_id, orderStatus, curr, team_id, resp_user, finalCustomer_id, invoiceCustomer_id, fileNumber, docLanguage, traderJunior_id, traderSenior_id, customerRef, creditCoverRef FROM staging.SO"
+}

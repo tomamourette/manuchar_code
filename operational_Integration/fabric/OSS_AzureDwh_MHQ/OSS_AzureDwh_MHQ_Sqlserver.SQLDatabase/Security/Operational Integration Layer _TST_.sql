@@ -1,0 +1,6 @@
+CREATE USER [Operational Integration Layer [TST]]]
+    WITH SID = 0xAC3AB6E10D0DC949AEE49E2238668DF0, TYPE = E;
+
+
+GO
+

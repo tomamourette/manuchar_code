@@ -1,0 +1,5 @@
+table_name,schema_name,load_enabled
+Sites,dbo,yes
+Locations,dbo,yes
+Anaplan_Budget,dbo,yes
+Anaplan_Forecast,dbo,yes

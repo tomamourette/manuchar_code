@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: bv_brg_invoices_payable
+    tags:
+      - "Invoices Payable"
+      - "business vault"
+    description: "This model is a template for filling the Bridge: Invoices Payable."
+    columns:
+      - name: bkey_date
+        description: ""
+      - name: due_date
+        description: ""
+      - name: closure_date
+        description: ""
+      - name: bkey_company
+        description: ""
+      - name: bkey_supplier
+        description: ""
+      - name: bkey_currency
+        description: ""
+      - name: bkey_payment_term
+        description: ""
+      - name: bkey_age_group
+        description: ""
+      - name: invoice_amount
+        description: ""
+      - name: open_invoice_amount
+        description: ""
+      - name: settled_invoice_amount
+        description: ""
+      - name: file_name
+        description: ""
+      - name: invoice_number
+        description: ""
+      - name: legal_number
+        description: ""

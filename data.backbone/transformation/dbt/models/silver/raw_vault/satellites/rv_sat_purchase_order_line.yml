@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: rv_sat_purchase_order_line
+    enabled: false
+    tags:
+      - "Purchase Order Line"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite purchase order line."
+    columns:
+      - name: bkey_purchase_order_line_source
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: purchase_order_line_purchase_id
+        description: ""
+      - name: purchase_order_line_line_number
+        description: ""
+      - name: purchase_order_line_company
+        description: ""
+      - name: purchase_order_line_name
+        description: ""
+      - name: purchase_order_line_delivery_term
+        description: ""
+      - name: purchase_order_line_quantity_ordered
+        description: ""
+      - name: purchase_order_line_purchase_unit
+        description: ""
+      - name: purchase_order_line_amount_trans_cur
+        description: ""
+      - name: purchase_order_line_amount_func_cur
+        description: ""
+      - name: purchase_order_line_amount_group_cur_uanda_spot
+        description: ""
+      - name: purchase_order_line_group_cur_oanda_rate
+        description: ""
+      - name: purchase_order_line_func_cur_rate
+        description: ""
+      - name: purchase_order_line_transactional_currency_code
+        description: ""
+      - name: purchase_order_line_group_currency_code
+        description: ""
+      - name: purchase_order_line_functional_currency_code
+        description: ""
+      - name: purchase_order_line_price_unit
+        description: ""
+      - name: purchase_order_line_delivery_mode
+        description: ""
+      - name: purchase_order_line_created_date_time
+        description: ""
+      - name: purchase_order_line_purchase_status
+        description: ""
+      - name: purchase_order_line_inventory_dimension_id
+        description: ""
+      - name: purchase_order_line_partition
+        description: ""
+      - name: purchase_order_line_lgs_logistic_file_id
+        description: ""
+      - name: purchase_order_line_product_id
+        description: ""
+      - name: purchase_order_line_purchase_price
+        description: ""
+      - name: purchase_order_line_vendor_account
+        description: ""
+      - name: purchase_order_line_purchase_quantity
+        description: ""
+      - name: purchase_order_line_purchase_quantity
+        description: ""
+      - name: purchase_order_line_purchase_quantity_mt
+        description: ""
+      - name: purchase_order_line_uom
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

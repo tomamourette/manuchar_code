@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_sales_order
+    tags:
+      - "Sales Order"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model is a template for filling business entity: sales order."
+    columns:
+      - name: bkey_sales_order_source
+        description: "The business key field plus source."
+      - name: bkey_sales_order
+        description: "The business key field."
+      - name: bkey_source
+        description: "Source identifier, either 'DYNAMICS' or 'STG'."
+      - name: ldts
+        description: "Load timestamp from the source, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, such as 'Dynamics 365' or 'STG'."

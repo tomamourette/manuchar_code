@@ -1,0 +1,37 @@
+
+version: 2
+
+models:
+  - name: dim_product
+    enabled: true
+    tags: 
+      - "Product"
+      - "Dimension"
+    description: "This model provides the current version of product details, including keys, attributes, and history metadata."
+    columns:
+      - name: tkey_product
+        description: "A unique technical key for the product, generated using a row number."
+      - name: bkey_product
+        description: "The business key for the product, used to uniquely identify it within the business context."
+      - name: product_code
+        description: "The code representing the product, identical to the business key."
+      - name: product_global_code
+        description: "The global code assigned to the product, used for international identification."
+      - name: product_name
+        description: "The name of the product."
+      - name: product_company
+        description: "The company associated with the product."
+      - name: product_id
+        description: "The identifier for the product, possibly used internally."
+      - name: valid_from
+        description: "The date and time from which the product record is valid."
+      - name: valid_to
+        description: "The date and time until which the product record is valid."
+      - name: is_current
+        description: "A flag indicating whether the product record is the current version."
+      - name: valid_from
+        description: "Start date and time from which the data is valid."
+      - name: valid_to
+        description: "End date and time until which the data is valid."
+      - name: is_current
+        description: "Indicates if the data is the most current version."

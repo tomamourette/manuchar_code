@@ -1,0 +1,55 @@
+
+version: 2
+
+models:
+  - name: rv_sat_site
+    enabled: false
+    tags:
+      - "Site"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model selects all columns from the site table sourced from Boomi, providing detailed information about each site including its location, status, and storage capacities."
+    columns:
+      - name: bkey_site_source
+        description: "The business key for the site source, uniquely identifying each site entry."
+      - name: site_code
+        description: "The code representing the site, used for identification purposes."
+      - name: site_name
+        description: "The name of the site, providing a human-readable identifier."
+      - name: site_status
+        description: "The current operational status of the site."
+      - name: site_main_activity
+        description: "The primary activity conducted at the site."
+      - name: site_property_type
+        description: "The type of property the site is categorized under."
+      - name: site_latitude
+        description: "The geographical latitude coordinate of the site."
+      - name: site_longitude
+        description: "The geographical longitude coordinate of the site."
+      - name: site_is_bonded
+        description: "Indicates whether the site is bonded, affecting its operational regulations."
+      - name: site_location_code
+        description: "The code representing the location of the site."
+      - name: site_location_name
+        description: "The name of the location where the site is situated."
+      - name: site_location_status
+        description: "The operational status of the site's location."
+      - name: site_location_type
+        description: "The type of location the site is situated in."
+      - name: site_location_property_type
+        description: "The property type of the site's location."
+      - name: site_location_size
+        description: "The size of the site's location, typically measured in square meters."
+      - name: site_storage_type
+        description: "The type of storage facilities available at the site."
+      - name: site_dry_storage_capacity
+        description: "The capacity for dry storage at the site, usually measured in cubic meters."
+      - name: site_liquid_storage_capacity
+        description: "The capacity for liquid storage at the site, usually measured in cubic meters."
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

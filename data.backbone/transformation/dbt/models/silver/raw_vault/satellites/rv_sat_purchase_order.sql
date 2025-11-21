@@ -1,0 +1,50 @@
+WITH purchase_order AS (
+    SELECT
+        bkey_purchase_order_source,
+        bkey_source,
+        purchase_order_payment_schedule,
+        purchase_order_payment,
+        purchase_order_dct_destination,
+        purchase_order_ecs_contract_status,
+        purchase_order_risk_trading_book_id,
+        purchase_order_created_date_time,
+        purchase_order_company,
+        purchase_order_partition,
+        purchase_order_order_account,
+        purchase_order_requester,
+        purchase_order_risk_trader,
+        purchase_order_worker_purchase_placer,
+        purchase_order_purchase_state,
+        purchase_order_ccs_closing_status,
+        purchase_order_ecs_trade_type,
+        purchase_order_purchase_type,
+        purchase_order_invoice_account,
+        purchase_order_accounting_date,
+        purchase_order_invoice_date,
+        purchase_order_amount_trans_cur,
+        purchase_order_amount_func_cur,
+        purchase_order_amount_group_cur_oanda_eod,
+        purchase_order_group_cur_oanda_eod_rate,
+        purchase_order_func_cur_rate,
+        purchase_order_internal_invoice_id,
+        purchase_order_local_product,
+        purchase_order_product,
+        purchase_order_transactional_currency_code,
+        purchase_order_group_currency_code,
+        purchase_order_functional_currency_code,
+        purchase_order_line_number,
+        purchase_order_incoterm,
+        purchase_order_origin_country,
+        purchase_order_destination_country,
+        purchase_order_quantity,
+        purchase_order_quantity_mt,
+        purchase_order_uom,
+        valid_from,
+        valid_to,
+        is_current
+    FROM {{ ref('purchase_order_dynamics')}}
+)
+
+SELECT
+    *
+FROM purchase_order

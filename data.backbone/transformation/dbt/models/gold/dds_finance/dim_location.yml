@@ -1,0 +1,43 @@
+
+version: 2
+
+models:
+  - name: dim_location
+    enabled: false
+    tags:
+      - "Industry"
+      - "Dimension"
+    description: "This model provides the latest version of location data, including keys, attributes, and history metadata."
+    columns:
+      - name: tkey_location
+        description: "A unique technical key for each location, generated using a row number."
+      - name: bkey_location
+        description: "The business key for the location, representing the unique identifier from the source."
+      - name: location_code
+        description: "The code representing the location, derived from the business key."
+      - name: location_name
+        description: "The name of the location."
+      - name: location_address
+        description: "The address of the location."
+      - name: location_city
+        description: "The city where the location is situated."
+      - name: location_zip_code
+        description: "The zip code of the location."
+      - name: location_longitude
+        description: "The geographical longitude of the location."
+      - name: location_latitude
+        description: "The geographical latitude of the location."
+      - name: location_country_code
+        description: "The country code representing the location's country."
+      - name: location_type
+        description: "The type of location, indicating its category or function."
+      - name: location_type_sort
+        description: "A sort key for organizing locations by type."
+      - name: location_company
+        description: "The company associated with the location."
+      - name: valid_from
+        description: "The date and time from which the location data is valid."
+      - name: valid_to
+        description: "The date and time until which the location data is valid."
+      - name: is_current
+        description: "A flag indicating whether the location data is the most current version."

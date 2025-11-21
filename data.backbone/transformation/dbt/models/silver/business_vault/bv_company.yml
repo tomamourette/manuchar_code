@@ -1,0 +1,36 @@
+version: 2
+ 
+models:
+  - name: bv_company
+    tags:
+      - "Company"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for business entity: Company."
+    columns:
+      - name: bkey_company
+        description: "The business key field."
+      - name: company_name
+        description: ""
+      - name: active_code
+        description: ""
+      - name: consolidation_period_method
+        description: ""
+      - name: group_percentage
+        description: ""
+      - name: minor_percentage
+        description: ""
+      - name: group_control_percentage
+        description: ""
+      - name: currency_code
+        description: ""
+      - name: sub_segment
+        description: ""
+      - name: segment
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,11 @@
+{
+    "file_name": "enum_costcenter",
+    "schema_name": "dbo",
+    "source_name": "dbb_lakehouse",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Code, Description FROM [dbo].[enum_CostCenterDescription]"
+}
+  

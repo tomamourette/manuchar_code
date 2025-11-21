@@ -1,0 +1,166 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Full Copy to SQL databank",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "DataProcess_RunStep Start",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "additionalColumns": [
+              {
+                "name": "Ingestion_Timestamp",
+                "value": {
+                  "value": "@pipeline().TriggerTime",
+                  "type": "Expression"
+                }
+              }
+            ],
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "dbb_dynamics_lakehouse",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+                    "artifactId": "00693b59-6dcb-4f19-bbd6-2b772ce5f838",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "table": {
+                  "value": "@pipeline().parameters.tableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "sink": {
+            "type": "FabricSqlDatabaseSink",
+            "preCopyScript": {
+              "value": "@concat('DROP TABLE IF EXISTS [',pipeline().parameters.targetSchemaName, '].', pipeline().parameters.tableName)",
+              "type": "Expression"
+            },
+            "writeBehavior": "insert",
+            "sqlWriterUseTableLock": false,
+            "tableOption": "autoCreate",
+            "datasetSettings": {
+              "annotations": [],
+              "connectionSettings": {
+                "name": "OperationalDataSources_Sql",
+                "properties": {
+                  "annotations": [],
+                  "type": "FabricSqlDatabase",
+                  "typeProperties": {
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                    "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                  },
+                  "externalReferences": {
+                    "connection": "7fabbca4-0ca2-4f48-b999-09b7214445fc"
+                  }
+                }
+              },
+              "type": "FabricSqlDatabaseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().parameters.targetSchemaName",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@pipeline().parameters.tableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "DataProcess_RunStep end Success",
+        "type": "Wait",
+        "dependsOn": [
+          {
+            "activity": "Full Copy to SQL databank",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      },
+      {
+        "name": "DataProcess_RunStep end Failed",
+        "type": "Wait",
+        "dependsOn": [
+          {
+            "activity": "Full Copy to SQL databank",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      },
+      {
+        "name": "DataProcess_RunStep Start",
+        "type": "Wait",
+        "dependsOn": [],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      }
+    ],
+    "parameters": {
+      "tableName": {
+        "type": "string",
+        "defaultValue": "vendtrans"
+      },
+      "source": {
+        "type": "string",
+        "defaultValue": "Dynamics"
+      },
+      "schemaName": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "targetSchemaName": {
+        "type": "string",
+        "defaultValue": "21D365_stg"
+      }
+    }
+  }
+}

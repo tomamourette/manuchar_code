@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "MonaOnPrem_Adhoc"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3886e142-e472-b5c4-46c3-63a224a3e6cd"
+  }
+}

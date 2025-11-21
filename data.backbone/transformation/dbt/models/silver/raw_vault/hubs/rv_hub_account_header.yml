@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_hub_account_header
+    tags:
+      - "Account Header"
+      - "raw vault"
+      - "hub"
+      - "CON"
+    description: "This model is a template for filling business entity: Account Header."
+    columns:
+      - name: bkey_account_header_source
+        description: "The business key field plus the source."
+      - name: bkey_account_header
+        description: "The business key field"
+      - name: bkey_source
+        description: ""
+      - name: ldts
+        description: "Date & Time the Record was Created In the Source System."
+      - name: record_source
+        description: "Source system name."

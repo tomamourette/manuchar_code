@@ -1,0 +1,57 @@
+
+version: 2
+
+models:
+  - name: fact_stock
+    enabled: true
+    tags: 
+      - "Stock"
+      - "Fact"
+    description: "Model representing stock facts including dates, dimensions, numeric values, attributes, and currency rates."
+    columns:
+      - name: tkey_entry_date
+        description: "The date key representing the entry date of the stock."
+      - name: tkey_snapshot_date
+        description: "The date key representing the snapshot date of the stock."
+      - name: tkey_company
+        description: "The key representing the company dimension."
+      - name: tkey_customer
+        description: "The key representing the customer dimension."
+      - name: tkey_currency
+        description: "The key representing the currency dimension."
+      - name: tkey_stock_age_group
+        description: "The key representing the stock age group dimension."
+      - name: tkey_product
+        description: "The key representing the product dimension."
+      - name: tkey_product_global
+        description: "The key representing the global product dimension."
+      - name: tkey_site
+        description: "The key representing the site dimension."
+      - name: stock_committed
+        description: "Indicates whether the stock is committed (true/false)."
+      - name: stock_in_transit
+        description: "Indicates whether the stock is in transit (true/false)."
+      - name: stock_home_amount
+        description: "The amount of stock in home currency."
+      - name: stock_quantity
+        description: "The quantity of stock."
+      - name: stock_quantity_mt
+        description: "The quantity of stock measured in metric tons."
+      - name: sales_last_3_months_home_amount
+        description: "Sales amount in home currency for the last 3 months."
+      - name: product_in_stock_home_amount
+        description: "Amount of product in stock in home currency."
+      - name: stock_lot_number
+        description: "The lot number of the stock."
+      - name: stock_uom
+        description: "The unit of measure for the stock."
+      - name: stock_warehouse_name
+        description: "The name of the warehouse where the stock is stored."
+      - name: conversion_rate_home_local
+        description: "The conversion rate from home currency to local currency."
+      - name: conversion_rate_home_group
+        description: "The conversion rate from home currency to group currency."
+      - name: snapshot_granularity
+        description: "The granularity of the snapshot, indicating the frequency (Weekly/Monthly/Unknown)."
+      - name: source
+        description: "The source system of the stock data."

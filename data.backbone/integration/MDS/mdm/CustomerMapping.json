@@ -1,0 +1,12 @@
+{
+    "table_name": "CustomerMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Customer Golden Key_Code] as Customer_Golden_Key_Code, [Customer Golden Key_Name] as Customer_Golden_Key_Name, [Customer Golden Key_ID] as Customer_Golden_Key_ID, [Customer To Map_Code] as Customer_To_Map_Code, [Customer To Map_Name] as Customer_To_Map_Name, [Customer To Map_ID] as Customer_To_Map_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Customer Mapping]"
+}

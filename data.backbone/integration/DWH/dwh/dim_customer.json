@@ -1,0 +1,10 @@
+{
+    "file_name": "dim_customer",
+    "schema_name": "dwh",
+    "source_name": "dwh_azure",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT CustomerCode, CustomerName, LegalNumber, CountryCode, CountryName, CommercialRegionName, Address, ZIPCode, City, CurrencyCode, MultinationalCustomerCode, MultinationalCustomerName, MultinationalLegalNumber, MultinationalCountryCode, MultinationalCountryName, AffiliateCode, AffiliateDescription, IsAffiliate, IndustryTypeCode, IndustryTypeDescription, MNCParentCode, MNCParentName, CreatedDateTime, ModifiedDateTime, ValidationStatus, KDP_SK, KDP_checksum, KDP_executionId, KDP_loadDT FROM dwh.dim_customer"
+}

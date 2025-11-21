@@ -1,0 +1,6 @@
+CREATE USER [adm_kpip@manuchar.com]
+    WITH SID = 0xA637EBDB24A7D549904B567753AA3923, TYPE = E;
+
+
+GO
+

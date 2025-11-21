@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: rv_sat_stock
+    enabled: true
+    tags:
+      - "Stock"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite for stock snapshots, combining data from both STG and Dynamics sources and applying SCD2 logic."
+
+    columns:
+      - name: bkey_stock_source
+        description: "Unique business key of the stock record, including source suffix."
+      - name: stock_company
+        description: "Code of the company/site where the stock resides."
+      - name: stock_closure_date
+        description: "End-of-period snapshot date representing when the stock was valid."
+      - name: stock_entry_date
+        description: "The entry date when the stock became available in the warehouse."
+      - name: stock_warehouse_name
+        description: "Name or code of the warehouse where the stock is located."
+      - name: stock_lot_number
+        description: "Lot or batch number identifying the stock group."
+      - name: bkey_product
+        description: "Mapped master product key (from affiliate mapping)."
+      - name: stock_product_id
+        description: "Original product ID reported by the source system."
+      - name: stock_product_name
+        description: "Product name as reported in the source (null for Dynamics)."
+      - name: stock_quantity
+        description: "Quantity of stock available in reported unit of measure."
+      - name: stock_uom
+        description: "Unit of measure (e.g., KG, MT, PCS) reported by the source."
+      - name: stock_amount
+        description: "Home currency value of the stock, reported or derived."
+      - name: stock_committed
+        description: "Whether the stock is committed to a customer ('Yes', 'No')."
+      - name: file_name
+        description: "Source file name from STG source systems (null for Dynamics)."
+      - name: valid_from
+        description: "The start of the validity period for this stock record (SCD2 logic)."
+      - name: valid_to
+        description: "The end of the validity period for this stock record (SCD2 logic)."
+      - name: is_current
+        description: "Indicates whether this stock record is the most recent version (valid_to = 2999-12-31)."

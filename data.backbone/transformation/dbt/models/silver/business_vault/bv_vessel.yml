@@ -1,0 +1,22 @@
+version: 2
+ 
+models:
+  - name: bv_vessel
+    tags:
+      - "Vessel"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling business entity: Vessel."
+    columns:
+      - name: bkey_vessel
+        description: "The business key field."
+      - name: vessel_id
+        description: "Vessel Id, sourced from the base shipvesselid."
+      - name: vessel_description
+        description: "Description of the vessel."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

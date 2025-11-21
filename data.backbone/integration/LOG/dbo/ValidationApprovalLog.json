@@ -1,0 +1,10 @@
+{
+    "table_name": "ValidationApprovalLog",
+    "schema_name": "MON",
+    "source_name": "LOG",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT ValidationApprovalLog, ValidationRunLog, CompanyCode, ClosureDate, Status, FileName, InsertDate, ModifiedBy, ModifiedOn FROM [dbo].[ValidationApprovalLog]"
+}

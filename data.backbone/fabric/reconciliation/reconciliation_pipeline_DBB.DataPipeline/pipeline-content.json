@@ -1,0 +1,484 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "2f08b9d6-94b7-b9a6-45e2-0ca64924ae5e",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "environment": {
+              "value": {
+                "value": "@variables('environment')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "orchestration_run_id": {
+              "value": {
+                "value": "@variables('orchestration_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "reconciliation_pipeline_run_id": {
+              "value": {
+                "value": "@variables('reconciliation_pipeline_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "reconciliation_pipeline_id": {
+              "value": {
+                "value": "@variables('reconciliation_pipeline_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "data_product": {
+              "value": {
+                "value": "@variables('data_product')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "reconciliation_notebook",
+        "dependsOn": [
+          {
+            "activity": "Wait",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "SELECT\n    [environment]\nFROM [dbb_warehouse].[meta].[environments]\nWHERE [workspace_id] = '@{pipeline().DataFactory}'",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "dbb_warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_environment_variables",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "environment",
+          "value": {
+            "value": "@toLower(activity('lookup_environment_variables').output.firstRow.environment)",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_environment",
+        "description": "Variable environment",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "reconciliation_pipeline_id",
+          "value": {
+            "value": "@{pipeline().Pipeline}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_reconciliation_pipeline_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "reconciliation_pipeline_run_id",
+          "value": {
+            "value": "@{pipeline().RunId}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_reconciliation_pipeline_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "orchestration_run_id",
+          "value": {
+            "value": "@{pipeline().parameters.orchestration_run_id}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_orchestration_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(activity('reconciliation_notebook').output.status, 'Succeeded')",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [],
+          "ifFalseActivities": [
+            {
+              "type": "Fail",
+              "typeProperties": {
+                "message": {
+                  "value": "@activity('reconciliation_notebook').output",
+                  "type": "Expression"
+                },
+                "errorCode": "500"
+              },
+              "name": "reconciliation_notebook_failed",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "reconciliation_notebook_succeeded",
+        "dependsOn": [
+          {
+            "activity": "reconciliation_notebook",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "data_product",
+          "value": {
+            "value": "@{pipeline().parameters.data_product}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_data_product",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "integration_lakehouse_id",
+          "value": "a3c7dd8f-25f9-4aa9-aaad-981087e7d0d4"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_integration_lakehouse_id",
+        "dependsOn": []
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "JsonSource",
+            "formatSettings": {
+              "type": "JsonReadSettings"
+            },
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            }
+          },
+          "datasetSettings": {
+            "type": "Json",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "folderPath": {
+                  "value": "transformation/dbt/models/gold/reconciliation/reconciliation_queries",
+                  "type": "Expression"
+                },
+                "fileName": "quality_equity_mona_onprem.json"
+              }
+            },
+            "schema": {},
+            "linkedService": {
+              "name": "7a76b31d_edb7_46cd_8311_f4a1cf0b42d2",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "@variables('integration_lakehouse_id')",
+                  "workspaceId": "@pipeline().DataFactory",
+                  "rootFolder": "Files"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_reconciliation_source_details",
+        "dependsOn": [
+          {
+            "activity": "set_variable_integration_lakehouse_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": {
+              "value": "@activity('lookup_reconciliation_source_details').output.firstRow.query",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "SqlServerTable",
+              "typeProperties": {
+                "database": {
+                  "value": "@activity('lookup_reconciliation_source_details').output.firstRow.database",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "@variables('source_connection_id')"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "OverwriteSchema",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "schema": "dbo",
+                "table": {
+                  "value": "@{activity('lookup_reconciliation_source_details').output.firstRow.database}__@{activity('lookup_reconciliation_source_details').output.firstRow.schema}_@{activity('lookup_reconciliation_source_details').output.firstRow.table_name}",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "b0c4d9a1_7dd0_49d6_9772_a33c89495e95",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "@variables('integration_lakehouse_id')",
+                    "workspaceId": "@pipeline().DataFactory",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "reconciliation_source_check",
+        "dependsOn": [
+          {
+            "activity": "set_variable_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "lookup_reconciliation_source_details",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_reconciliation_pipeline_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_reconciliation_pipeline_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_orchestration_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_data_product",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_source_connection_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "source_connection_id",
+          "value": "d645f75d-9fd8-4e67-910d-22fee4b0900c"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_source_connection_id",
+        "dependsOn": []
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 120
+        },
+        "name": "Wait",
+        "dependsOn": [
+          {
+            "activity": "reconciliation_source_check",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "data_product": {
+        "type": "string"
+      },
+      "orchestration_run_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "orchestration_run_id": {
+        "type": "String"
+      },
+      "environment": {
+        "type": "String"
+      },
+      "reconciliation_pipeline_run_id": {
+        "type": "String"
+      },
+      "reconciliation_pipeline_id": {
+        "type": "String"
+      },
+      "data_product": {
+        "type": "String"
+      },
+      "transformation_warehouse_connection_id": {
+        "type": "String"
+      },
+      "integration_lakehouse_connection_id": {
+        "type": "String"
+      },
+      "source_connection_id": {
+        "type": "String"
+      },
+      "integration_lakehouse_id": {
+        "type": "String"
+      }
+    }
+  }
+}

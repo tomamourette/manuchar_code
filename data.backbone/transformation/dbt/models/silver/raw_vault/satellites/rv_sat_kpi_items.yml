@@ -1,0 +1,29 @@
+
+version: 2
+
+models:
+  - name: rv_sat_kpi_items
+    enabled: false
+    tags:
+      - "KPI Items"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "Model representing kpi details sourced from the kpi excel."
+    columns:
+      - name: tkey_kpi
+        description: "The unique key for each kpi record in the lakehouse."
+      - name: bkey_kpi_source
+        description: "Unique key identifying the source of the kpi data."
+      - name: kpi_name
+        description: "Name of the kpi."
+      - name: kpi_sort_number
+        description: "Sort Number of the KPI."
+      - name: kpi_type
+        description: "Type of the kpi"
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

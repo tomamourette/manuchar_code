@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "42dc50c7-bd73-83ee-4c4f-15e6225c7505",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "environment": {
+              "value": {
+                "value": "@variables('environment')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "maintenance_notebook_lakehouse_optimization",
+        "dependsOn": [
+          {
+            "activity": "set_variable_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "workspace_id",
+          "value": {
+            "value": "@pipeline().DataFactory",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_environment",
+        "dependsOn": []
+      }
+    ],
+    "variables": {
+      "environment": {
+        "type": "String"
+      },
+      "workspace_id": {
+        "type": "String"
+      }
+    }
+  }
+}

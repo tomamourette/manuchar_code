@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "OIL_Mona_LakehouseID",
+      "note": "",
+      "type": "String",
+      "value": "86563906-0212-4c50-9019-45c93eae5671"
+    },
+    {
+      "name": "OIL_Mona_WorkspaceID",
+      "note": "",
+      "type": "String",
+      "value": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+    },
+    {
+      "name": "OIL_Dynamics_LakehouseID",
+      "note": "",
+      "type": "String",
+      "value": "26d71613-5ee6-4522-a720-0f4dfa85c17b"
+    },
+    {
+      "name": "OIL_Dynamics_WorkspaceID",
+      "note": "",
+      "type": "String",
+      "value": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: bv_product
+    tags:
+      - "Product"
+      - "business vault"
+      - "ERP"
+    description: "This model unifies product data from Dynamics and MDS sources by concatenating the product key and source identifier to create a composite business key. It includes product details such as name, grouping, categories, business unit, grouping code, and time-based validity fields with an active flag."
+    columns:
+      - name: product_name
+        description: "Name of the product."
+      - name: product_group_category
+        description: "Product category derived from the product grouping."
+      - name: product_group_subcategory
+        description: "Product subcategory from the product grouping."
+      - name: business_unit
+        description: "Business unit responsible for the product."
+      - name: product_grouping_code
+        description: "Derived product grouping code used for organizing products."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active (1 if valid_to equals '2999-12-31 23:59:59.999999', otherwise 0)."

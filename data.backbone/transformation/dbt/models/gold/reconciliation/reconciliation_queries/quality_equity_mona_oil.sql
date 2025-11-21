@@ -1,0 +1,35 @@
+WITH source_mona_kpi_equity AS (
+	SELECT 
+		SUBSTRING(vconso.ConsoCode, 1, 6) AS bkey_date,
+		TRIM(vconso.CompanyCode) AS bkey_affiliate,
+		CAST(vconso.Amount AS DECIMAL(18, 3)) AS amount,
+		'OIL Mona' AS source_name,
+		'Equity' AS kpi_name
+	FROM {{ ref('sv_mona_v_data_conso')}} vconso
+	WHERE vconso.Account IN ('100000', '101000', '110000', '120000', '130000', '131000', '132000', '133000', '134000', '136920', '140000', '145000', '136500')
+		AND vconso.ConsoCode LIKE '%IFR%'
+		AND SUBSTRING(vconso.ConsoCode, 1, 6) IN (FORMAT(DATEADD(MM, -1, GETDATE()), 'yyyyMM'), FORMAT(DATEADD(MM, -2, GETDATE()), 'yyyyMM'), FORMAT(DATEADD(MM, -3, GETDATE()), 'yyyyMM'))
+),
+
+source_mona_kpi_equity_aggregated AS (
+	SELECT 
+		bkey_date,
+		bkey_affiliate,
+		SUM(amount) AS amount,
+		source_name,
+		kpi_name
+	FROM source_mona_kpi_equity
+	GROUP BY 
+		bkey_date,
+		bkey_affiliate,
+		source_name,
+		kpi_name
+)
+
+SELECT
+	bkey_date,
+	bkey_affiliate,
+	amount,
+	source_name,
+	kpi_name
+FROM source_mona_kpi_equity_aggregated

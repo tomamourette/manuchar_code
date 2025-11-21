@@ -1,0 +1,40 @@
+
+version: 2
+
+models:
+  - name: bv_location
+    enabled: false
+    tags: 
+      - "Location"
+      - "business vault"
+      - "REF"
+    description: "This model combines location data from different sources, generating non-overlapping time ranges and selecting the leading source for each attribute."
+    columns:
+      - name: bkey_location
+        description: "Unique key representing each location."
+      - name: location_name
+        description: "Name of the location."
+      - name: location_address
+        description: "Address of the location."
+      - name: location_city
+        description: "City where the location is situated."
+      - name: location_zip_code
+        description: "Zip code of the location."
+      - name: location_longitude
+        description: "Longitude coordinate of the location."
+      - name: location_latitude
+        description: "Latitude coordinate of the location."
+      - name: location_country_code
+        description: "Country code of the location."
+      - name: location_type
+        description: "Type classification of the location."
+      - name: location_type_sort
+        description: "Sort order for the location type."
+      - name: location_company
+        description: "Company associated with the location."
+      - name: valid_from
+        description: "Start date and time from which the data is valid."
+      - name: valid_to
+        description: "End date and time until which the data is valid."
+      - name: is_current
+        description: "Indicator if the record is the current version."

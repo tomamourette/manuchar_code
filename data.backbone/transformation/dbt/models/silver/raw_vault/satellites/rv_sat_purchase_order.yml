@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: rv_sat_purchase_order
+    enabled: false
+    tags:
+      - "Purchase Order"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite purchase order."
+    columns:
+      - name: bkey_purchase_order_source
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: purchase_order_payment_schedule
+        description: ""
+      - name: purchase_order_payment
+        description: ""
+      - name: purchase_order_dct_destination
+        description: ""
+      - name: purchase_order_ecs_contract_status
+        description: ""
+      - name: purchase_order_risk_trading_book_id
+        description: ""
+      - name: purchase_order_created_date_time
+        description: ""
+      - name: purchase_order_company
+        description: ""
+      - name: purchase_order_partition
+        description: ""
+      - name: purchase_order_order_account
+        description: ""
+      - name: purchase_order_requester
+        description: ""
+      - name: purchase_order_risk_trader
+        description: ""
+      - name: purchase_order_worker_purchase_placer
+        description: ""
+      - name: purchase_order_purchase_state
+        description: ""
+      - name: purchase_order_ccs_closing_status
+        description: ""
+      - name: purchase_order_ecs_trade_type
+        description: ""
+      - name: purchase_order_purchase_type
+        description: ""
+      - name: purchase_order_invoice_account
+        description: ""
+      - name: purchase_order_accounting_date
+        description: ""
+      - name: purchase_order_invoice_date,
+        description: ""
+      - name: purchase_order_amount_trans_cur
+        description: ""
+      - name: purchase_order_amount_func_cur
+        description: ""
+      - name: purchase_order_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_order_group_cur_oanda_eod_rate
+        description: ""
+      - name: purchase_order_func_cur_rate
+        description: ""
+      - name: purchase_order_internal_invoice_id
+        description: ""
+      - name: purchase_order_local_product
+        description: ""
+      - name: purchase_order_product
+        description: ""
+      - name: purchase_order_transactional_currency_code
+        description: ""
+      - name: purchase_order_group_currency_code
+        description: ""
+      - name: purchase_order_functional_currency_code
+        description: ""
+      - name: purchase_order_line_number
+        description: ""
+      - name: purchase_order_incoterm
+        description: ""
+      - name: purchase_order_origin_country
+        description: ""
+      - name: purchase_order_destination_country
+        description: ""
+      - name: purchase_order_quantity
+        description: ""
+      - name: purchase_order_quantity_mt
+        description: ""
+      - name: purchase_order_uom
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

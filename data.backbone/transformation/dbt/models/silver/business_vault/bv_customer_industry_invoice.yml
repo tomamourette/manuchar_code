@@ -1,0 +1,22 @@
+version: 2
+ 
+models:
+  - name: bv_customer_industry_invoice
+    tags:
+      - "Customer Industry Invoice"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling the business entity: Customer Industry Invoice."
+    columns:
+      - name: bkey_customer_industry_invoice
+        description: "The business key field."
+      - name: customer_industry_invoice_name
+        description: ""
+      - name: customer_industry_invoice_group
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

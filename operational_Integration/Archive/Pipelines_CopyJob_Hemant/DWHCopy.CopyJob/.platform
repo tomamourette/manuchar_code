@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "CopyJob",
+    "displayName": "DWHCopy"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d92c635b-4034-a0b7-4a3f-d1c3e32ce64a"
+  }
+}

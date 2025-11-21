@@ -1,0 +1,10 @@
+{
+    "table_name": "FILGRIDVERSIONRATE",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, fileGridVersionRateId, fileId, currency, rate, version, amount, amountDifference, currencyGainLoss, currencyGainLossCumul FROM staging.FILGRIDVERSIONRATE"
+}

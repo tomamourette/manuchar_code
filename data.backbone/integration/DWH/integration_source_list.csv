@@ -1,0 +1,7 @@
+table_name,schema_name,load_enabled
+dim_customer,dwh,yes
+dim_product,dwh,yes
+dbo_Anaplan_Budget,ds,yes
+Anaplan_Budget,ds,yes
+Anaplan_Forecast,ds,yes
+STG_val_STG_SALES_PLAN_HIST,ds,yes

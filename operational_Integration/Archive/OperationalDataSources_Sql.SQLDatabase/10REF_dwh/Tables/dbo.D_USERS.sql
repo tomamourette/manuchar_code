@@ -1,0 +1,22 @@
+CREATE TABLE [10REF_dwh].[dbo.D_USERS] (
+    [PK_USERS]           INT             NULL,
+    [BK_USER_CODE]       NVARCHAR (MAX)  NULL,
+    [BK_USER_NAME]       NVARCHAR (MAX)  NULL,
+    [USER_EMAIL]         NVARCHAR (MAX)  NULL,
+    [USER_PHONE]         NVARCHAR (MAX)  NULL,
+    [USER_FIRSTNAME]     NVARCHAR (MAX)  NULL,
+    [USER_LASTNAME]      NVARCHAR (MAX)  NULL,
+    [USER_PRINCIPALNAME] NVARCHAR (MAX)  NULL,
+    [HASHED_KEY_SCD1]    NVARCHAR (MAX)  NULL,
+    [IS_CURRENT]         SMALLINT        NULL,
+    [INSERT_DATE]        DATETIME2 (6)   NULL,
+    [UPDATE_DATE]        DATETIME2 (6)   NULL,
+    [START_DATE]         DATETIME2 (6)   NULL,
+    [END_DATE]           DATETIME2 (6)   NULL,
+    [MISSING_RECORD]     VARBINARY (MAX) NULL,
+    [PACKAGERUNID]       INT             NULL
+);
+
+
+GO
+

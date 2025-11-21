@@ -1,0 +1,42 @@
+CREATE TABLE [MDS_mdm].[Business_Partner] (
+    [ID]                                 INT            NULL,
+    [MUID]                               NVARCHAR (MAX) NULL,
+    [VersionName]                        NVARCHAR (MAX) NULL,
+    [VersionNumber]                      INT            NULL,
+    [Version_ID]                         INT            NULL,
+    [VersionFlag]                        NVARCHAR (MAX) NULL,
+    [Name]                               NVARCHAR (MAX) NULL,
+    [Code]                               NVARCHAR (MAX) NULL,
+    [ChangeTrackingMask]                 INT            NULL,
+    [Legal_Number_Original]              NVARCHAR (MAX) NULL,
+    [Legal_Number_Cleansed]              NVARCHAR (MAX) NULL,
+    [Country_Code]                       NVARCHAR (MAX) NULL,
+    [Country_Name]                       NVARCHAR (MAX) NULL,
+    [Country_ID]                         INT            NULL,
+    [Is_Intercompany_Code]               NVARCHAR (MAX) NULL,
+    [Is_Intercompany_Name]               NVARCHAR (MAX) NULL,
+    [Is_Intercompany_ID]                 INT            NULL,
+    [Industry_Type_Code]                 NVARCHAR (MAX) NULL,
+    [Industry_Type_Name]                 NVARCHAR (MAX) NULL,
+    [Industry_Type_ID]                   INT            NULL,
+    [Multinational_Parent_Code]          NVARCHAR (MAX) NULL,
+    [Multinational_Parent_Name]          NVARCHAR (MAX) NULL,
+    [Multinational_Parent_ID]            INT            NULL,
+    [Multinational_Business_Parent_Code] NVARCHAR (MAX) NULL,
+    [Multinational_Business_Parent_Name] NVARCHAR (MAX) NULL,
+    [Multinational_Business_Parent_ID]   INT            NULL,
+    [Address]                            NVARCHAR (MAX) NULL,
+    [City]                               NVARCHAR (MAX) NULL,
+    [Zip]                                NVARCHAR (MAX) NULL,
+    [EnterDateTime]                      DATETIME2 (6)  NULL,
+    [EnterUserName]                      NVARCHAR (MAX) NULL,
+    [EnterVersionNumber]                 INT            NULL,
+    [LastChgDateTime]                    DATETIME2 (6)  NULL,
+    [LastChgUserName]                    NVARCHAR (MAX) NULL,
+    [LastChgVersionNumber]               INT            NULL,
+    [ValidationStatus]                   NVARCHAR (MAX) NULL
+);
+
+
+GO
+

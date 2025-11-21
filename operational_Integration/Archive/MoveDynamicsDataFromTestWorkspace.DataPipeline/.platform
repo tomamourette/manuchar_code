@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "MoveDynamicsDataFromTestWorkspace"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9e28a8f2-bcc4-a85f-4827-3f729ea091e5"
+  }
+}

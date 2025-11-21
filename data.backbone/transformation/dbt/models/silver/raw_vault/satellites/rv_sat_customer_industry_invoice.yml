@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_sat_customer_industry_invoice
+    tags:
+      - "Customer Industry Invoice"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model is a template for filling the Satellite: Customer Industry Invoice."
+    columns:
+      - name: bkey_customer_industry_invoice_source
+        description: "The business key field."
+      - name: customer_industry_invoice_name
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

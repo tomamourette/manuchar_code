@@ -1,0 +1,6 @@
+CREATE USER [adm_apo@manuchar.com]
+    WITH SID = 0x15451AF74C54514D99DAAF399C6B453D, TYPE = E;
+
+
+GO
+

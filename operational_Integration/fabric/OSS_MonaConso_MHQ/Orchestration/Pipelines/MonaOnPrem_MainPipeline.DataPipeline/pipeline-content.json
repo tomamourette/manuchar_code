@@ -1,0 +1,375 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "typeProperties": {
+              "schema": "DataSys",
+              "table": "Config_SourceList"
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "OSS_MonaConso_MHQ_Warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup Config Data SourceList",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup Config Data SourceList').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().LoadType",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "Incremental",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "Schema": {
+                              "value": "@item().Schema",
+                              "type": "Expression"
+                            },
+                            "TableName": {
+                              "value": "@item().Table",
+                              "type": "Expression"
+                            },
+                            "DataLoadQuery": {
+                              "value": "@pipeline().parameters.DataLoadQuery",
+                              "type": "Expression"
+                            },
+                            "Watermark": {
+                              "value": "@item().Watermark_Column",
+                              "type": "Expression"
+                            },
+                            "DestinationSchema": {
+                              "value": "@item().TargetSchema",
+                              "type": "Expression"
+                            },
+                            "DeleteClause": {
+                              "value": "@pipeline().parameters.DeleteQuery",
+                              "type": "Expression"
+                            },
+                            "DataProduct": {
+                              "value": "@pipeline().parameters.Data_Product",
+                              "type": "Expression"
+                            },
+                            "OrchestrationRunId": {
+                              "value": "@pipeline().parameters.Orchestration_Run_ID",
+                              "type": "Expression"
+                            },
+                            "MonaMainPipelineId": {
+                              "value": "@pipeline().Pipeline",
+                              "type": "Expression"
+                            },
+                            "MonaMainPipelineRunId": {
+                              "value": "@pipeline().RunId",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "f81bf204-37ce-8124-4bc5-482441b3902d",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "Incremental Load Table",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Full",
+                    "activities": [
+                      {
+                        "type": "Copy",
+                        "typeProperties": {
+                          "source": {
+                            "type": "SqlServerSource",
+                            "partitionOption": "None",
+                            "queryTimeout": "02:00:00",
+                            "additionalColumns": [
+                              {
+                                "name": "ODSKey",
+                                "value": "1"
+                              },
+                              {
+                                "name": "ODSVersion",
+                                "value": "0"
+                              },
+                              {
+                                "name": "ODSHash",
+                                "value": "ODSHash"
+                              },
+                              {
+                                "name": "ODSRecordStatus",
+                                "value": "N"
+                              },
+                              {
+                                "name": "ODSActive",
+                                "value": "1"
+                              },
+                              {
+                                "name": "ODSDeleted",
+                                "value": "0"
+                              },
+                              {
+                                "name": "ODSModifiedOn",
+                                "value": {
+                                  "value": "@pipeline().TriggerTime",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSModifiedBy",
+                                "value": {
+                                  "value": "@pipeline().PipelineName",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSIngestionDate",
+                                "value": {
+                                  "value": "@pipeline().TriggerTime",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSStartDate",
+                                "value": {
+                                  "value": "@pipeline().TriggerTime",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSEndDate",
+                                "value": "12-31-1999"
+                              }
+                            ],
+                            "datasetSettings": {
+                              "type": "SqlServerTable",
+                              "typeProperties": {
+                                "schema": {
+                                  "value": "@item().Schema",
+                                  "type": "Expression"
+                                },
+                                "table": {
+                                  "value": "@item().Table",
+                                  "type": "Expression"
+                                },
+                                "database": "Mona"
+                              },
+                              "schema": [],
+                              "externalReferences": {
+                                "connection": "d645f75d-9fd8-4e67-910d-22fee4b0900c"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "sink": {
+                            "type": "DataWarehouseSink",
+                            "tableOption": "autoCreate",
+                            "preCopyScript": {
+                              "value": "@concat('DROP TABLE IF EXISTS ', item().TargetSchema, '.', item().Table, '__ODS')",
+                              "type": "Expression"
+                            },
+                            "allowCopyCommand": true,
+                            "copyCommandSettings": {},
+                            "disableMetricsCollection": false,
+                            "datasetSettings": {
+                              "type": "DataWarehouseTable",
+                              "typeProperties": {
+                                "schema": {
+                                  "value": "@item().TargetSchema",
+                                  "type": "Expression"
+                                },
+                                "table": {
+                                  "value": "@concat(item().Table, '__ODS')",
+                                  "type": "Expression"
+                                }
+                              },
+                              "schema": [],
+                              "linkedService": {
+                                "name": "OSS_MonaConso_MHQ_Warehouse",
+                                "properties": {
+                                  "type": "DataWarehouse",
+                                  "typeProperties": {
+                                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                                  },
+                                  "annotations": []
+                                }
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            }
+                          },
+                          "enableStaging": true
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "Copy data from Source to ODS",
+                        "dependsOn": []
+                      },
+                      {
+                        "type": "Script",
+                        "typeProperties": {
+                          "scripts": [
+                            {
+                              "text": {
+                                "value": "INSERT INTO [dbb_warehouse].[meta].[monitoring_integration] (\n    table_name,\n    schema_name,\n    source_name,\n    source_type,\n    load_type,\n    workspace,\n    status,\n    timestamp,\n    duration,\n    throughput,\n    data_read,\n    data_written,\n    rows_read,\n    rows_written,\n    data_product,\n    orchestration_run_id,\n    integration_pipeline_source_run_id,\n    integration_pipeline_id\n)\nVALUES (\n    '@{item().Table}',\n    '@{item().Schema}',\n    'Mona',\n    'SQL',\n    '@{item().LoadType}',\n    '@{pipeline().DataFactory}',\n    '@{activity('Copy data from Source to ODS').output.executionDetails[0].status}',\n    '@{formatDateTime(pipeline().TriggerTime, 'yyyy-MM-dd HH:mm:ss.ffffff')}',\n    @{coalesce(activity('Copy data from Source to ODS').output.copyDuration, 0)},\n    @{coalesce(activity('Copy data from Source to ODS').output.throughput, 0)},\n    @{coalesce(activity('Copy data from Source to ODS').output.dataRead, 0)},\n    @{coalesce(activity('Copy data from Source to ODS').output.dataWritten, 0)},\n    @{coalesce(activity('Copy data from Source to ODS').output.rowsRead, 0)},\n    @{if(equals(activity('Copy data from Source to ODS').output.dataWritten, 0), 0, activity('Copy data from Source to ODS').output.rowsCopied)},\n    '@{pipeline().parameters.Data_Product}',\n    '@{pipeline().parameters.Orchestration_Run_ID}',\n    '@{pipeline().RunId}',\n    '@{pipeline().Pipeline}'\n);",
+                                "type": "Expression"
+                              },
+                              "type": "Query"
+                            }
+                          ],
+                          "scriptBlockExecutionTimeout": "02:00:00"
+                        },
+                        "connectionSettings": {
+                          "name": "dbb_warehouse",
+                          "properties": {
+                            "type": "DataWarehouse",
+                            "typeProperties": {
+                              "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+                              "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+                              "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+                            },
+                            "externalReferences": {
+                              "connection": "d3fd0f81-8be0-46fa-9e13-fb5808f93ec0"
+                            },
+                            "annotations": []
+                          }
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "Monitoring Integration",
+                        "dependsOn": [
+                          {
+                            "activity": "Copy data from Source to ODS",
+                            "dependencyConditions": [
+                              "Succeeded"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": [
+                  {
+                    "type": "Wait",
+                    "typeProperties": {
+                      "waitTimeInSeconds": 1
+                    },
+                    "name": "Wait1",
+                    "dependsOn": []
+                  }
+                ]
+              },
+              "name": "Switch LoadType",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach Mona Table",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config Data SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "DataLoadQuery": {
+        "type": "string",
+        "defaultValue": "((vconso.ConsoYear = year(getdate()) and vconso.consomonth = month(getdate())) OR (vconso.ConsoYear = year(dateadd(month,-1,getdate())) and vconso.consomonth = month(dateadd(month,-1,getdate()))))"
+      },
+      "DeleteQuery": {
+        "type": "string",
+        "defaultValue": "AND ((ods.ODSConsoYear = YEAR(GETDATE()) AND ods.ODSConsoMonth = MONTH(GETDATE())) OR (ods.ODSConsoYear = YEAR(GETDATE())    AND ods.ODSConsoMonth = MONTH(GETDATE()) - 1 AND MONTH(GETDATE()) > 1) OR (ods.ODSConsoYear = YEAR(DATEADD(MONTH, -1, GETDATE())) AND ods.ODSConsoMonth = MONTH(DATEADD(MONTH, -1, GETDATE()))))"
+      },
+      "Data_Product": {
+        "type": "string",
+        "defaultValue": "Group-FinancialStatements"
+      },
+      "Orchestration_Run_ID": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "DataLoadQuery": {
+        "type": "String",
+        "defaultValue": "((vconso.ConsoYear = year(getdate()) and vconso.consomonth = month(getdate())) OR (vconso.ConsoYear = year(dateadd(month,-1,getdate())) and vconso.consomonth = month(dateadd(month,-1,getdate()))))"
+      }
+    }
+  }
+}

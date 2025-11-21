@@ -1,0 +1,104 @@
+table monitoring_integration_validation
+	lineageTag: 75c2344c-18cb-4018-bc7d-702d38f9b0f7
+
+	measure integration_validation_loads = COUNTROWS(monitoring_integration_validation)
+		formatString: 0
+		lineageTag: 75ace2c0-4f4c-45c3-8814-3b27cf64d12d
+
+	column table_identifier
+		dataType: string
+		lineageTag: 48b8ea59-2ef0-4866-ae63-ef8c13aa0372
+		summarizeBy: none
+		sourceColumn: table_identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_name
+		dataType: string
+		lineageTag: 2cf5d342-888e-4dd2-b5a4-3ac3eba4c8d4
+		summarizeBy: none
+		sourceColumn: source_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column schema_table_name
+		dataType: string
+		lineageTag: ef8c12e8-976e-4990-92cb-8bd6a7fff59c
+		summarizeBy: none
+		sourceColumn: schema_table_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column workspace
+		dataType: string
+		lineageTag: e4daff96-83e7-4c8e-b574-716c374c82d7
+		summarizeBy: none
+		sourceColumn: workspace
+
+		annotation SummarizationSetBy = Automatic
+
+	column row_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 65684057-8489-4a88-9eb9-3b83c0181ae4
+		summarizeBy: sum
+		sourceColumn: row_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column latest_ingestion_timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 89db389d-bc60-4ffe-848e-8fbe90b64211
+		summarizeBy: none
+		sourceColumn: latest_ingestion_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 93464309-d55b-4323-a428-39c46fca9366
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b1c93523-838f-4131-af6f-a5de570153fb
+		summarizeBy: none
+		sourceColumn: timestamp_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column timestamp_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 0f7b165a-feab-4862-af99-2f5ae9a3c4b4
+		summarizeBy: none
+		sourceColumn: timestamp_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition monitoring_integration_validation = m
+		mode: import
+		queryGroup: MONITORING
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    monitoring = Source{[Schema="meta",Item="monitoring_integration_validation"]}[Data],
+				    timestamp_date = Table.AddColumn(monitoring, "timestamp_date", each DateTime.Date([timestamp]), type date),
+				    timestamp_time = Table.AddColumn(timestamp_date, "timestamp_time", each DateTime.Time([timestamp]), type time)
+				in
+				    timestamp_time
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

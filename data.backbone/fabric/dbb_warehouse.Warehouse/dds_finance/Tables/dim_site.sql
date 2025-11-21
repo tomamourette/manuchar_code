@@ -1,0 +1,25 @@
+CREATE TABLE [dds_finance].[dim_site] (
+
+	[tkey_site] bigint NULL, 
+	[bkey_site] varchar(255) NULL, 
+	[site_code] varchar(255) NULL, 
+	[site_name] varchar(255) NULL, 
+	[site_status] varchar(255) NULL, 
+	[site_main_activity] varchar(255) NULL, 
+	[site_property_type] varchar(255) NULL, 
+	[site_latitude] varchar(255) NULL, 
+	[site_longitude] varchar(255) NULL, 
+	[site_is_bonded] varchar(255) NULL, 
+	[site_location_code] varchar(255) NULL, 
+	[site_location_name] varchar(255) NULL, 
+	[site_location_status] varchar(255) NULL, 
+	[site_location_type] varchar(255) NULL, 
+	[site_location_property_type] varchar(255) NULL, 
+	[site_location_size] varchar(255) NULL, 
+	[site_location_storage_type] varchar(255) NULL, 
+	[site_location_dry_storage_capacity] decimal(18,0) NULL, 
+	[site_location_liquid_storage_capacity] decimal(18,0) NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] bit NULL
+);

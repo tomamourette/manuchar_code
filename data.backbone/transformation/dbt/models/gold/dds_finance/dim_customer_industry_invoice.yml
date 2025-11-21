@@ -1,0 +1,23 @@
+version: 2
+ 
+models:
+  - name: dim_customer_industry_invoice
+    tags:
+      - "Customer industry Invoice"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Customer industry Invoice."
+    columns:
+      - name: tkey_customer_industry_invoice
+        description: ""
+      - name: bkey_customer_industry_invoice
+        description: ""
+      - name: customer_industry_invoice_code
+        description: ""
+      - name: customer_industry_invoice_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

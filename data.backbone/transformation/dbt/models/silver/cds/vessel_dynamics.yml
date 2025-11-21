@@ -1,0 +1,25 @@
+version: 2
+ 
+models:
+  - name: vessel_dynamics
+    tags:
+      - "Vessel"
+      - "intermediate layer"
+      - "REF"
+      - "dynamics"
+    description: "This model fills the intermediate layer of the business entity vessel."
+    columns:
+      - name: bkey_vessel_source
+        description: ""
+      - name: bkey_vessel
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: vessel_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

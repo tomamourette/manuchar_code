@@ -1,0 +1,22 @@
+
+version: 2
+models:
+  - name: rv_hub_customer
+    enabled: false
+    tags: 
+      - "Customer"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model consolidates customer data from multiple sources, deduplicating entries to retain the earliest record for each customer source."
+    columns:
+      - name: bkey_customer_source
+        description: "The unique business key identifying the customer source."
+      - name: bkey_customer
+        description: "The unique business key identifying the customer."
+      - name: bkey_source
+        description: "The unique business key identifying the source system."
+      - name: ldts
+        description: "The timestamp indicating when the record is valid from."
+      - name: record_source
+        description: "The source system from which the record originates, either 'MDS' or 'Dynamics'."

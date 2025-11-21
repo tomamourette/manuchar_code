@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_hub_country
+    tags:
+      - "Country"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model is a template for filling business entity: Country."
+    columns:
+      - name: bkey_country_source
+        description: "The business key field plus source."
+      - name: bkey_country
+        description: "The business key field."
+      - name: bkey_source
+        description: ""
+      - name: ldts
+        description: "Date & Time the Record was Created In the Source System."
+      - name: record_source
+        description: "Source system name."

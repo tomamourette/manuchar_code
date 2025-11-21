@@ -1,0 +1,26 @@
+CREATE TABLE [21D365_stg].[ecorescategoryhierarchy] (
+
+	[Id] varchar(8000) NULL, 
+	[SinkCreatedOn] datetime2(6) NULL, 
+	[SinkModifiedOn] datetime2(6) NULL, 
+	[hierarchymodifier] bigint NULL, 
+	[sysdatastatecode] bigint NULL, 
+	[name] varchar(8000) NULL, 
+	[modifieddatetime] datetime2(6) NULL, 
+	[modifiedby] varchar(8000) NULL, 
+	[modifiedtransactionid] bigint NULL, 
+	[createddatetime] datetime2(6) NULL, 
+	[createdby] varchar(8000) NULL, 
+	[createdtransactionid] bigint NULL, 
+	[dataareaid] varchar(8000) NULL, 
+	[recversion] bigint NULL, 
+	[partition] bigint NULL, 
+	[sysrowversion] bigint NULL, 
+	[recid] bigint NULL, 
+	[tableid] bigint NULL, 
+	[versionnumber] bigint NULL, 
+	[createdon] datetime2(6) NULL, 
+	[modifiedon] datetime2(6) NULL, 
+	[IsDelete] bit NULL, 
+	[PartitionId] varchar(8000) NULL
+);

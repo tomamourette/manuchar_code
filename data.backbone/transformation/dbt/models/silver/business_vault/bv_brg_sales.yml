@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: bv_brg_sales
+    tags:
+      - "Sales"
+      - "business vault"
+    description: "This model is a template for filling the Bridge: Sales."
+    columns:
+      - name: bkey_date
+        description: ""
+      - name: closure_date
+        description: ""
+      - name: shipping_date
+        description: ""
+      - name: bkey_company
+        description: ""
+      - name: bkey_cost_center
+        description: ""
+      - name: bkey_profit_center
+        description: ""
+      - name: bkey_customer
+        description: ""
+      - name: bkey_industry
+        description: ""
+      - name: bkey_business_unit
+        description: ""
+      - name: bkey_payment_term
+        description: ""
+      - name: bkey_country
+        description: ""
+      - name: bkey_site
+        description: ""
+      - name: bkey_currency
+        description: ""
+      - name: bkey_product
+        description: ""
+      - name: uom_original
+        description: ""
+      - name: invoice_amount
+        description: ""
+      - name: home_amount
+        description: ""
+      - name: conversion_rate_local_home
+        description: ""
+      - name: invoice_volume_original
+        description: ""
+      - name: invoice_volume_mt
+        description: ""
+      - name: order_value
+        description: ""
+      - name: sales_accrual_amount
+        description: ""
+      - name: sales_accrual_volume
+        description: ""
+      - name: sales_accrual_volume_mt
+        description: ""
+      - name: sales_accrual_currency
+        description: ""
+      - name: csv_cogs1_amount
+        description: ""
+      - name: csv_external_transport_amount
+        description: ""
+      - name: csv_internal_transport_amount
+        description: ""
+      - name: csv_other_cogs2_amount
+        description: ""
+      - name: csv_cogs2_amount
+        description: ""
+      - name: budget_quantity
+        description: ""
+      - name: budget_quantity_metric_ton
+        description: ""
+      - name: budget_amount_group_currency
+        description: ""
+      - name: budget_amount_home_currency
+        description: ""
+      - name: budget_amount_budget_currency
+        description: ""
+      - name: version
+        description: ""
+      - name: forecast_quantity
+        description: ""
+      - name: forecast_quantity_metric_ton
+        description: ""
+      - name: forecast_amount_group_currency
+        description: ""
+      - name: forecast_amount_home_currency
+        description: ""
+      - name: forecast_amount_forecast_currency
+        description: ""
+      - name: legal_number
+        description: ""
+      - name: invoice_number
+        description: ""
+      - name: invoice_line_number
+        description: ""
+      - name: credit_note_id
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: actual_budget

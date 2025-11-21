@@ -1,0 +1,230 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": {
+              "value": "@pipeline().parameters.SQLQuery",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "SqlServerTable",
+              "typeProperties": {
+                "database": {
+                  "value": "@pipeline().parameters.source",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "0d42f85a-bad8-4de2-8558-cabded88f3b0"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": {
+                  "value": "@concat(\n    pipeline().parameters.source, \n    '_', \n    pipeline().parameters.schemaName, \n    '_', \n    replace(pipeline().parameters.tableName, ' ', '_')\n)",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "dbb_lakehouse_DIH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "95af1c55-0293-992d-40ac-347a5a33d451",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "MDS source to Lakehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": {
+                  "value": "@concat(\n    pipeline().parameters.source, \n    '_', \n    pipeline().parameters.schemaName, \n    '_', \n    replace(pipeline().parameters.tableName, ' ', '_')\n)",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "dbb_lakehouse_DIH",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "95af1c55-0293-992d-40ac-347a5a33d451",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "FabricSqlDatabaseSink",
+            "sqlWriterUseTableLock": false,
+            "writeBehavior": "insert",
+            "tableOption": "autoCreate",
+            "datasetSettings": {
+              "type": "FabricSqlDatabaseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().parameters.targetSchemaName",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@concat(\n    pipeline().parameters.schemaName,\n    '.',\n    replace(pipeline().parameters.tableName, ' ', '_')\n)",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "OperationalDataSources_Sql",
+                "properties": {
+                  "type": "FabricSqlDatabase",
+                  "typeProperties": {
+                    "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  },
+                  "externalReferences": {
+                    "connection": "0c206a39-936f-4e24-a4fd-8d8f86c456fb"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lakehouse to SQLDB",
+        "dependsOn": [
+          {
+            "activity": "MDS source to Lakehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "c58bc4d3-cbf4-a735-42ea-6beaa19ada58",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "tableName": {
+              "value": {
+                "value": "@concat(\n    pipeline().parameters.source, \n    '_', \n    pipeline().parameters.schemaName, \n    '_', \n    replace(pipeline().parameters.tableName, ' ', '_')\n)",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Delete Table from Lakehouse",
+        "dependsOn": [
+          {
+            "activity": "Lakehouse to SQLDB",
+            "dependencyConditions": [
+              "Succeeded",
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "tableName": {
+        "type": "string",
+        "defaultValue": "Product Grouping"
+      },
+      "source": {
+        "type": "string",
+        "defaultValue": "MDS"
+      },
+      "schemaName": {
+        "type": "string",
+        "defaultValue": "mdm"
+      },
+      "targetSchemaName": {
+        "type": "string",
+        "defaultValue": "REF10_mds"
+      },
+      "SQLQuery": {
+        "type": "string",
+        "defaultValue": "SELECT [ID], [MUID], [VersionName] AS Version_Name, [VersionNumber] AS Version_Number, [Version_ID], [VersionFlag] AS Version_Flag, [Name], [Code], [ChangeTrackingMask] AS Change_Tracking_Mask, [Product Business Unit_Code] AS Product_Business_Unit_Code, [Product Business Unit_Name] AS Product_Business_Unit_Name, [Product Business Unit_ID] AS Product_Business_Unit_ID, [Product Category] AS Product_Category, [Product Sub Category] AS Product_Sub_Category, [Sort Order] AS Sort_Order, [EnterDateTime] AS Enter_DateTime, [EnterUserName] AS Enter_User_Name, [EnterVersionNumber] AS Enter_Version_Number, [LastChgDateTime] AS Last_Change_DateTime, [LastChgUserName] AS Last_Change_User_Name, [LastChgVersionNumber] AS Last_Change_Version_Number, [ValidationStatus] AS Validation_Status FROM [MDS].[mdm].[Product Grouping];"
+      }
+    },
+    "variables": {
+      "tableName": {
+        "type": "String"
+      }
+    }
+  }
+}

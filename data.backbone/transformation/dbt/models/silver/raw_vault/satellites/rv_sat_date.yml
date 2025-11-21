@@ -1,0 +1,86 @@
+
+version: 2
+
+models:
+  - name: rv_sat_date
+    enabled: false
+    tags:
+      - "Date"
+      - "raw vault"
+      - "satellite"
+    description: "This model selects all date-related attributes from the date_oil_genericdata source, providing comprehensive details about various time dimensions such as year, semester, quarter, month, week, and day."
+    columns:
+      - name: date_key
+        description: "Unique identifier for each date."
+      - name: bkey_date_source
+        description: "Source key for the date data."
+      - name: date
+        description: "The actual date value."
+      - name: year
+        description: "The year of the date."
+      - name: previous_year
+        description: "The previous year relative to the date."
+      - name: number_of_days_in_year
+        description: "Total number of days in the year."
+      - name: number_of_work_days_in_year
+        description: "Total number of working days in the year."
+      - name: semester
+        description: "The semester of the date."
+      - name: previous_semester
+        description: "The previous semester relative to the date."
+      - name: semester_description_short
+        description: "Short description of the semester."
+      - name: semester_description_long
+        description: "Long description of the semester."
+      - name: previous_semester_description_short
+        description: "Short description of the previous semester."
+      - name: previous_semester_description_long
+        description: "Long description of the previous semester."
+      - name: number_of_days_in_semester
+        description: "Total number of days in the semester."
+      - name: number_of_work_days_in_semester
+        description: "Total number of working days in the semester."
+      - name: quarter
+        description: "The quarter of the date."
+      - name: previous_quarter
+        description: "The previous quarter relative to the date."
+      - name: quarter_description_short
+        description: "Short description of the quarter."
+      - name: quarter_description_long
+        description: "Long description of the quarter."
+      - name: previous_quarter_description_short
+        description: "Short description of the previous quarter."
+      - name: previous_quarter_description_long
+        description: "Long description of the previous quarter."
+      - name: number_of_days_in_quarter
+        description: "Total number of days in the quarter."
+      - name: number_of_work_days_in_quarter
+        description: "Total number of working days in the quarter."
+      - name: month_key
+        description: "Unique identifier for each month."
+      - name: month
+        description: "The month of the date."
+      - name: previous_month
+        description: "The previous month relative to the date."
+      - name: month_description_short
+        description: "Short description of the month."
+      - name: month_description_long
+        description: "Long description of the month."
+      - name: previous_month_description_short
+        description: "Short description of the previous month."
+      - name: previous_month_description_long
+        description: "Long description of the previous month."
+      - name: number_of_days_in_month
+        description: "Total number of days in the month."
+      - name: number_of_work_days_in_month
+        description: "Total number of working days in the month."
+      - name: week
+        description: "The week of the date."
+      - name: previous_week
+        description: "The previous week relative to the date."
+      - name: week_description_short
+        description: "Short description of the week."
+      - name: week_description_long
+        description: "Long description of the week."
+      - name: previous_week_description_short
+        description: "Short description of the week."

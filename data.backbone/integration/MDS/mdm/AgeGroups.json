@@ -1,0 +1,13 @@
+{
+    "table_name": "AgeGroups",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Age Group Position] as AgeGroupPosition, [Age Group Description] as AgeGroupDescription, [Age Group Min Days] as AgeGroupMinDays, [Age Group Max Days] as AgeGroupMaxDays, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM [mdm].[Age Groups]"
+}
+

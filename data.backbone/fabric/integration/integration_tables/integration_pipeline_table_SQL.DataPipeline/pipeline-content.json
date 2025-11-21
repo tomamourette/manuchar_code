@@ -1,0 +1,471 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "lookup_integration_source_metadata",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "JsonSource",
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            },
+            "formatSettings": {
+              "type": "JsonReadSettings"
+            }
+          },
+          "datasetSettings": {
+            "annotations": [],
+            "linkedService": {
+              "name": "ac759a34_6744_4511_a7d6_6c4ce36872de",
+              "properties": {
+                "annotations": [],
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "workspaceId": "@{pipeline().DataFactory}",
+                  "artifactId": "@pipeline().parameters.integration_lakehouse",
+                  "rootFolder": "Files"
+                }
+              }
+            },
+            "type": "Json",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "fileName": {
+                  "value": "@{pipeline().parameters.table_name}.json",
+                  "type": "Expression"
+                },
+                "folderPath": {
+                  "value": "integration/@{pipeline().parameters.source_name}/@{pipeline().parameters.schema_name}",
+                  "type": "Expression"
+                }
+              }
+            },
+            "schema": {}
+          }
+        }
+      },
+      {
+        "name": "lookup_integration_source_watermark",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "lookup_integration_source_metadata",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_monitoring_connection_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": {
+              "value": "IF '@{activity('lookup_integration_source_metadata').output.firstRow.load_type}' = 'INCREMENTAL'\nBEGIN\n    SELECT \n        COALESCE(FORMAT(MAX([timestamp]), 'yyyy/MM/dd'), '0000/00/00') AS watermark_date\n    FROM \n        [dbb_warehouse].[meta].[monitoring_integration]\n    WHERE \n        [table_name] = '@{pipeline().parameters.table_name}' \n        AND [schema_name] = '@{pipeline().parameters.schema_name}' \n        AND [source_name] = '@{pipeline().parameters.source_name}'\n        AND [status] = 'Succeeded'\nEND\nELSE\nBEGIN\n    SELECT TOP 1\n        '0000/00/00' AS watermark_date\n    FROM \n        [dbb_warehouse].[meta].[monitoring_integration]\nEND",
+              "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "datasetSettings": {
+            "annotations": [],
+            "type": "AzureSqlTable",
+            "schema": [],
+            "typeProperties": {
+              "database": "dbb_warehouse"
+            },
+            "externalReferences": {
+              "connection": "@variables('monitoring_connection_id')"
+            }
+          }
+        }
+      },
+      {
+        "name": "integrate_source_table_fail",
+        "type": "Fail",
+        "dependsOn": [
+          {
+            "activity": "integrate_source_table",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "message": {
+            "value": "@activity('integrate_source_table').output",
+            "type": "Expression"
+          },
+          "errorCode": "500"
+        }
+      },
+      {
+        "name": "integrate_source_table",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "lookup_integration_source_watermark",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_source_connection_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_source_database_name",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "additionalColumns": [
+              {
+                "name": "ingestion_timestamp",
+                "value": {
+                  "value": "@{formatDateTime(utcnow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}",
+                  "type": "Expression"
+                }
+              }
+            ],
+            "sqlReaderQuery": {
+              "value": "@{activity('lookup_integration_source_metadata').output.firstRow.query}",
+              "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "annotations": [],
+              "type": "SqlServerTable",
+              "schema": [],
+              "typeProperties": {
+                "database": {
+                  "value": "@variables('database_name')",
+                  "type": "Expression"
+                }
+              },
+              "externalReferences": {
+                "connection": "@variables('source_connection_id')"
+              }
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "OverwriteSchema",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "c4d86b67_82e9_4768_b94e_e10ace3b2fd9",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "@pipeline().DataFactory",
+                    "artifactId": "@pipeline().parameters.integration_lakehouse",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "dbo",
+                "table": {
+                  "value": "@{pipeline().parameters.source_name}__@{pipeline().parameters.schema_name}_@{pipeline().parameters.table_name}",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "script_monitoring_integration",
+        "type": "Script",
+        "dependsOn": [
+          {
+            "activity": "integrate_source_table",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "scripts": [
+            {
+              "type": "NonQuery",
+              "text": {
+                "value": "INSERT INTO [dbb_warehouse].[meta].[monitoring_integration] (\n    table_name,\n    schema_name,\n    source_name,\n    source_type,\n    load_type,\n    workspace,\n    status,\n    [integration_timestamp],\n    duration,\n    throughput,\n    data_read,\n    data_written,\n    rows_read,\n    rows_written,\n    data_product,\n    orchestration_run_id,\n    integration_pipeline_source_run_id,\n    integration_pipeline_id\n)\nVALUES (\n    '@{pipeline().parameters.table_name}',\n    '@{pipeline().parameters.schema_name}',\n    '@{pipeline().parameters.source_name}',\n    '@{activity('lookup_integration_source_metadata').output.firstRow.source_type}',\n    '@{activity('lookup_integration_source_metadata').output.firstRow.load_type}',\n    '@{pipeline().DataFactory}',\n    '@{activity('integrate_source_table').output.executionDetails[0].status}',\n    '@{formatDateTime(utcnow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}',\n    @{coalesce(activity('integrate_source_table').output.copyDuration, 0)},\n    @{coalesce(activity('integrate_source_table').output.throughput, 0)},\n    @{coalesce(activity('integrate_source_table').output.dataRead, 0)},\n    @{coalesce(activity('integrate_source_table').output.dataWritten, 0)},\n    @{coalesce(activity('integrate_source_table').output.rowsRead, 0)},\n    @{if(equals(activity('integrate_source_table').output.dataWritten, 0), 0, activity('integrate_source_table').output.rowsCopied)},\n    '@{pipeline().parameters.data_product}',\n    '@{pipeline().parameters.orchestration_run_id}',\n    '@{pipeline().RunId}',\n    '@{pipeline().Pipeline}'\n);",
+                "type": "Expression"
+              }
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00",
+          "database": "dbb_warehouse"
+        },
+        "externalReferences": {
+          "connection": "@variables('monitoring_connection_id')",
+          "connectionType": "AzureSqlDatabase"
+        }
+      },
+      {
+        "name": "lookup_integration_source_connections",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "DelimitedTextSource",
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            },
+            "formatSettings": {
+              "type": "DelimitedTextReadSettings"
+            }
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "linkedService": {
+              "name": "6ef1d19b_3e73_427b_8006_77a206cc73d3",
+              "properties": {
+                "annotations": [],
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "workspaceId": "@pipeline().DataFactory",
+                  "artifactId": "@pipeline().parameters.integration_lakehouse",
+                  "rootFolder": "Files"
+                }
+              }
+            },
+            "type": "DelimitedText",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "fileName": "integration_source_connections.csv",
+                "folderPath": {
+                  "value": "integration",
+                  "type": "Expression"
+                }
+              },
+              "columnDelimiter": ",",
+              "escapeChar": "\\",
+              "firstRowAsHeader": true,
+              "quoteChar": "\""
+            },
+            "schema": []
+          }
+        }
+      },
+      {
+        "name": "set_variable_source_connection_id",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "filter_source_connection",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "source_connection_id",
+          "value": {
+            "value": "@first(activity('filter_source_connection').output.value).connection_id\n\n",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "filter_source_connection",
+        "type": "Filter",
+        "dependsOn": [
+          {
+            "activity": "lookup_integration_source_connections",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('lookup_integration_source_connections').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@and(\n  equals(item().source_name, pipeline().parameters.source_name),\n  equals(item().workspace_id, pipeline().DataFactory)\n)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "filter_monitoring_connection",
+        "type": "Filter",
+        "dependsOn": [
+          {
+            "activity": "lookup_integration_source_connections",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('lookup_integration_source_connections').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@and(\n  equals(item().source_name, 'dbb_warehouse'),\n  equals(item().workspace_id, pipeline().DataFactory)\n)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "set_variable_monitoring_connection_id",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "filter_monitoring_connection",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "monitoring_connection_id",
+          "value": {
+            "value": "@first(activity('filter_monitoring_connection').output.value).connection_id\n\n",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "set_variable_source_database_name",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "filter_source_connection",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "database_name",
+          "value": {
+            "value": "@first(activity('filter_source_connection').output.value).database_name\n\n",
+            "type": "Expression"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "source_name": {
+        "type": "string"
+      },
+      "schema_name": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "table_name": {
+        "type": "string",
+        "defaultValue": "InventTransOrigin"
+      },
+      "integration_lakehouse": {
+        "type": "string",
+        "defaultValue": "a3c7dd8f-25f9-4aa9-aaad-981087e7d0d4"
+      },
+      "data_product": {
+        "type": "string",
+        "defaultValue": "Group-FinancialStatements"
+      },
+      "orchestration_run_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "source_connection_id": {
+        "type": "String"
+      },
+      "monitoring_connection_id": {
+        "type": "String"
+      },
+      "database_name": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stock_stg
+    tags:
+      - "stock"
+      - "staging"
+      - "ERP"
+    description: "This model prepares a snapshot-based historical view of stock per company, product, lot, warehouse and closure date. It enriches the stock entries with master product codes and applies SCD2 logic using closure dates to allow tracking stock evolution over time."
+
+    columns:
+      - name: bkey_stock_source
+        description: "Business key for the stock row, derived from CONCAT(ProductID, '_', Company, '_STG_STOCK')."
+      - name: stock_company
+        description: "Company code of the affiliate reporting the stock."
+      - name: stock_closure_date
+        description: "Snapshot closure date representing end-of-month stock reporting moment."
+      - name: stock_entry_date
+        description: "Date the stock physically entered the warehouse or system."
+      - name: stock_warehouse_name
+        description: "Name of the warehouse where the stock is located."
+      - name: stock_lot_number
+        description: "Unique identifier for the stock lot or batch."
+      - name: bkey_product
+        description: "Mapped business key for the product (from productaffiliate mapping)."
+      - name: stock_product_id
+        description: "Original ProductID as reported in the source file."
+      - name: stock_product_name
+        description: "Free-text name of the product as reported."
+      - name: stock_quantity
+        description: "Quantity of stock available, in the reported unit of measure."
+      - name: stock_uom
+        description: "Unit of measure used for the quantity (e.g., MT, KG)."
+      - name: stock_amount
+        description: "Monetary value of the stock in home currency."
+      - name: stock_committed
+        description: "Indicates whether the stock is committed to a customer."
+      - name: file_name
+        description: "Name of the file from which the stock record originated."
+      - name: valid_from
+        description: "Start date of the validity window for this stock snapshot."
+      - name: valid_to
+        description: "End date of the validity window, based on the next available closure date."
+      - name: is_current
+        description: "Flag indicating if this is the most recent record (1 if valid_to = '2999-12-31', otherwise 0)."

@@ -1,0 +1,27 @@
+CREATE TABLE [REF_Manual].[Manuchar_Sites] (
+
+	[SiteName] varchar(8000) NULL, 
+	[SiteCode] varchar(8000) NULL, 
+	[CompanyCode] varchar(8000) NULL, 
+	[CompanyName] varchar(8000) NULL, 
+	[FirstUseDate] date NULL, 
+	[Status] varchar(8000) NULL, 
+	[MainActivity] varchar(8000) NULL, 
+	[SitePropertyType] varchar(8000) NULL, 
+	[IsBonded] bit NULL, 
+	[SiteAddress] varchar(8000) NULL, 
+	[ZIP] varchar(8000) NULL, 
+	[City] varchar(8000) NULL, 
+	[CountryName] varchar(8000) NULL, 
+	[CountryCode] varchar(8000) NULL, 
+	[CompanyRegion1] varchar(8000) NULL, 
+	[CompanyRegion2] varchar(8000) NULL, 
+	[Latitude] decimal(38,12) NULL, 
+	[Longitude] decimal(38,12) NULL, 
+	[LandSurfaceArea] decimal(20,2) NULL, 
+	[DateLatestReviewLocalTeam] date NULL, 
+	[ModifiedBy] varchar(8000) NULL, 
+	[ModifiedDateTime] datetime2(6) NULL, 
+	[SiteID] int NULL, 
+	[LoadDateTime] datetime2(6) NULL
+);

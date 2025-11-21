@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SQLDatabase",
+    "displayName": "OSS_AzureDwh_MHQ_Sqlserver"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f50d8aec-8483-890e-4267-49492ab845ba"
+  }
+}

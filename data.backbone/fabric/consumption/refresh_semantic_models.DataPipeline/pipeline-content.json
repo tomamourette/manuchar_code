@@ -1,0 +1,320 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "PBISemanticModelRefresh",
+        "typeProperties": {
+          "method": "post",
+          "groupId": {
+            "value": "@variables('model_workspace_id')",
+            "type": "Expression"
+          },
+          "datasetId": {
+            "value": "@variables('model_id')",
+            "type": "Expression"
+          },
+          "commitMode": "Transactional",
+          "waitOnCompletion": true,
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "16b9ff07-2966-41ef-a12e-975ce4911e3a"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "semantic_model_refresh",
+        "dependsOn": [
+          {
+            "activity": "set_variable_model_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "model_workspace_id",
+          "value": "4361af73-85af-49c9-8a8b-aee26af975f2"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_model_workspace_id",
+        "dependsOn": [
+          {
+            "activity": "set_variable_data_product",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_orchestration_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_data_product_refresh_pipeline_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_data_product_refresh_pipeline_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "model_id",
+          "value": "a9430796-25b3-4378-83dd-ab632b82aac6"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_model_id",
+        "dependsOn": [
+          {
+            "activity": "set_variable_model_workspace_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "5ff06112-9d0f-a22b-420f-d3215a15abe7",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "workspace_id": {
+              "value": {
+                "value": "@pipeline().DataFactory",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "model_id": {
+              "value": {
+                "value": "@variables('model_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "data_product": {
+              "value": {
+                "value": "@variables('data_product')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "orchestration_run_id": {
+              "value": {
+                "value": "@variables('orchestration_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "data_product_refresh_pipeline_run_id": {
+              "value": {
+                "value": "@variables('data_product_refresh_pipeline_run_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "data_product_refresh_pipeline_id": {
+              "value": {
+                "value": "@variables('data_product_refresh_pipeline_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "model_workspace_id": {
+              "value": {
+                "value": "@variables('model_workspace_id')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "monitoring_notebook_semantic_model_refresh",
+        "dependsOn": [
+          {
+            "activity": "semantic_model_refresh",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "data_product",
+          "value": {
+            "value": "@{pipeline().parameters.data_product}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_data_product",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "orchestration_run_id",
+          "value": {
+            "value": "@{pipeline().parameters.orchestration_run_id}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_orchestration_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "data_product_refresh_pipeline_run_id",
+          "value": {
+            "value": "@{pipeline().RunId}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_data_product_refresh_pipeline_run_id",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "data_product_refresh_pipeline_id",
+          "value": {
+            "value": "@{pipeline().Pipeline}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_data_product_refresh_pipeline_id",
+        "dependsOn": []
+      },
+      {
+        "type": "IfCondition",
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(activity('semantic_model_refresh').output.status, 'Completed')",
+            "type": "Expression"
+          },
+          "ifTrueActivities": [],
+          "ifFalseActivities": [
+            {
+              "type": "Fail",
+              "typeProperties": {
+                "message": {
+                  "value": "@activity('semantic_model_refresh').output",
+                  "type": "Expression"
+                },
+                "errorCode": "500"
+              },
+              "name": "semantic_model_refresh_failed",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "semantic_model_refresh_succeeded",
+        "dependsOn": [
+          {
+            "activity": "monitoring_notebook_semantic_model_refresh",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "data_product": {
+        "type": "string",
+        "defaultValue": "Group-FinancialStatements"
+      },
+      "orchestration_run_id": {
+        "type": "string",
+        "defaultValue": "e9308772-f52b-4f34-9112-f0c6a0db9256"
+      }
+    },
+    "variables": {
+      "database": {
+        "type": "String",
+        "defaultValue": "dbb_warehouse"
+      },
+      "environment": {
+        "type": "String"
+      },
+      "sql_connection_string": {
+        "type": "String"
+      },
+      "warehouse_id": {
+        "type": "String"
+      },
+      "workspace_id": {
+        "type": "String"
+      },
+      "model_id": {
+        "type": "String"
+      },
+      "data_product": {
+        "type": "String"
+      },
+      "orchestration_run_id": {
+        "type": "String"
+      },
+      "data_product_refresh_pipeline_run_id": {
+        "type": "String"
+      },
+      "data_product_refresh_pipeline_name": {
+        "type": "String"
+      },
+      "data_product_refresh_pipeline_id": {
+        "type": "String"
+      },
+      "model_workspace_id": {
+        "type": "String"
+      }
+    }
+  }
+}

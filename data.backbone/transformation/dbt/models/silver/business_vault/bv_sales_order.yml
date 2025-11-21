@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: bv_sales_order
+    enabled: false
+    tags: 
+      - "Sales Order"
+      - "business vault"
+      - "ERP"
+    description: "This model is a template for filling business entity: Sales Order."
+    columns:
+      - name: bkey_sales_order
+        description: "The business key field."
+      - name: sales_order_sales_id
+        description: ""
+      - name: sales_order_sales_status
+        description: ""
+      - name: sales_order_currencycode
+        description: ""
+      - name: sales_order_cust_account
+        description: ""
+      - name: sales_order_invoice_account
+        description: ""
+      - name: sales_order_sales_amount_accrual
+        description: ""
+      - name: sales_order_sales_volume_accrual
+        description: ""
+      - name: sales_order_sales_accrual_accounting_date
+        description: ""
+      - name: sales_order_company
+        description: ""
+      - name: sales_order_ledger_account
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: rv_sat_industry
+    tags:
+      - "Industry"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model is a template for filling the Satellite: Industry."
+    columns:
+      - name: bkey_industry_source
+        description: "The business key field."
+      - name: industry_name
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

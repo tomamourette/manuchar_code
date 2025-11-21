@@ -1,0 +1,26 @@
+CREATE TABLE [mim].[rv_sat_stock] (
+
+	[bkey_stock_source] varchar(255) NULL, 
+	[stock_company] varchar(50) NULL, 
+	[stock_customer_id] varchar(50) NULL, 
+	[stock_currency] varchar(50) NULL, 
+	[stock_closure_date] datetime2(6) NULL, 
+	[stock_entry_date] datetime2(6) NULL, 
+	[stock_warehouse_name] varchar(255) NULL, 
+	[stock_invent_location_id] varchar(255) NULL, 
+	[stock_site_id] varchar(255) NULL, 
+	[stock_lot_number] varchar(255) NULL, 
+	[stock_product_code] varchar(255) NULL, 
+	[stock_product_id] varchar(255) NULL, 
+	[stock_quantity] decimal(18,4) NULL, 
+	[stock_quantity_mt] decimal(18,4) NULL, 
+	[stock_uom] varchar(50) NULL, 
+	[stock_amount_func_cur] decimal(18,4) NULL, 
+	[stock_amount_group_conso_eom] decimal(18,4) NULL, 
+	[stock_amount_group_oanda_eod] decimal(18,4) NULL, 
+	[stock_committed] bit NULL, 
+	[stock_in_transit] bit NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

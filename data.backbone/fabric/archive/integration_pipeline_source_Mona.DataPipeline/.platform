@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "integration_pipeline_source_Mona"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "36046494-e090-8486-4956-1b8f46423866"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "OSS_Sharepoint-List-ManuShare-SiteLocations"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "dd143589-482d-95d7-4824-522111f4f3d0"
+  }
+}

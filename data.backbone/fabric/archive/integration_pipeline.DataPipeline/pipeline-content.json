@@ -1,0 +1,682 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DelimitedTextSource",
+            "formatSettings": {
+              "type": "DelimitedTextReadSettings"
+            },
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            }
+          },
+          "datasetSettings": {
+            "type": "DelimitedText",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "folderPath": {
+                  "value": "integration",
+                  "type": "Expression"
+                },
+                "fileName": {
+                  "value": "integration_sources.csv",
+                  "type": "Expression"
+                }
+              },
+              "columnDelimiter": ",",
+              "quoteChar": "\"",
+              "escapeChar": "\\",
+              "firstRowAsHeader": true
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "d8b91680_a89a_46d8_a819_73226276ddb7",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "@variables('integration_lakehouse')",
+                  "workspaceId": "@pipeline().DataFactory",
+                  "rootFolder": "Files"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_integration_sources",
+        "dependsOn": [
+          {
+            "activity": "set_variable_integration_lakehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_transformation_warehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_sql_connection_string",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_environment",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 5,
+          "items": {
+            "value": "@activity('filter_source_load_enabled').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().source_name",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "Boomi",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "3cba1931-b47c-8fcb-4a80-102603dcd61a",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_Boomi",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "dbb_lakehouse",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "d3cee145-2486-8004-4116-cf103c61eb15",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_dbb_lakehouse",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Dynamics",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "d9385102-1a74-b56a-4c1c-7eb2564416bf",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_Dynamics",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "MDS",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "4e2fe9e7-daf5-accc-466d-384a0f01e201",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_MDS",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Mona",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "36046494-e090-8486-4956-1b8f46423866",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_Mona",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "MTM",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "13203ed0-ad5a-906c-4fe9-64444b48a6af",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_MTM",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "STG",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "source_name": {
+                              "value": "@{item().source_name}",
+                              "type": "Expression"
+                            },
+                            "integration_lakehouse": {
+                              "value": "@variables('integration_lakehouse')",
+                              "type": "Expression"
+                            },
+                            "transformation_warehouse": {
+                              "value": "@variables('transformation_warehouse')",
+                              "type": "Expression"
+                            },
+                            "sql_connection_string": {
+                              "value": "@variables('sql_connection_string')",
+                              "type": "Expression"
+                            },
+                            "environment": {
+                              "value": "@variables('environment')",
+                              "type": "Expression"
+                            },
+                            "ingestion_timestamp": {
+                              "value": "@variables('ingestion_timestamp')",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "cedb6515-7628-9bd1-420a-0d968edbe5cf",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "integration_pipeline_source_STG",
+                        "dependsOn": []
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": []
+              },
+              "name": "switch_integration_source",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "integrate_sources",
+        "dependsOn": [
+          {
+            "activity": "filter_source_load_enabled",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "SELECT\n    [environment],\n    [workspace_id],\n    [lakehouse_id],\n    [warehouse_id],\n    [sql_connection_string]\nFROM [dbb_warehouse].[meta].[environments]\nWHERE [workspace_id] = '@{pipeline().DataFactory}'",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "dbb_warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "86563906-0212-4c50-9019-45c93eae5671",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "lookup_environment_variables",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "integration_lakehouse",
+          "value": {
+            "value": "@activity('lookup_environment_variables').output.firstRow.lakehouse_id",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_integration_lakehouse",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "transformation_warehouse",
+          "value": {
+            "value": "@activity('lookup_environment_variables').output.firstRow.warehouse_id",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_transformation_warehouse",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "sql_connection_string",
+          "value": {
+            "value": "@activity('lookup_environment_variables').output.firstRow.sql_connection_string",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_sql_connection_string",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "environment",
+          "value": {
+            "value": "@activity('lookup_environment_variables').output.firstRow.environment",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_environment",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Filter",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('lookup_integration_sources').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().load_enabled,'yes')",
+            "type": "Expression"
+          }
+        },
+        "name": "filter_source_load_enabled",
+        "dependsOn": [
+          {
+            "activity": "lookup_integration_sources",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "ingestion_timestamp",
+          "value": {
+            "value": "@{formatDateTime(utcNow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_ingestion_timestamp",
+        "dependsOn": [
+          {
+            "activity": "lookup_environment_variables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "integration_lakehouse": {
+        "type": "String"
+      },
+      "transformation_warehouse": {
+        "type": "String"
+      },
+      "sql_connection_string": {
+        "type": "String"
+      },
+      "environment": {
+        "type": "String"
+      },
+      "ingestion_timestamp": {
+        "type": "String"
+      }
+    }
+  }
+}

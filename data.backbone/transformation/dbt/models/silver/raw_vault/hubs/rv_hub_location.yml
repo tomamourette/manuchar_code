@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_location
+    enabled: false
+    tags: 
+      - "Location"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model selects deduplicated location records from the source, ensuring only the earliest record per location source is retained."
+    columns:
+      - name: bkey_location_source
+        description: "The business key representing the source of the location data."
+      - name: bkey_location
+        description: "The business key representing the location."
+      - name: bkey_source
+        description: "The business key representing the source system."
+      - name: ldts
+        description: "The timestamp indicating when the record is valid from, cast to DATETIME2(6)."
+      - name: record_source
+        description: "The source of the record, hardcoded as 'MDS'."

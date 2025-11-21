@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: rv_sat_invoice_payable
+    enabled: false
+    tags:
+      - "Invoice Payable"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite invoice payable."
+    columns:
+      - name: bkey_invoice_payable_source
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: invoice_payable_invoice_id
+        description: ""
+      - name: invoice_payable_supplier_id
+        description: ""
+      - name: invoice_payable_company
+        description: ""
+      - name: invoice_payable_local_currency_code
+        description: ""
+      - name: invoice_payable_invoice_date
+        description: ""
+      - name: invoice_payable_due_date
+        description: ""
+      - name: invoice_payable_closure_date
+        description: ""
+      - name: invoice_payable_local_amount
+        description: ""
+      - name: invoice_payable_payment_schedule
+        description: ""
+      - name: invoice_payable_file_name
+        description: ""
+      - name: invoice_payable_open_amount_invoice_currency
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

@@ -1,0 +1,26 @@
+version: 2
+ 
+models:
+  - name: bv_age_group
+    tags:
+      - "Age Group"
+      - "business vault"
+      - "REF"
+    description: "This model is a template for filling satellite: Age Group."
+    columns:
+      - name: bkey_age_group
+        description: "The business key field."
+      - name: age_group_name
+        description: ""
+      - name: age_group_id
+        description: ""
+      - name: age_group_min_days
+        description: ""
+      - name: age_group_max_days
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "ODS_D365_FullLoad_WrH"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9a9fe0fe-a47f-a558-4f45-bd8b3f849ab3"
+  }
+}

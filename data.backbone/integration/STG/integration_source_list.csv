@@ -1,0 +1,6 @@
+table_name,schema_name,load_enabled
+STG_SALES_HIST,val,yes
+STG_SALES_PLAN_HIST,val,yes
+STG_AR_INVOICES_HIST,val,yes
+STG_AP_INVOICES_HIST,val,yes
+STG_STOCK_HIST,val,yes

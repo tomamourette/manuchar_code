@@ -1,0 +1,63 @@
+version: 2
+ 
+models:
+  - name: dim_customer
+    tags:
+      - "Customer"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Customer."
+    columns:
+      - name: tkey_customer
+        description: ""
+      - name: bkey_customer
+        description: ""
+      - name: customer_code
+        description: ""
+      - name: customer_id
+        description: ""
+      - name: customer_legal_number
+        description: ""
+      - name: customer_name
+        description: ""
+      - name: customer_company
+        description: ""
+      - name: customer_country_code
+        description: ""
+      - name: customer_address
+        description: ""
+      - name: customer_city
+        description: ""
+      - name: customer_zip_code
+        description: ""
+      - name: customer_industry
+        description: ""
+      - name: customer_affiliate
+        description: ""
+      - name: customer_group
+        description: ""
+      - name: customer_multinational_legal_number
+        description: ""
+      - name: customer_multinational_name
+        description: ""
+      - name: customer_gkam
+        description: ""
+      - name: customer_country_name
+        description: ""
+      - name: customer_country_sort
+        description: ""
+      - name: customer_iso_code
+        description: ""
+      - name: customer_region_level_1
+        description: ""
+      - name: customer_region_level_1_sort
+        description: ""
+      - name: customer_region_level_2
+        description: ""
+      - name: customer_region_level_2_sort
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

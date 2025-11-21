@@ -1,0 +1,62 @@
+
+version: 2
+
+models:
+  - name: dim_supplier
+    enabled: true
+      - "Supplier"
+      - "Dimension"
+    description: "This model provides detailed information about suppliers, including their keys, attributes, country data, and history metadata."
+    columns:
+      - name: tkey_supplier
+        description: "Technical key for the supplier, generated using row number."
+      - name: bkey_supplier
+        description: "Business key for the supplier."
+      - name: bkey_supplier_global
+        description: "Global business key for the supplier."
+      - name: supplier_code
+        description: "Code representing the supplier."
+      - name: supplier_global_code
+        description: "Global code representing the supplier."
+      - name: supplier_group
+        description: "Group to which the supplier belongs."
+      - name: supplier_group_description
+        description: "Description of the supplier group."
+      - name: supplier_name
+        description: "Name of the supplier."
+      - name: supplier_id
+        description: "Identifier for the supplier."
+      - name: supplier_company
+        description: "Company name associated with the supplier."
+      - name: supplier_address
+        description: "Address of the supplier."
+      - name: supplier_city
+        description: "City where the supplier is located."
+      - name: supplier_zipcode
+        description: "Zip code of the supplier's location."
+      - name: supplier_affiliate
+        description: "Indicates whether the supplier is an affiliate ('Yes' or 'No')."
+      - name: supplier_country_code
+        description: "Country code of the supplier."
+      - name: supplier_legal_number
+        description: "Legal number associated with the supplier."
+      - name: supplier_country_name
+        description: "Name of the country where the supplier is located."
+      - name: supplier_country_sort
+        description: "Sort order for the supplier's country, with 'UNK' mapped to NULL."
+      - name: supplier_iso_code
+        description: "ISO code of the supplier's country."
+      - name: supplier_region_level_1
+        description: "Level 1 region classification for the supplier's country."
+      - name: supplier_region_level_1_sort
+        description: "Sort order for level 1 region classification."
+      - name: supplier_region_level_2
+        description: "Level 2 region classification for the supplier's country."
+      - name: supplier_region_level_2_sort
+        description: "Sort order for level 2 region classification."
+      - name: valid_from
+        description: "Start date from which the supplier data is valid."
+      - name: valid_to
+        description: "End date until which the supplier data is valid."
+      - name: is_current
+        description: "Indicates if the supplier data is current (1 for true, 0 for false)."

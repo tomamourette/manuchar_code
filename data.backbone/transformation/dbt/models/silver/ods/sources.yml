@@ -1,0 +1,459 @@
+version: 2
+
+sources:
+  - name: monitoring_operations
+    database: dbb_warehouse
+    schema: meta
+    tables:
+      - name: MonitoringIntegration
+        identifier: monitoring_integration
+        description: Monitoring info of the Integration of Source Tables.
+      - name: MonitoringTransformationDbt
+        identifier: monitoring_transformation_dbt
+        description: Monitoring info of the Transformation DBT builds.
+      - name: MonitoringSemanticModelRefresh
+        identifier: monitoring_semantic_model_refresh
+        description: Monitoring info of the Samantic Model Refresh.
+  - name: monitoring_orchestration
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: DbbOrchestrationRunData
+        identifier: dbb_orchestration_run_data
+        description: Monitoring info of the Integration of Source Tables.
+  - name: dynamics
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: Company
+        identifier: Dynamics__dbo_cdm_company
+        description: Dynamics 365 Company table.
+      - name: Currency
+        identifier: Dynamics__dbo_currency
+        description: Dynamics 365 Currency table.
+      - name: CustInvoiceJour
+        identifier: Dynamics__dbo_custinvoicejour
+        description: Dynamics 365 Customer Invoice Journal table.
+      - name: CustInvoiceTrans
+        identifier: Dynamics__dbo_custinvoicetrans
+        description: Dynamics 365 Customer Invoice Transaction table.
+      - name: CustGroup
+        identifier: Dynamics__dbo_custgroup
+        description: Dynamics 365 Customer Group table.
+      - name: CustSettlement
+        identifier: Dynamics__dbo_custsettlement
+        description: Dynamics 365 Customer Settlement table.
+      - name: CustTable
+        identifier: Dynamics__dbo_custtable
+        description: Dynamics 365 Customer table.
+      - name: CustTran
+        identifier: Dynamics__dbo_custtrans
+        description: Dynamics 365 Customer Transactions table.
+      - name: DimensionAttributeValueSet
+        identifier: Dynamics__dbo_dimensionattributevalueset
+        description: Dynamics 365 Dimension Attribue Value Sets table.
+      - name: DimensionAttributeValueCombination
+        identifier: Dynamics__dbo_dimensionattributevaluecombination
+        description: Dynamics 365 Dimension Attribute Value Combinations table.
+      - name: DirectoryParty
+        identifier: Dynamics__dbo_dirpartytable
+        description: Dynamics 365 Directory Party table.
+      - name: DirectoryPartyLocation
+        identifier: Dynamics__dbo_dirpartylocation
+        description: Dynamics 365 Directory Party Location table.
+      - name: EcoResCategory
+        identifier: Dynamics__dbo_ecorescategory
+        description: Dynamics 365 Economic Resource Category table.
+      - name: EcoResCategoryHierarchy
+        identifier: Dynamics__dbo_ecorescategoryhierarchy
+        description: Dynamics 365 Economic Resource Category Hierarchy table.
+      - name: EcoResProduct
+        identifier: Dynamics__dbo_ecoresproduct
+        description: Dynamics 365 Economic Resource Products table.
+      - name: EcoResProductCategory
+        identifier: Dynamics__dbo_ecoresproductcategory
+        description: Dynamics 365 Economic Resource Product Categories table.
+      - name: EcoResProductTranslation
+        identifier: Dynamics__dbo_ecoresproducttranslation
+        description: Dynamics 365 Economic Resource Product Translation table.
+      - name: FiscalCalendarPeriods
+        identifier: Dynamics__dbo_fiscalcalendarperiod
+        description: Dynamics 365 Fiscal Calendar Period table.
+      - name: GeneralJournalAccountEntry
+        identifier: Dynamics__dbo_generaljournalaccountentry
+        description: Dynamics 365 General Journal Account Entry table.
+      - name: GeneralJournalEntry
+        identifier: Dynamics__dbo_generaljournalentry
+        description: Dynamics 365 General Journal Entry table.
+      - name: InventLocations
+        identifier: Dynamics__dbo_inventlocation
+        description: Dynamics 365 Inventory Location table.
+      - name: InventSums
+        identifier: Dynamics__dbo_inventsum
+        description: Dynamics 365 Inventory Summmary table.
+      - name: InventTableModule
+        identifier: Dynamics__dbo_inventtablemodule
+        description: Dynamics 365 Invent Table Module table.
+      - name: InventTrans
+        identifier: Dynamics__dbo_inventtrans
+        description: Dynamics 365 Inventory Transaction table.
+      - name: InventTransOrigin
+        identifier: Dynamics__dbo_inventtransorigin
+        description: Dynamics 365 Inventory Transaction Origin table.
+      - name: ItmVesselTable
+        identifier: Dynamics__dbo_itmvesseltable
+        description: Dynamics 365 Item Vessel Table.
+      - name: LgsLogisticFileLine
+        identifier: Dynamics__dbo_lgslogisticfileline
+        description: Dynamics 365 Logistics File Line table.
+      - name: LgsLogisticFileTable
+        identifier: Dynamics__dbo_lgslogisticfiletable
+        description: Dynamics 365 Logistics File table.
+      - name: LogisticsLocation
+        identifier: Dynamics__dbo_logisticslocation
+        description: Dynamics 365 Logistics Location table.
+      - name: LogisticsPostalAddress
+        identifier: Dynamics__dbo_logisticspostaladdress
+        description: Dynamics 365 Logistic Postal Addresses table.
+      - name: MainAccount
+        identifier: Dynamics__dbo_mainaccount
+        description: Dynamics 365 Main Account table.
+      - name: PaymTerm
+        identifier: Dynamics__dbo_paymterm
+        description: Dynamics 365 Payment Term table.
+      - name: PurchTable
+        identifier: Dynamics__dbo_purchtable
+        description: Dynamics 365 Purchase table.
+      - name: PurchLine
+        identifier: Dynamics__dbo_purchline
+        description: Dynamics 365 Purchase Line table.
+      - name: SalesLine
+        identifier: Dynamics__dbo_salesline
+        description: Dynamics 365 Sales Line table.
+      - name: SalesTables
+        identifier: Dynamics__dbo_salestable
+        description: Dynamics 365 Sales table.
+      - name: UnitOfMeasure
+        identifier: Dynamics__dbo_unitofmeasure
+        description: Dynamics 365 Unit Of Measurements table.
+      - name: UnitOfMeasureTranslation
+        identifier: Dynamics__dbo_unitofmeasuretranslation
+        description: Dynamics 365 Unit Of Measurements Translation table.
+      - name: VendGroup
+        identifier: Dynamics__dbo_vendgroup
+        description: Dynamics 365 Vendor Group table.
+      - name: VendInvoiceJour
+        identifier: Dynamics__dbo_vendinvoicejour
+        description: Dynamics 365 Vendor Invoice Journal table.
+      - name: VendInvoiceTrans
+        identifier: Dynamics__dbo_vendinvoicetrans
+        description: Dynamics 365 Vendor Invoice Trans table.
+      - name: VendTable
+        identifier: Dynamics__dbo_vendtable
+        description: Dynamics 365 Vendor Table.
+      - name: VendTrans
+        identifier: Dynamics__dbo_vendtrans
+        description: Dynamics 365 Vendor Transactions table.
+      - name: VendSettlement
+        identifier: Dynamics__dbo_vendsettlement
+        description: Dynamics 365 Vendor Settlement table.
+      - name: CustTransOpen
+        identifier: Dynamics__dbo_custtransopen
+        description: Dynamics 365 Open Customer Transactions table.
+  - name: mds
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: AccountHierarchy
+        identifier: MDS__mdm_MONA_AccountHierarchy
+        description: MDS Account Hierarchy table.
+      - name: AccountReporting
+        identifier: MDS__mdm_MONA_AccountsReporting
+        description: MDS Account Reporting table.
+      - name: AccountHeader
+        identifier: MDS__mdm_MONA_AccountHeaders
+        description: MDS Account Header table.
+      - name: AgeGroup
+        identifier: MDS__mdm_AgeGroups
+        description: MDS Age Groups table.
+      - name: BusinessPartner
+        identifier: MDS__mdm_BusinessPartner
+        description: MDS Business Partners table.
+      - name: BusinessPartnerCompany
+        identifier: MDS__mdm_BusinessPartnerCompanies
+        description: MDS Business Partner Companies table.
+      - name: BusinessType
+        identifier: MDS__mdm_BusinessTypes
+        description: MDS Business Types table.
+      - name: BusinessUnit
+        identifier: MDS__mdm_BusinessUnits
+        description: MDS Business Units table.
+      - name: Company
+        identifier: MDS__mdm_Companies
+        description: MDS Company table.
+      - name: CompanyFxExposure
+        identifier: MDS__mdm_CompanyFXExposure
+        description: MDS Company FX Exposure table.
+      - name: CompanyHistory
+        identifier: MDS__mdm_CompanyHistory
+        description: MDS Company History table.
+      - name: CompanyMapping
+        identifier: MDS__mdm_CompanyMapping
+        description: MDS Company Mappings table.
+      - name: CompanyPOV
+        identifier: MDS__mdm_MONA_CompanyPOV
+        description: MDS Company Point Of View table.
+      - name: Country
+        identifier: MDS__mdm_Countries
+        description: MDS Countries table.
+      - name: CountryMapping
+        identifier: MDS__mdm_CountryMapping
+        description: MDS Country Mapping table.
+      - name: Currency
+        identifier: MDS__mdm_Currencies
+        description: MDS Currencies table.
+      - name: CustomerGoldenKey
+        identifier: MDS__mdm_CustomerGoldenKey
+        description: MDS Customer Golden Key table.
+      - name: CustomerMapping
+        identifier: MDS__mdm_CustomerMapping
+        description: MDS Customer Mapping table.
+      - name: CustomerToMap
+        identifier: MDS__mdm_CustomerToMap
+        description: MDS To Map Customers table.
+      - name: IndustryType
+        identifier: MDS__mdm_IndustryTypes
+        description: MDS Industry Type table.
+      - name: IndustryTypesExceptions
+        identifier: MDS__mdm_IndustryTypesExceptions
+        description: MDS Industry Type Exception table.
+      - name: Location
+        identifier: MDS__mdm_Locations
+        description: MDS Location table.
+      - name: LocationAffiliatesMapping
+        identifier: MDS__mdm_LocationAffiliatesMapping
+        description: MDS Location table.
+      - name: Product
+        identifier: MDS__mdm_Product
+        description: MDS Product table.
+      - name: ProductAffiliateMapping
+        identifier: MDS__mdm_ProductAffiliateMapping
+        description: MDS Product Affiliate Mapping table.
+      - name: ProductGrouping
+        identifier: MDS__mdm_ProductGrouping
+        description: MDS Product Grouping table.
+      - name: ProductGroupingMapping
+        identifier: MDS__mdm_ProductGroupingMapping
+        description: MDS Product Grouping Mapping table.
+      - name: StockAgeGroups
+        identifier: MDS__mdm_StockAgeGroups
+        description: MDS Age Groups table.
+      - name: UOM
+        identifier: MDS__mdm_UOM
+        description: MDS Unit Of Measurement table.
+      - name: UOMMapping
+        identifier: MDS__mdm_UOMMapping
+        description: MDS Unit Of Measurement Mapping table.
+  - name: mona
+    database: dbb_lakehouse
+    schema: dbo
+    tables: 
+      - name: td030b1
+        identifier: Mona__dbo_TD030B1
+        description: Mona Bundle Local Amounts table.
+      - name: td030e0
+        identifier: Mona__dbo_TD030E0
+        description: Mona Local Adjustments Header table.
+      - name: td030e2
+        identifier: Mona__dbo_TD030E2
+        description: Mona Local Adjustments Amounts table.
+      - name: td030i2
+        identifier: Mona__dbo_TD030I2
+        description: Mona Local Adjustments Amounts table.
+      - name: td055c2
+        identifier: Mona__dbo_TD055C2
+        description: Mona Consolidated Amount Dimensions table.
+      - name: ts010s0
+        identifier: Mona__dbo_TS010S0
+        description: Mona Account IDs table.
+      - name: ts014c0
+        identifier: Mona__dbo_TS014C0
+        description: Mona Company table.
+      - name: ts014m1
+        identifier: Mona__dbo_TS014M1
+        description: Mona Additional Information Company table.
+      - name: ts017r0
+        identifier: Mona__dbo_TS017R0
+        description: Mona Currency Rates table.
+      - name: ts017r2
+        identifier: Mona__dbo_TS017R2
+        description: Mona Customer Currency table.
+      - name: ts024c0
+        identifier: Mona__dbo_TS024C0
+        description: Mona Countries table.
+      - name: ts024c1
+        identifier: Mona__dbo_TS024C1
+        description: Mona Countries table.
+      - name: ts096n0
+        identifier: Mona__dbo_TS096N0
+        description: Mona Consolidation Categories table.
+      - name: ts096s0
+        identifier: Mona__dbo_TS096S0
+        description: Mona Consolidation Periods table.
+      - name: ts098s0
+        identifier: Mona__dbo_TS098S0
+        description: Mona Customers table.
+      - name: v_conso
+        identifier: Mona__dbo_V_CONSO
+        description: Mona Consolidation view.
+      - name: v_conso_code
+        identifier: Mona__dbo_V_CONSO_CODE
+        description: Mona Consolidation Codes view.
+      - name: v_data_conso
+        identifier: Mona__dbo_V_DATA_CONSO
+        description: Mona Consolidated Amounts View.
+      - name: v_dimensiondetail
+        identifier: Mona__dbo_V_DIMENSIONDETAIL
+        description: Mona Dimension Detail View.
+      - name: v_dimensiongroup
+        identifier: Mona__dbo_V_DIMENSIONGROUP
+        description: Mona Dimension Group View.
+      - name: v_journal_view
+        identifier: Mona__dbo_V_JOURNAL_VIEW
+        description: Mona Journal view.
+      - name: v_journal_view_detail
+        identifier: Mona__dbo_V_JOURNAL_VIEW_DETAIL
+        description: Mona Journal Detail view.
+      - name: quality_equity_mona_onprem
+        identifier: Mona__dbo_quality_equity_mona_onprem
+        description: Mona Journal Detail view.
+  - name: dbb_lakehouse
+    database: dbb_lakehouse
+    schema: dbo
+    tables: 
+      - name: Costcenter
+        identifier: dbb_lakehouse__dbo_enum_costcenter
+        description: Cost center codes.
+      - name: D365_accounts_report
+        identifier: dbb_lakehouse__dbo_enum_d365accounts_report
+        description: Account Mapping table for COGS calculation.
+  - name: stg
+    database: dbb_lakehouse
+    schema: dbo
+    tables: 
+      - name: stg_sales_hist
+        identifier: STG__val_STG_SALES_HIST
+        description: Sales History table.
+      - name: stg_sales_plan_hist
+        identifier: STG__val_STG_SALES_PLAN_HIST
+        description: Sales History table.
+      - name: stg_ap_invoices_hist
+        identifier: STG__val_STG_AP_INVOICES_HIST
+        description: Ap Invoice History table.
+      - name: stg_ar_invoices_hist
+        identifier: STG__val_STG_AR_INVOICES_HIST
+        description: Ar Invoice History table.
+      - name: stg_stock_hist
+        identifier: STG__val_STG_STOCK_HIST
+        description: Stock History table from STG input.
+  - name: log
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+        - name: validation_approval_log
+          identifier: LOG__dbo_ValidationApprovalLog
+          description: Validation Log for STG tables.
+  - name: dwh
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: dim_customer
+        identifier: DWH__dwh_dim_customer
+        description: Dim customer from existing dwh
+      - name: dim_product
+        identifier: DWH__dwh_dim_product
+        description: Dim product from existing dwh
+      - name: Anaplan_Budget
+        identifier: DWH__ds_Anaplan_Budget
+        description: Budget data from Anaplan
+      - name: dbo_Anaplan_Budget
+        identifier: DWH__ds_dbo_Anaplan_Budget
+        description: Budget data from Anaplan
+      - name: Anaplan_Forecast
+        identifier: DWH__ds_Anaplan_Forecast
+        description: Forecast data from Anaplan
+      - name: stg_sales_plan_hist
+        identifier: DWH__ds_STG_val_STG_SALES_PLAN_HIST
+        description: Sales History table.
+  - name: oil_genericdata
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: ref_locations
+        identifier: OIL_GenericData__Manuchar_Locations
+        description: Locations Table.
+      - name: ref_sites
+        identifier: OIL_GenericData__Manuchar_Sites
+        description: Sites Table.
+      - name: MS_Entra_Groups
+        identifier: OIL_GenericData__MS_Entra_Groups
+        description: Microsoft Entra Groups Table.
+      - name: MS_Entra_GroupMembers
+        identifier: OIL_GenericData__MS_Entra_GroupMembers
+        description: Microsoft Entra Group Members Table.
+      - name: Date
+        identifier: OIL_GenericData__Manuchar_Dates
+        description: Date source source table managed by the Operational Integration Layer (OIL).
+      - name: PublicHolidays
+        identifier: OIL_GenericData__Manuchar_PublicHolidays
+        description: Public Holidays source table managed by the Operational Integration Layer (OIL).
+  - name: oil_monaconso
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: RefConsoReportingCategory
+        identifier: OIL_MonaConso__REF_CONSO_REPORTING_CATEGORY
+        description: Consolidation Category source table managed by the Operational Integration Layer (OIL).
+      - name: JournalMapping
+        identifier: OIL_MonaConso__REF_JOURNAL_MAPPING
+        description: Journal Mapping table managed by the Operational Integration Layer (OIL).
+      - name: KpiItems
+        identifier: OIL_MonaConso__REF_KPI_ITEMS
+        description: KPI Names and Sort numbers for the Fact KPI's managed by the Operational Integration Layer (OIL).
+  - name: mtm
+    database: dbb_lakehouse
+    schema: dbo
+    tables:
+      - name: dim_contacts_alt
+        identifier: MTM__dbo_DIM_Contacts_ALT
+        description: Contacts Dimension Table.
+      - name: dim_employees
+        identifier: MTM__dbo_DIM_Employees
+        description: Employees Dimension table.
+      - name: dim_products
+        identifier: MTM__dbo_DIM_Products
+        description: Products Dimension table.
+      - name: dim_teams
+        identifier: MTM__dbo_DIM_TEAMS
+        description: Teams Dimension table.
+      - name: fil
+        identifier: MTM__staging_FIL
+        description: fil table.
+      - name: filgrid
+        identifier: MTM__staging_FILGRID
+        description: filgrid table.
+      - name: filgridline
+        identifier: MTM__staging_FILGRIDLINE
+        description: filgridline table.
+      - name: filgridversionrate
+        identifier: MTM__staging_FILGRIDVERSIONRATE
+        description: filgridversionrate table.
+      - name: pd
+        identifier: MTM__staging_PD
+        description: Purchase Order table.
+      - name: sd
+        identifier: MTM__staging_SD
+        description: Sales table.
+      - name: so
+        identifier: MTM__staging_SO
+        description: Sales Order table.

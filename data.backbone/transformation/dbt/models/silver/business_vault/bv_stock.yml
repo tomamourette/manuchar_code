@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: bv_stock
+    enabled: true
+    tags:
+      - "Stock"
+      - "business vault"
+      - "ERP"
+    description: "This model combines stock information from raw vault satellite into a cleaned, business-aligned view per stock snapshot."
+
+    columns:
+      - name: bkey_stock
+        description: "The business key field, typically combination of product + company."
+      - name: stock_product_id
+        description: "The product ID as reported by the source system."
+      - name: bkey_product
+        description: "The mapped product key from master data."
+      - name: stock_product_name
+        description: "Name of the product if available."
+      - name: stock_company
+        description: "The company/site reporting the stock."
+      - name: stock_closure_date
+        description: "The date representing the end-of-month snapshot moment."
+      - name: stock_entry_date
+        description: "The date the stock physically entered the warehouse."
+      - name: stock_warehouse_name
+        description: "Warehouse where the stock is stored."
+      - name: stock_lot_number
+        description: "Lot or batch number for traceability."
+      - name: stock_quantity
+        description: "Quantity of stock available."
+      - name: stock_uom
+        description: "Unit of measure for the quantity."
+      - name: stock_amount
+        description: "Monetary value of the stock in home currency."
+      - name: stock_committed
+        description: "Whether the stock is committed to a customer or not."
+      - name: file_name
+        description: "The name of the source file (STG only)."
+      - name: valid_from
+        description: "Start of the validity window for this record."
+      - name: valid_to
+        description: "End of the validity window for this record."
+      - name: is_current
+        description: "Flag indicating if this is the latest version of the record (1 = yes)."

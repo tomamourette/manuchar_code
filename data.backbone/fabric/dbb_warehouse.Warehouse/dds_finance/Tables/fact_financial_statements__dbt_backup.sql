@@ -1,0 +1,25 @@
+CREATE TABLE [dds_finance].[fact_financial_statements__dbt_backup] (
+
+	[tkey_date] int NULL, 
+	[tkey_account] bigint NULL, 
+	[tkey_consolidation_period] bigint NULL, 
+	[tkey_company] bigint NULL, 
+	[tkey_partner_company] bigint NULL, 
+	[tkey_currency] bigint NULL, 
+	[tkey_industry] bigint NULL, 
+	[amount] decimal(18,2) NULL, 
+	[bundle_local_adjustment_in_local_currency_amount] decimal(18,2) NULL, 
+	[bundle_local_in_local_currency_amount] decimal(18,2) NULL, 
+	[allocation_amount] decimal(18,2) NULL, 
+	[bundle_amount] decimal(18,2) NULL, 
+	[conso_adjusted_amount] decimal(18,2) NULL, 
+	[conso_legal_amount] decimal(18,2) NULL, 
+	[intercompany_amount] decimal(18,2) NULL, 
+	[manual_amount] decimal(18,2) NULL, 
+	[technical_eliminations_amount] decimal(18,2) NULL, 
+	[volume_amount] decimal(18,2) NULL, 
+	[fte_amount] decimal(18,2) NULL, 
+	[fte_avg_amount] decimal(18,2) NULL, 
+	[actual_workday_holidays_in_workweek] int NULL, 
+	[bkey_consolidation_period] varchar(8000) NULL
+);

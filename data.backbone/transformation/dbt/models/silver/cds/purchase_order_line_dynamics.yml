@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: purchase_order_line_dynamics
+    tags:
+      - "Purchase Order Line"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: tkey_purchase_order_line
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_purchase_order_line_source
+        description: ""
+      - name: bkey_purchase_order_line
+        description: ""
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: purchase_order_line_purchase_id
+        description: ""
+      - name: purchase_order_line_line_number
+        description: ""
+      - name: purchase_order_line_company
+        description: ""
+      - name: purchase_order_line_name
+        description: ""
+      - name: purchase_order_line_delivery_term
+        description: ""
+      - name: purchase_order_line_quantity_ordered
+        description: ""
+      - name: purchase_order_line_purchase_unit
+        description: ""
+      - name: purchase_order_line_amount_trans_cur
+        description: ""
+      - name: purchase_order_line_amount_func_cur
+        description: ""
+      - name: purchase_order_line_amount_group_cur_oanda_spot
+        description: ""
+      - name: purchase_order_line_group_cur_oanda_rate
+        description: ""
+      - name: purchase_order_line_func_cur_rate
+        description: ""
+      - name: purchase_order_line_transactional_currency_code
+        description: ""
+      - name: purchase_order_line_group_currency_code
+        description: ""
+      - name: purchase_order_line_functional_currency_code
+        description: ""
+      - name: purchase_order_line_price_unit
+        description: ""
+      - name: purchase_order_line_delivery_mode
+        description: ""
+      - name: purchase_order_line_created_date_time
+        description: ""
+      - name: purchase_order_line_purchase_status
+        description: ""
+      - name: purchase_order_line_inventory_dimension_id
+        description: ""
+      - name: purchase_order_line_partition
+        description: ""
+      - name: purchase_order_line_lgs_logistic_file_id
+        description: ""
+      - name: purchase_order_line_product_id
+        description: ""
+      - name: purchase_order_line_purchase_price
+        description: ""
+      - name: purchase_order_line_vendor_account
+        description: ""
+      - name: purchase_order_line_purchase_quantity
+        description: ""
+      - name: purchase_order_line_purchase_quantity
+        description: ""
+      - name: purchase_order_line_purchase_quantity_mt
+        description: ""
+      - name: purchase_order_line_uom
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

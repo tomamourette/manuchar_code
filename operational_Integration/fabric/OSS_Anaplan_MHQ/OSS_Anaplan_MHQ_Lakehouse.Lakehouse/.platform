@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "OSS_Anaplan_MHQ_Lakehouse"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0f254d1f-cec7-902c-4fc2-ec78a8587260"
+  }
+}

@@ -1,0 +1,31 @@
+
+version: 2
+
+models:
+  - name: rv_sat_stock_age_group
+    enabled: false
+    tags:
+      - "Stock Age Group"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model selects all columns from the stock_age_group CTE, which sources data from the stock_age_group_mds model."
+    columns:
+      - name: bkey_stock_age_group_source
+        description: "The business key for the stock age group source."
+      - name: stock_age_group_name
+        description: "The name of the stock age group."
+      - name: stock_age_group_id
+        description: "The unique identifier for the stock age group."
+      - name: stock_age_group_min_days
+        description: "The minimum number of days for the stock age group."
+      - name: stock_age_group_max_days
+        description: "The maximum number of days for the stock age group."
+      - name: stock_age_group_sort
+        description: "The sort order for the stock age group."
+      - name: valid_from
+        description: "The date from which the stock age group is valid."
+      - name: valid_to
+        description: "The date until which the stock age group is valid."
+      - name: is_current
+        description: "Indicates whether the stock age group is currently active."

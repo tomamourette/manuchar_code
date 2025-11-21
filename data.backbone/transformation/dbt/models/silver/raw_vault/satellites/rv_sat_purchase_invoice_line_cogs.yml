@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: rv_sat_purchase_invoice_line_cogs
+    tags:
+      - "Purchase Invoice Line COGS"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite purchase invoice cogs."
+    columns:
+      - name: tkey_purchase_invoice_line_cogs
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_purchase_invoice_line_cogs_source
+        description: ""
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'DYNAMICS', 'MTM'."
+      - name: bkey_flow
+        description: "Source identifier for the flow within the source ('MITS', 'MST', 'MTM')."
+      - name: purchase_invoice_line_cogs_file_number
+        description: ""
+      - name: purchase_invoice_line_cogs_payment_schedule
+        description: ""
+      - name: purchase_invoice_line_cogs_payment
+        description: ""
+      - name: purchase_invoice_line_cogs_dct_destination
+        description: ""
+      - name: purchase_invoice_line_cogs_ecs_contract_status
+        description: ""
+      - name: purchase_invoice_line_cogs_risk_trading_book_id
+        description: ""
+      - name: purchase_invoice_line_cogs_created_date_time
+        description: ""
+      - name: purchase_invoice_line_cogs_company
+        description: ""
+      - name: purchase_invoice_line_cogs_order_account
+        description: ""
+      - name: purchase_invoice_line_cogs_requester
+        description: ""
+      - name: purchase_invoice_line_cogs_risk_trader
+        description: ""
+      - name: purchase_invoice_line_cogs_worker_purchase_placer
+        description: ""
+      - name: purchase_invoice_line_cogs_purchase_state
+        description: ""
+      - name: purchase_invoice_line_cogs_ccs_closing_status
+        description: ""
+      - name: purchase_invoice_line_cogs_ecs_trade_type
+        description: ""
+      - name: purchase_invoice_line_cogs_purchase_type
+        description: ""
+      - name: purchase_invoice_line_cogs_invoice_account
+        description: ""
+      - name: purchase_invoice_line_cogs_accounting_date
+        description: ""
+      - name: purchase_invoice_line_cogs_internal_invoice_id
+        description: ""
+      - name: purchase_invoice_line_cogs_product
+        description: ""
+      - name: purchase_invoice_line_cogs_purchase_id
+        description: ""
+      - name: purchase_invoice_line_cogs_line_number
+        description: ""
+      - name: purchase_invoice_line_cogs_incoterm
+        description: ""
+      - name: purchase_invoice_line_cogs_origin_country
+        description: ""
+      - name: purchase_invoice_line_cogs_destination_country
+        description: ""
+      - name: purchase_invoice_line_cogs_adjusted_cogs_functional
+        description: ""
+      - name: purchase_invoice_line_cogs_adjusted_cogs_transactional
+        description: ""
+      - name: purchase_invoice_line_cogs_adjusted_cogs_group_conso_avg
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_purchase_amount_functional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_purchase_amount_transactional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_purchase_amount_group_conso_avg
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_freight_amount_functional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_freight_amount_transactional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_freight_amount_group_conso_avg
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_other_amount_functional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_other_amount_transactional
+        description: ""
+      - name: purchase_invoice_line_cogs_cogs1_other_amount_group_conso_avg
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

@@ -1,0 +1,41 @@
+CREATE TABLE [MDS_mdm].[MONA_Account_Hierarchy] (
+    [ID]                     INT            NULL,
+    [MUID]                   NVARCHAR (MAX) NULL,
+    [VersionName]            NVARCHAR (MAX) NULL,
+    [VersionNumber]          INT            NULL,
+    [Version_ID]             INT            NULL,
+    [VersionFlag]            NVARCHAR (MAX) NULL,
+    [Name]                   NVARCHAR (MAX) NULL,
+    [Code]                   NVARCHAR (MAX) NULL,
+    [ChangeTrackingMask]     INT            NULL,
+    [AccountSign]            DECIMAL (38)   NULL,
+    [CustomGrouping]         NVARCHAR (MAX) NULL,
+    [CustomGroupingName]     NVARCHAR (MAX) NULL,
+    [RunningTotalSign]       DECIMAL (38)   NULL,
+    [ReportSign]             DECIMAL (38)   NULL,
+    [CustomRunningTotalSign] NVARCHAR (MAX) NULL,
+    [CustomReportSign]       NVARCHAR (MAX) NULL,
+    [CustomHeader]           NVARCHAR (MAX) NULL,
+    [CustomSubheader]        NVARCHAR (MAX) NULL,
+    [CustomSubheader2]       NVARCHAR (MAX) NULL,
+    [CalcAccount]            NVARCHAR (MAX) NULL,
+    [CalcAccountName]        NVARCHAR (MAX) NULL,
+    [CalcAccountGroup]       NVARCHAR (MAX) NULL,
+    [AccountCategory]        NVARCHAR (MAX) NULL,
+    [AccountCategoryName]    NVARCHAR (MAX) NULL,
+    [AccountGroup]           NVARCHAR (MAX) NULL,
+    [AccountGroupName]       NVARCHAR (MAX) NULL,
+    [Account]                NVARCHAR (MAX) NULL,
+    [AccountDescription]     NVARCHAR (MAX) NULL,
+    [EnterDateTime]          DATETIME2 (6)  NULL,
+    [EnterUserName]          NVARCHAR (MAX) NULL,
+    [EnterVersionNumber]     INT            NULL,
+    [LastChgDateTime]        DATETIME2 (6)  NULL,
+    [LastChgUserName]        NVARCHAR (MAX) NULL,
+    [LastChgVersionNumber]   INT            NULL,
+    [ValidationStatus]       NVARCHAR (MAX) NULL
+);
+
+
+GO
+

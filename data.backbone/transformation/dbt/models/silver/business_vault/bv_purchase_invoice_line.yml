@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: bv_purchase_invoice_line
+    enabled: false
+    tags: 
+      - "Purchase Invoice Line"
+      - "business vault"
+      - "ERP"
+    description: "This model is a template for filling business entity: Purchase Invoice Line."
+    columns:
+      - name: bkey_purchase_invoice_line
+        description: "The business key field."
+      - name: bkey_purchase_invoice
+        description: ""
+      - name: purchase_invoice_line_number
+        description: ""
+      - name: purchase_invoice_line_description
+        description: ""
+      - name: purchase_invoice_line_quantity
+        description: ""
+      - name: purchase_invoice_line_product_id
+        description: ""
+      - name: purchase_invoice_line_amount_trans_cur
+        description: ""
+      - name: purchase_invoice_line_amount_func_cur
+        description: ""
+      - name: purchase_invoice_line_amount_group_cur_conso_avg
+        description: ""
+      - name: purchase_invoice_line_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_invoice_line_group_cur_oanda_eod_rate
+        description: ""
+      - name: purchase_invoice_line_group_cur_conso_avg_rate
+        description: ""
+      - name: purchase_invoice_line_func_cur_rate
+        description: ""
+      - name: purchase_invoice_line_transactional_currency_code
+        description: ""
+      - name: purchase_invoice_line_group_currency_code
+        description: ""
+      - name: purchase_invoice_line_functional_currency_code
+        description: ""
+      - name: purchase_invoice_line_company
+        description: ""
+      - name: purchase_invoice_line_UOM
+        description: ""
+      - name: purchase_invoice_line_ledger_voucher
+        description: ""
+      - name: purchase_invoice_line_payment_term_id
+        description: ""
+      - name: purchase_invoice_line_closed
+        description: ""
+      - name: purchase_invoice_line_tax_amount
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,25 @@
+CREATE TABLE [cds].[logistic_file_line_dynamics] (
+
+	[tkey_logistic_file_line] bigint NULL, 
+	[bkey_logistic_file_line] varchar(8000) NULL, 
+	[bkey_logistic_file_line_source] varchar(8000) NULL, 
+	[bkey_source] varchar(8) NULL, 
+	[logfileline_company] varchar(8000) NULL, 
+	[logfileline_filenumber] varchar(8000) NULL, 
+	[logfileline_purchlinerecid] bigint NULL, 
+	[logfileline_purchid] varchar(8000) NULL, 
+	[logfileline_purchase_line_num] bigint NULL, 
+	[logfileline_saleslinerecid] bigint NULL, 
+	[logfileline_salesid] varchar(8000) NULL, 
+	[logfileline_sales_line_num] decimal(38,16) NULL, 
+	[logfileline_product_id] varchar(8000) NULL, 
+	[logfileline_description] varchar(8000) NULL, 
+	[logfileline_quantity] decimal(38,6) NULL, 
+	[logfileline_grossquantity] decimal(38,6) NULL, 
+	[logfileline_UOM] varchar(8000) NULL, 
+	[logfileline_number_of_packages] bigint NULL, 
+	[logfile_number_of_packages_unit] int NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

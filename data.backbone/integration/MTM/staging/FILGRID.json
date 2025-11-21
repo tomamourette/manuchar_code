@@ -1,0 +1,10 @@
+{
+    "table_name": "FILGRID",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, filegrid_id, file_id, invSup_id, invCust_id, product_id, gridNr, gridDate, quantity, quantityGross, uom, margin, marginPerc, roce, gridDateDesc, version, history, creationDate, finalCustomer_id, marginBeforeShare, marginSumWithShare, amountGrossIncomeEUR, turnoverCustomer, turnoverCustomerCurr, turnoverCustomerEUR, roceValue, vessel, eta, EPICORbookingStatus FROM staging.FILGRID"
+}

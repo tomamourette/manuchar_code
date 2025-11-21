@@ -1,0 +1,72 @@
+
+version: 2
+
+models:
+  - name: rv_sat_sales_plan
+    enabled: false
+    tags:
+      - "Sales Plan"
+      - "raw vault"
+      - "satellite"
+      - "PER"
+    description: "This model selects all columns from the sales_plan table, which contains detailed information about sales plans including budget, category, customer details, and currency amounts."
+    columns:
+      - name: bkey_sales_plan_source
+        description: "The business key for the source of the sales plan."
+      - name: bkey_sales_plan
+        description: "The business key for the sales plan."
+      - name: bkey_source
+        description: "The business key for the source."
+      - name: sales_plan_budget_line_number
+        description: "The line number associated with the budget in the sales plan."
+      - name: sales_plan_category
+        description: "The category of the sales plan."
+      - name: sales_plan_plan
+        description: "The specific plan within the sales plan."
+      - name: sales_plan_version
+        description: "The version of the sales plan."
+      - name: sales_plan_company
+        description: "The company associated with the sales plan."
+      - name: sales_plan_closure_date
+        description: "The closure date of the sales plan."
+      - name: sales_plan_global_customer_code
+        description: "The global code for the customer in the sales plan."
+      - name: sales_plan_customer_id
+        description: "The ID of the customer in the sales plan."
+      - name: sales_plan_customer_name
+        description: "The name of the customer in the sales plan."
+      - name: sales_plan_business_type
+        description: "The type of business associated with the sales plan."
+      - name: sales_plan_product_global_code
+        description: "The global code for the product in the sales plan."
+      - name: sales_plan_poduct_global_name
+        description: "The global name for the product in the sales plan."
+      - name: sales_plan_uom
+        description: "The unit of measure for the sales plan."
+      - name: sales_plan_quantity
+        description: "The quantity specified in the sales plan."
+      - name: sales_plan_quantity_metric_ton
+        description: "The quantity in metric tons specified in the sales plan."
+      - name: sales_plan_group_currency_total_amount
+        description: "The total amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_total_amount
+        description: "The total amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_total_amount
+        description: "The total amount in budget currency for the sales plan."
+      - name: sales_plan_group_currency_cogs1_amount
+        description: "The COGS1 amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_cogs1_amount
+        description: "The COGS1 amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_cogs1_amount
+        description: "The COGS1 amount in budget currency for the sales plan."
+      - name: sales_plan_group_currency_cogs2_amount
+        description: "The COGS2 amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_cogs2_amount
+        description: "The COGS2 amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_cogs2_amount
+        description: "The COGS2 amount in budget currency for the sales plan."
+      - name: sales_plan_home_currency
+        description: "The home currency used in the sales plan."
+      - name: sales_plan_plan_rate
+        description: "The plan rate specified in the sales plan."
+      - name: sales_plan_industry_type_code

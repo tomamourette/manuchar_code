@@ -1,0 +1,48 @@
+
+version: 2
+
+models:
+  - name: bv_customer
+    enabled: true
+    tags: 
+      - "Customer"
+      - "business vault"
+      - "ERP"
+    description: "This model combines customer data from multiple sources, generating non-overlapping time ranges for each customer and selecting leading source attributes."
+    columns:
+      - name: bkey_customer
+        description: "Unique business key for each customer."
+      - name: customer_company
+        description: "Name of the customer's company, sourced from either MDS or Dynamics."
+      - name: customer_group
+        description: "Group classification of the customer."
+      - name: customer_id
+        description: "Unique identifier for the customer, sourced from either MDS or Dynamics."
+      - name: customer_legal_number
+        description: "Legal number associated with the customer, sourced from either MDS or Dynamics."
+      - name: customer_multinational_legal_number
+        description: "Legal number for multinational customers, sourced from either MDS or Dynamics."
+      - name: customer_multinational_name
+        description: "Name of the multinational customer, sourced from either MDS or Dynamics."
+      - name: customer_name
+        description: "Name of the customer, sourced from either MDS or Dynamics."
+      - name: customer_address
+        description: "Address of the customer, sourced from either MDS or Dynamics."
+      - name: customer_city
+        description: "City where the customer is located, sourced from either MDS or Dynamics."
+      - name: customer_zip_code
+        description: "Zip code of the customer's location, sourced from either MDS or Dynamics."
+      - name: customer_industry
+        description: "Industry classification of the customer, sourced from either MDS or Dynamics."
+      - name: customer_gkam
+        description: "Global Key Account Manager for the customer, sourced from either MDS or Dynamics."
+      - name: customer_affiliate
+        description: "Affiliate information of the customer, sourced from either MDS or Dynamics."
+      - name: customer_country_code
+        description: "Country code of the customer's location, sourced from either MDS or Dynamics."
+      - name: valid_from
+        description: "Start date of the validity period for the customer data."
+      - name: valid_to
+        description: "End date of the validity period for the customer data."
+      - name: is_current
+        description: "Indicator of whether the customer data is current, with 1 representing current data."

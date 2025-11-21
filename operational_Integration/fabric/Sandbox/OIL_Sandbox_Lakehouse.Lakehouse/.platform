@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "OIL_Sandbox_Lakehouse"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8670b720-a91a-87b8-4630-78d9481c44f4"
+  }
+}

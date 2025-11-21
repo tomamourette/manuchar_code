@@ -1,0 +1,28 @@
+CREATE TABLE [cds].[stock_dynamics] (
+
+	[bkey_stock_source] varchar(8000) NULL, 
+	[bkey_stock] varchar(8000) NULL, 
+	[bkey_source] varchar(8) NOT NULL, 
+	[stock_company] varchar(8000) NULL, 
+	[stock_customer_id] varchar(8000) NULL, 
+	[stock_currency] varchar(8000) NULL, 
+	[stock_closure_date] datetime2(6) NULL, 
+	[stock_entry_date] datetime2(6) NULL, 
+	[stock_warehouse_name] varchar(8000) NULL, 
+	[stock_invent_location_id] varchar(8000) NULL, 
+	[stock_site_id] varchar(8000) NULL, 
+	[stock_lot_number] varchar(8000) NULL, 
+	[stock_product_code] varchar(8000) NULL, 
+	[stock_product_id] varchar(8000) NULL, 
+	[stock_quantity] decimal(38,6) NULL, 
+	[stock_quantity_mt] decimal(38,20) NULL, 
+	[stock_uom] varchar(8000) NULL, 
+	[stock_amount_func_cur] decimal(38,6) NULL, 
+	[stock_amount_group_conso_eom] int NULL, 
+	[stock_amount_group_oanda_eod] int NULL, 
+	[stock_committed] varchar(1) NOT NULL, 
+	[stock_in_transit] int NOT NULL, 
+	[valid_from] varchar(8000) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

@@ -1,0 +1,24 @@
+version: 2
+ 
+models:
+  - name: dim_currency
+    tags:
+      - "Currency"
+      - "Dimension"
+      - "Group-FinancialStatements"
+    description: "This model is a template for filling the dimension: Currency."
+    columns:
+      - name: tkey_currency
+        description: ""
+      - name: bkey_currency
+        description: ""
+      - name: currency_code
+        description: ""
+      - name: currency_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,10 @@
+{
+    "table_name": "DIM_Employees",
+    "schema_name": "dbo",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT employeeid, initials, email, name FROM dbo.DIM_Employees"
+}

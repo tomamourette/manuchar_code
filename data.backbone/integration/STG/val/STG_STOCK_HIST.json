@@ -1,0 +1,10 @@
+{
+    "table_name": "STG_STOCK_HIST",
+    "schema_name": "val",
+    "source_name": "STG",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Company, ClosureDate, WarehouseName, LotNumber, EntryDate, ProductID, ProductName, Quantity, UOM, HomeCurrencyInventoryCostAmount, Committed, FileName FROM val.STG_STOCK_HIST WHERE TRY_CAST(RIGHT(ClosureDate, 4) AS INT) >= (YEAR(GETDATE()) - 2)"
+}

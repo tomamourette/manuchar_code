@@ -1,0 +1,38 @@
+version: 2
+ 
+models:
+  - name: account_header_mds
+    tags:
+      - "Account Header"
+      - "intermediate layer"
+      - "Financial Consolidations"
+      - "CON"
+      - "mds"
+    description: "This model fills the table of the business entity Account Header."
+    columns:
+      - name: bkey_account_header_source
+        description: ""
+      - name: bkey_account_header
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: account_code
+        description: ""
+      - name: subheader
+        description: ""
+      - name: subheader2
+        description: ""
+      - name: reporting_view
+        description: ""
+      - name: header
+        description: ""
+      - name: detail
+        description: ""
+      - name: sort_order
+        description: ""
+      - name: calculation_type
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""

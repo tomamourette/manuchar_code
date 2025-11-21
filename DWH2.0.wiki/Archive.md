@@ -1,0 +1,1 @@
+Documentation pages that were deemed unnecessary or not up-to-date throughout the project.

@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_site
+    enabled: false
+    tags:
+      - "Site"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model selects distinct site records from various sources, prioritizing the earliest valid record."
+    columns:
+      - name: bkey_site_source
+        description: "The unique key representing the source of the site data."
+      - name: bkey_site
+        description: "The unique key identifying the site."
+      - name: bkey_source
+        description: "The unique key identifying the source system."
+      - name: ldts
+        description: "The timestamp indicating when the record became valid."
+      - name: record_source
+        description: "The name of the source system from which the record was obtained."

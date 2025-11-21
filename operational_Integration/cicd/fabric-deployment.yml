@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    include:
+      - acceptance
+      - production
+  paths:
+    include:
+      - fabric/*
+
+pool:
+  vmImage: ubuntu-22.04
+
+variables:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'test') }}:
+      - group: "variable_operational_integration_test"
+  - ${{ if eq(variables['Build.SourceBranchName'], 'acceptance') }}:
+      - group: "variable_operational_integration_acceptance"
+  - ${{ if eq(variables['Build.SourceBranchName'], 'production') }}:
+      - group: "variable_operational_integration_production"
+
+
+steps:
+  - script: |
+      set -e
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      uv venv
+      source .venv/bin/activate
+      uv pip install -r requirements.txt
+      cp -f fabric_cicd_constants.py ./.venv/lib/python3.10/site-packages/fabric_cicd/constants.py
+      cp -f fabric_cicd_constants.py ./.venv/lib64/python3.10/site-packages/fabric_cicd/constants.py
+      deactivate
+    displayName: Installing uv and requirements
+    workingDirectory: cicd
+  - script: |
+      set -e
+      source .venv/bin/activate
+      uv run deploy_workspace_items.py
+      deactivate
+    displayName: Deploy ${{ variables['Build.SourceBranchName'] }}
+    workingDirectory: cicd
+    env:
+      AZURE_TENANT_ID: $(TenantID)
+      AZURE_CLIENT_ID: $(SPN_ClientID)
+      AZURE_CLIENT_SECRET: $(SPN_ClientSecret)
+      FABRIC_WORKSPACE_ID: $(Workspace_ID)
+      FABRIC_TARGET_ENV: ${{ variables['Build.SourceBranchName'] }}
+  - publish: cicd/fabric_cicd.error.log
+    artifact: fabricLogs
+    condition: always()

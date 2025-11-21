@@ -1,0 +1,5 @@
+ALTER ROLE [db_owner] ADD MEMBER [BE-APR-DWH-FABRIC-TST];
+
+
+GO
+

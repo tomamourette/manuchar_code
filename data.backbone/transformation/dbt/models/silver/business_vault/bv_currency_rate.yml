@@ -1,0 +1,34 @@
+
+version: 2
+
+models:
+  - name: bv_currency_rate
+    enabled: false
+    tags:
+      - "Currency Rate"
+      - "business vault"
+      - "REF"
+    description: "This model extracts and consolidates currency rate data from different sources, generating non-overlapping time ranges and combining them into a timeline with the latest version of each attribute."
+    columns:
+      - name: bkey_currency_rate
+        description: "The business key for the currency rate, used to uniquely identify each currency rate entry."
+      - name: consolidation_id
+        description: "The identifier for the consolidation process associated with the currency rate."
+      - name: consolidation_code
+        description: "The code representing the consolidation process associated with the currency rate."
+      - name: currency_code
+        description: "The code representing the currency for which the rate is applicable."
+      - name: reference_currency_code
+        description: "The code representing the reference currency against which the rate is measured."
+      - name: closing_rate
+        description: "The closing rate of the currency for the specified period."
+      - name: average_rate
+        description: "The average rate of the currency over the specified period."
+      - name: average_month
+        description: "The month for which the average rate is calculated."
+      - name: valid_from
+        description: "The start date and time from which the currency rate is valid."
+      - name: valid_to
+        description: "The end date and time until which the currency rate is valid."
+      - name: is_current
+        description: "Indicator of whether the currency rate is the current rate, with 1 representing current and 0 representing historical."

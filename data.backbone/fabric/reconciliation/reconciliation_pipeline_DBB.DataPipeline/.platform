@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "reconciliation_pipeline_DBB"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "eed23b10-0d71-98a6-4206-7adf679658e9"
+  }
+}

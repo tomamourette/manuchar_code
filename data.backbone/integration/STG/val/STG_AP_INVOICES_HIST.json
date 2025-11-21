@@ -1,0 +1,10 @@
+{
+    "table_name": "STG_AP_INVOICES_HIST",
+    "schema_name": "val",
+    "source_name": "STG",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Company, ClosureDate, SupplierID, SupplierName, InvoiceNr, InvoiceID, InvoiceDate, DueDate, InvoiceAmountInvoiceCurrency, OpenAmountInvoiceCurrency, InvoiceCurrency, OpenAmountHomeCurrency, PaymentTerm, FILE_NAME, CreatedOn FROM val.STG_AP_INVOICES_HIST WHERE TRY_CAST(RIGHT(ClosureDate, 4) AS INT) >= (YEAR(GETDATE()) - 2)"
+}

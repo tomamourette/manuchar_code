@@ -1,0 +1,12 @@
+{
+    "table_name": "Companies",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, Active_Code, Active_Name, Active_ID, Controller, Whitelist, [Trust Data_Code] AS Trust_Data_Code, [Trust Data_Name] AS Trust_Data_Name, [Trust Data_ID] AS Trust_Data_ID, [Connection Type_Code] AS Connection_Type_Code, [Connection Type_Name] AS Connection_Type_Name, [Connection Type_ID] AS Connection_Type_ID, [Landing Folder] AS Landing_Folder, [Archive Folder] AS Archive_Folder, [Error Folder] AS Error_Folder, [Busy Folder] AS Busy_Folder, DebtorReporting_Code, DebtorReporting_Name, DebtorReporting_ID, SalesReporting_Code, SalesReporting_Name, SalesReporting_ID, StockReporting_Code, StockReporting_Name, StockReporting_ID, PayablesReporting_Code, PayablesReporting_Name, PayablesReporting_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.Companies"
+}

@@ -1,0 +1,12 @@
+{
+    "table_name": "ProductGrouping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Product Business Unit_Code] as Product_Business_Unit_Code, [Product Business Unit_Name] as Product_Business_Unit_Name, [Product Business Unit_ID] as Product_Business_Unit_ID, [Product Category] as Product_Category, [Product Sub Category] as Product_Sub_Category, [Sort Order] as Sort_Order, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Product Grouping]"
+}

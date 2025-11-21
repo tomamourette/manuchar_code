@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_payment_term
+    tags:
+      - "Payment Term"
+      - "raw vault"
+      - "hub"
+      - "REF"
+    description: "This model extracts payment term records from Dynamics, constructs a composite key by concatenating the payment term key with the source identifier, and deduplicates the records by selecting the earliest load timestamp."
+    columns:
+      - name: bkey_payment_term_source
+        description: "Composite key for the payment term, created by concatenating bkey_payment_term and 'dynamics'."
+      - name: bkey_payment_term
+        description: "Base payment term key from Dynamics; trimmed and defaulted to 'N/A' if null."
+      - name: bkey_source
+        description: "Static source identifier, set to 'dynamics'."
+      - name: ldts
+        description: "Load timestamp from the Dynamics payment term data, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, statically set to 'Dynamics 365'."

@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_supplier
+    tags:
+      - "Supplier"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model extracts and deduplicates supplier source records from Dynamics data. It constructs composite keys by concatenating the supplier business key with the source identifier, and returns the earliest load timestamp for each supplier."
+    columns:
+      - name: bkey_supplier_source
+        description: "Composite key for the supplier, created by concatenating bkey_supplier and the string 'dynamics'."
+      - name: bkey_supplier
+        description: "Supplier business key; if missing, defaults to 'N/A'."
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'dynamics', 'mds'."
+      - name: ldts
+        description: "Load timestamp from Dynamics data, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, statically set to 'Dynamics 365'."

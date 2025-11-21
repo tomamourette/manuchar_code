@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_purchase_invoice_line_cogs
+    tags:
+      - "Sales Invoice Line COGS"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model is a template for filling business entity: purchase invoice line cogs."
+    columns:
+      - name: bkey_invoice_line_cogs_source
+        description: "The business key field plus source."
+      - name: bkey_invoice_line_cogs
+        description: "The business key field."
+      - name: bkey_source
+        description: "Source identifier, 'DYNAMICS', 'MTM'."
+      - name: ldts
+        description: "Load timestamp from the source, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, such as 'Dynamics 365'"

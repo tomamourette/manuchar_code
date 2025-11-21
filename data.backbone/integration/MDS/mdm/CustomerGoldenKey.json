@@ -1,0 +1,12 @@
+{
+    "table_name": "CustomerGoldenKey",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Legal Number] as Legal_Number,  Country_Code, Country_Name, Country_ID, Address, [ZIP Code] as ZIPCode, City, Currency, [Multinational Customer_Code] as Multinational_Customer_Code, [Multinational Customer_Name] as Multinational_Customer_Name, [Multinational Customer_ID] as Multinational_Customer_ID, Affiliate_Code, Affiliate_Name, Affiliate_ID, [Industry Type_Code] as Industry_Type_Code, [Industry Type_Name] as Industry_Type_Name, [Industry Type_ID] as Industry_Type_ID, [MNC Parent_Code] as MNC_Parent_Code, [MNC Parent_Name] as MNC_Parent_Name, [MNC Parent_ID] as MNC_Parent_ID, [Credendo Debtor Number] as Credendo_Debtor_Number, [Latest Annex Number] as Latest_Annex_Number, CpRefNo, [CpRefNo Validation_Code] as CpRefNo_Validation_Code, [CpRefNo Validation_Name] as CpRefNo_Validation_Name, [CpRefNo Validation_ID] as CpRefNo_Validation_ID, [CpRefNo Validation Date] as CpRefNo_Validation_Date, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Customer Golden Key]"
+}

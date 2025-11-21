@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: logistic_file_line_dynamics
+    tags:
+      - "Logistic File Line"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: tkey_logistic_file_line
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_logistic_file_line_source,
+        description: ""
+      - name: bkey_source,
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: logfileline_company
+        description: ""
+      - name: logfileline_filenumber
+        description: ""
+      - name: logfileline_purchlinerecid
+        description: ""
+      - name: logfileline_purchid
+        description: ""
+      - name: logfileline_purchase_line_num
+        description: ""
+      - name: logfileline_saleslinerecid
+        description: ""
+      - name: logfileline_salesid
+        description: ""
+      - name: logfileline_sales_line_num
+        description: ""
+      - name: logfileline_product_id
+        description: ""
+      - name: logfileline_description
+        description: ""
+      - name: logfileline_quantity
+        description: ""
+      - name: logfileline_grossquantity
+        description: ""
+      - name: logfileline_UOM
+        description: ""
+      - name: logfileline_number_of_packages
+        description: ""
+      - name: logfile_number_of_packages_unit
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

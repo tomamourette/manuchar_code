@@ -1,0 +1,41 @@
+
+version: 2
+
+models:
+  - name: rv_sat_location
+    enabled: false
+    tags:
+      - "Location"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "Model representing location details sourced from the location_mds reference."
+    columns:
+      - name: bkey_location_source
+        description: "Unique key identifying the source of the location data."
+      - name: location_name
+        description: "Name of the location."
+      - name: location_address
+        description: "Address of the location."
+      - name: location_city
+        description: "City where the location is situated."
+      - name: location_zip_code
+        description: "Postal code for the location."
+      - name: location_longitude
+        description: "Longitude coordinate of the location."
+      - name: location_latitude
+        description: "Latitude coordinate of the location."
+      - name: location_country_code
+        description: "Country code associated with the location."
+      - name: location_type
+        description: "Type classification of the location."
+      - name: location_type_sort
+        description: "Sort order for the location type."
+      - name: location_company
+        description: "Company associated with the location."
+      - name: valid_from
+        description: "Start date from which the location data is valid."
+      - name: valid_to
+        description: "End date until which the location data is valid."
+      - name: is_current
+        description: "Indicator if the location data is current."

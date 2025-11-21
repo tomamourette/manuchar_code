@@ -1,0 +1,51 @@
+
+version: 2
+
+models:
+  - name: rv_sat_customer
+    enabled: true
+    tags:
+      - "Customer"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model consolidates customer data from multiple sources, providing a unified view of customer attributes."
+    columns:
+      - name: bkey_customer_source
+        description: "The source key for the customer data, indicating the origin of the record."
+      - name: customer_code
+        description: "A unique code representing the customer."
+      - name: customer_company
+        description: "The name of the company associated with the customer."
+      - name: customer_id
+        description: "A unique identifier for the customer."
+      - name: customer_name
+        description: "The full name of the customer."
+      - name: customer_address
+        description: "The address of the customer."
+      - name: customer_legal_number
+        description: "The legal identification number of the customer."
+      - name: customer_city
+        description: "The city where the customer is located."
+      - name: customer_zip_code
+        description: "The postal code of the customer's location."
+      - name: customer_group
+        description: "The group classification of the customer."
+      - name: customer_industry
+        description: "The industry sector to which the customer belongs."
+      - name: customer_multinational_legal_number
+        description: "The legal number for multinational customers."
+      - name: customer_multinational_name
+        description: "The name of the multinational entity associated with the customer."
+      - name: customer_gkam
+        description: "The global key account manager for the customer."
+      - name: customer_affiliate
+        description: "The affiliate status of the customer."
+      - name: customer_country_code
+        description: "The country code representing the customer's location."
+      - name: valid_from
+        description: "The start date from which the customer data is valid."
+      - name: valid_to
+        description: "The end date until which the customer data is valid."
+      - name: is_current
+        description: "Indicates whether the customer data is current."

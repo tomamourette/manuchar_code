@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: fact_financial_statements_kpi
+    tags:
+      - "Financial Statements KPI"
+      - "Fact"
+      - "Group-FinancialStatements"
+    description: "This model calculates financial statement metrics such as YTD amounts, currency conversion rates, and working days based on various dimensions and mappings."
+    columns:
+      - name: tkey_kpi
+        description: "The unique key representing the KPI dimension."
+      - name: tkey_date
+        description: "The unique key representing the date dimension."
+      - name: tkey_company
+        description: "The unique key representing the company period dimension."
+      - name: tkey_consolidation_period
+        description: "The unique key representing the consolidation dimension."
+      - name: ytd_bundle_amount_act
+        description: ""
+      - name: ytd_conso_adjusted_amount_act
+        description: ""
+      - name: ytd_bundle_amount_bud
+        description: ""
+      - name: ytd_conso_adjusted_amount_bud
+        description: ""
+      - name: ytd_bundle_amount_fct
+        description: ""
+      - name: ytd_conso_adjusted_amount_fct
+        description: ""

@@ -1,0 +1,32 @@
+
+version: 2
+
+models:
+  - name: bv_product_global
+    enabled: true
+    tags:
+      - "Product Global"
+      - "business vault"
+      - "ERP"
+    description: "Model to extract and combine product data from different sources, generating non-overlapping time ranges and selecting leading sources for each attribute."
+    columns:
+      - name: bkey_product_global
+        description: "Unique key representing the global product."
+      - name: product_group
+        description: "The group to which the product belongs, sourced from MDS or Dynamics."
+      - name: product_group_category
+        description: "Category of the product group, sourced from MDS or Dynamics."
+      - name: product_group_subcategory
+        description: "Subcategory of the product group, sourced from MDS or Dynamics."
+      - name: product_business_unit
+        description: "Business unit associated with the product, sourced from MDS or Dynamics."
+      - name: product_global_name
+        description: "Global name of the product, sourced from MDS or Dynamics."
+      - name: product_core
+        description: "Indicator if the product group category is 'Core'."
+      - name: valid_from
+        description: "Start of the validity period for the product data."
+      - name: valid_to
+        description: "End of the validity period for the product data."
+      - name: is_current
+        description: "Indicator if the product data is current, based on the validity period."

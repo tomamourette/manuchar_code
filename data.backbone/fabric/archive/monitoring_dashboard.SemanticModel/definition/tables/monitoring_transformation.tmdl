@@ -1,0 +1,111 @@
+table monitoring_transformation
+	lineageTag: f2ce04d3-fb75-4d8d-aab0-6c716ff2a4d2
+
+	measure transformation_loads = COUNTROWS(monitoring_transformation)
+		formatString: 0
+		lineageTag: 2a29ac64-b23c-4ae0-9282-e1ba2ae26c05
+
+	column workspace
+		dataType: string
+		lineageTag: b4be1587-a987-41ff-8e1c-2336ab5ea2cb
+		summarizeBy: none
+		sourceColumn: workspace
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: db334745-577a-4cbf-acdd-79848ed8bb70
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 76579198-f3d1-4974-a75b-25f93ca2733d
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 89fb8643-d221-49da-bf2f-0bf48356ac70
+		summarizeBy: sum
+		sourceColumn: duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column pool_id
+		dataType: string
+		lineageTag: 1c0085da-4635-4d96-8cc6-c73990868b2b
+		summarizeBy: none
+		sourceColumn: pool_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column session_id
+		dataType: string
+		lineageTag: 750b8c1b-cc07-4229-8ccc-2e2f4e217cec
+		summarizeBy: none
+		sourceColumn: session_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column run_id
+		dataType: string
+		lineageTag: bfda6d42-9aa2-4c8b-b236-b4330725d852
+		summarizeBy: none
+		sourceColumn: run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column message
+		dataType: string
+		lineageTag: b17b7995-bf3b-42f9-8631-8e1d114b155a
+		summarizeBy: none
+		sourceColumn: message
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 557fb53c-dcc0-4229-b55e-476d02137d9d
+		summarizeBy: none
+		sourceColumn: timestamp_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column timestamp_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 33987ce2-759d-4dff-acd8-37f8318b2a1d
+		summarizeBy: none
+		sourceColumn: timestamp_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition monitoring_transformation = m
+		mode: import
+		queryGroup: MONITORING
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    monitoring = Source{[Schema="meta",Item="monitoring_transformation"]}[Data],
+				    timestamp_date = Table.AddColumn(monitoring, "timestamp_date", each DateTime.Date([timestamp]), type date),
+				    timestamp_time = Table.AddColumn(timestamp_date, "timestamp_time", each DateTime.Time([timestamp]), type time)
+				in
+				    timestamp_time
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

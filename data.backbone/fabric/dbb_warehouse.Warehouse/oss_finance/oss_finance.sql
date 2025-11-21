@@ -1,0 +1,1 @@
+CREATE SCHEMA oss_finance;

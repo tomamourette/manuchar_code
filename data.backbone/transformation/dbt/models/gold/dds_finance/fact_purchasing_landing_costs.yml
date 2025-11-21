@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: fact_purchasing_landing_costs
+    enabled: true
+    tags:
+      - "Purchasing Landing Costs"
+      - "Fact"
+    description: "This model represents purchasing transactions with details on invoice dates, products, suppliers, currencies, companies, incoterms, payment terms, and country origins and destinations."
+    columns:
+      - name: tkey_created_date
+        description: "The key representing the created date."
+      - name: tkey_accounting_date
+        description: "The key representing the accounting date."
+      - name: tkey_product
+        description: "The key representing the product involved in the transaction."
+      - name: tkey_company
+        description: "The key representing the company involved in the transaction."
+      - name: tkey_supplier
+        description: "The key representing the supplier involved in the transaction."
+      - name: tkey_incoterm
+        description: "The key representing the incoterm applied to the transaction."
+      - name: tkey_payment_term
+        description: "The key representing the payment term agreed upon for the transaction."
+      - name: tkey_country_origin
+        description: "The key representing the country of origin for the goods."
+      - name: tkey_country_destination
+        description: "The key representing the country of destination for the goods."
+      - name: file_number
+        description: "The file number associated with the transaction."
+      - name: lot_number
+        description: "The lot number associated with the transaction."
+      - name: invoice_supplier_id
+        description: "The identifier for the supplier's invoice."
+      - name: local_supplier_id
+        description: "The local identifier for the supplier."
+      - name: local_product
+        description: "The local identifier for the product."
+      - name: internal_invoice_id
+        description: "The internal identifier for the invoice."
+      - name: purchase_id
+        description: "The identifier for the purchase"
+      - name: line_number
+        description: "The line number in the purchase."
+      - name: adjusted_cogs_functional
+        description: "The adjusted cogs functional amount"
+      - name: adjusted_cogs_transactional
+        description: "The adjusted cogs transactional amount."
+      - name: adjusted_cogs_group
+        description: "The adjusted cogs group amount."
+      - name: cogs1_purchase_amount_functional
+        description: "The cogs 1 purchase amount functional amount."
+      - name: cogs1_purchase_amount_transactional
+        description: "The cogs 1 purchase amount transactional amount."
+      - name: cogs1_purchase_amount_group
+        description: "The cogs 1 purchase amount group amount."
+      - name: cogs1_freight_amount_functional
+        description: "The cogs 1 freight amount functional amount."
+      - name: cogs1_freight_amount_transactional
+        description: "The cogs 1 freight amount transactional amount."
+      - name: cogs1_freight_amount_group
+        description: "The cogs 1 freight amount group amount."
+      - name: cogs1_other_amount_functional
+        description: "The cogs 1 other amount functional amount."
+      - name: cogs1_other_amount_transactional
+        description: "The cogs 1 other amount transactional amount."
+      - name: cogs1_other_amount_group
+        description: "The cogs 1 other amount group amount."

@@ -1,0 +1,6 @@
+CREATE USER [adm_pmu@manuchar.com]
+    WITH SID = 0xE0C0288387675D44B37B1437AADDAC58, TYPE = E;
+
+
+GO
+

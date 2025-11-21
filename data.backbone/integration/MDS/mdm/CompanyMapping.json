@@ -1,0 +1,12 @@
+{
+    "table_name": "CompanyMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [MONA Company Code_Code] as MONA_Company_Code_Code, [MONA Company Code_Name] as MONA_Company_Code_Name, [MONA Company Code_ID] as MONA_Company_Code_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Company Mapping]"
+}

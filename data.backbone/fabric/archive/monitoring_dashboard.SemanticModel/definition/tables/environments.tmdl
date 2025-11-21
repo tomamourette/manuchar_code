@@ -1,0 +1,73 @@
+table environments
+	lineageTag: 9d2a6879-df47-4223-9f0b-7292ef260e58
+
+	column environment
+		dataType: string
+		lineageTag: 1b405f9f-0b08-4e46-bdf7-6062ab7becdb
+		summarizeBy: none
+		sourceColumn: environment
+
+		annotation SummarizationSetBy = Automatic
+
+	column workspace_id
+		dataType: string
+		lineageTag: 1d8a39c3-9909-434e-ab83-e2631bf0a63f
+		summarizeBy: none
+		sourceColumn: workspace_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column workspace_name
+		dataType: string
+		lineageTag: 16fb2e46-34f3-4d68-8626-b7e97e9f94d6
+		summarizeBy: none
+		sourceColumn: workspace_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column domain
+		dataType: string
+		lineageTag: 4700b04c-08d9-473f-8b40-511c273a8a45
+		summarizeBy: none
+		sourceColumn: domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column lakehouse_id
+		dataType: string
+		lineageTag: fbb59b55-990f-4521-bd98-2ebfd2599ef4
+		summarizeBy: none
+		sourceColumn: lakehouse_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column warehouse_id
+		dataType: string
+		lineageTag: 4731d150-13c4-408a-8ed9-85f315fb3c1e
+		summarizeBy: none
+		sourceColumn: warehouse_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sql_connection_string
+		dataType: string
+		lineageTag: 5e4dc5dc-ddd1-4ef0-96a6-4294d66f0f76
+		summarizeBy: none
+		sourceColumn: sql_connection_string
+
+		annotation SummarizationSetBy = Automatic
+
+	partition environments = m
+		mode: import
+		queryGroup: METADATA
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    environments = Source{[Schema="meta",Item="environments"]}[Data]
+				in
+				    environments
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "dbb_orchestration_stream"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "89c0f658-6dde-965b-43fa-e3df3c2f1969"
+  }
+}

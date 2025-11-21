@@ -1,0 +1,52 @@
+
+version: 2
+
+models:
+  - name: fact_invoices_payable
+    enabled: true
+      - "Invoices Payable"
+      - "Fact"
+    description: "This model provides a detailed view of invoices payable, including invoice dates, amounts, payment status, and currency conversion rates."
+    columns:
+      - name: tkey_invoice_date
+        description: "The technical key representing the invoice date."
+      - name: tkey_due_date
+        description: "The technical key representing the due date of the invoice."
+      - name: tkey_snapshot_date
+        description: "The technical key representing the snapshot date for the invoice data."
+      - name: tkey_company
+        description: "The technical key for the company associated with the invoice."
+      - name: tkey_supplier
+        description: "The technical key for the supplier associated with the invoice."
+      - name: tkey_currency
+        description: "The technical key for the currency used in the invoice."
+      - name: tkey_payment_term
+        description: "The technical key for the payment term associated with the invoice."
+      - name: tkey_customer_industry_invoice
+        description: "The technical key for the customer industry related to the invoice."
+      - name: tkey_age_group
+        description: "The technical key for the age group based on the difference between due date and snapshot date."
+      - name: invoice_amount
+        description: "The total amount of the invoice."
+      - name: open_invoice_amount
+        description: "The amount of the invoice that is still open and unpaid."
+      - name: settled_invoice_amount
+        description: "The amount of the invoice that has been settled."
+      - name: invoice_number
+        description: "The unique identifier for the invoice."
+      - name: legal_number
+        description: "The legal number associated with the invoice."
+      - name: settlement_date
+        description: "The date on which the invoice was settled."
+      - name: status
+        description: "The payment status of the invoice, indicating whether it is paid, partially paid, or open."
+      - name: payment_progress_percentage
+        description: "The percentage of the invoice amount that has been paid."
+      - name: conversion_rate_local_home
+        description: "The conversion rate from local currency to home currency."
+      - name: conversion_rate_local_group
+        description: "The conversion rate from local currency to group currency."
+      - name: snapshot_granularity
+        description: "The granularity of the snapshot, indicating whether it is weekly or monthly."
+      - name: source
+        description: "The source system from which the invoice data was extracted."

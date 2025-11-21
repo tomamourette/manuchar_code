@@ -1,0 +1,38 @@
+version: 2
+ 
+models:
+  - name: consolidation_period_mona
+    tags:
+      - "Consolidation Period"
+      - "intermediate layer"
+      - "Financial Consolidations"
+      - "CON"
+      - "mona"
+    description: "This model fills the intermediate layer of the business entity Consolidation Period."
+    columns:
+      - name: bkey_consolidation_period_source
+        description: ""
+      - name: bkey_consolidation_period
+        description: ""
+      - name: bkey_source,
+        description: ""
+      - name: consolidation_period_id
+        description: ""
+      - name: consolidation_period_name
+        description: ""
+      - name: consolidation_period_year
+        description: ""
+      - name: consolidation_period_month
+        description: ""
+      - name: consolidation_period_date
+        description: ""
+      - name: consolidation_period_sequence
+        description: ""
+      - name: category_code
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

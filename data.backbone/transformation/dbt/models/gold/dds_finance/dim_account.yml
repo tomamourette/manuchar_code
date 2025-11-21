@@ -1,0 +1,44 @@
+version: 2
+ 
+models:
+  - name: dim_account
+    tags:
+      - "Account"
+      - "Dimension"
+      - "Group-FinancialStatements"
+    description: "This model is a template for filling the dimension: Account."
+    columns:
+      - name: tkey_account
+        description: ""
+      - name: bkey_account
+        description: ""
+      - name: account_code
+        description: ""
+      - name: account_description
+        description: ""
+      - name: account_category
+        description: ""
+      - name: report_sign
+        description: ""
+      - name: running_total_sign
+        description: ""
+      - name: subheader
+        description: ""
+      - name: subheader2
+        description: ""
+      - name: reporting_view
+        description: ""
+      - name: header
+        description: ""
+      - name: detail
+        description: ""
+      - name: sort_order
+        description: ""
+      - name: calculation_type
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

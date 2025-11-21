@@ -1,0 +1,11 @@
+source_name,source_type,load_enabled
+Dynamics,AzureSQL,yes
+Mona,SQLServer,yes
+Boomi,AzureSQL,yes
+MDS,SQLServer,yes
+DWH,SQLServer,yes
+dbb_lakehouse,AzureSQL,yes
+MTM,SQLServer,yes
+LOG,SQLServer,yes
+STG,SQLServer,yes
+OSS_GenericData,SQLServer,yes

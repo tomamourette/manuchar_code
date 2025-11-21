@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: rv_hub_stock
+    tags:
+      - "Stock"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model defines the hub for stock business keys, uniquely identifying each stock snapshot entry across source systems."
+
+    columns:
+      - name: bkey_stock_source
+        description: "The full business key including source suffix (e.g., product + company + source)."
+      - name: bkey_stock
+        description: "The core business key for the stock entry (e.g., product + company), without source suffix."
+      - name: bkey_source
+        description: "Identifies the source system, typically 'STG' or 'DYNAMICS'."
+      - name: ldts
+        description: "Load timestamp from the source, used to determine change ordering (valid_from)."
+      - name: record_source
+        description: "Label of the source system from which the record originates (e.g., 'STG_STOCK', 'DYNAMICS')."

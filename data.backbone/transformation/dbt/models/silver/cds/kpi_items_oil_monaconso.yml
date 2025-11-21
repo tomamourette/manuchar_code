@@ -1,0 +1,25 @@
+version: 2
+ 
+models:
+  - name: kpi_items_oil_monaconso
+    tags:
+      - "KPI Items"
+      - "intermediate layer"
+      - "REF"
+      - "oil_genericdata"
+    description: "This model fills the intermediate layer of the kpi items."
+    columns:
+      - name: tkey_kpi
+        description: ""
+      - name: kpi_name
+        description: ""
+      - name: kpi_sort_number
+        description: ""
+      - name: kpi_type
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

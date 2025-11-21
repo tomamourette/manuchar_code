@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "integration_pipeline_Group-FinancialStatements_OLD"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bd9b5b97-8f3d-9284-4f21-4c792a20c822"
+  }
+}

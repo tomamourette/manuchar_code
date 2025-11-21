@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: rv_sat_sales_invoice_line
+    enabled: false
+    tags:
+      - "Sales Invoice line"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model fills the satellite sales invoice line."
+    columns:
+      - name: bkey_sales_invoice_line_source
+        description: ""
+      - name: bkey_sales_invoice
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: sales_invoice_id
+        description: ""
+      - name: sales_invoice_line_invoice_line_num
+        description: ""
+      - name: sales_invoice_line_product_id
+        description: ""
+      - name: sales_invoice_line_product_name
+        description: ""
+      - name: sales_invoice_line_quantity
+        description: ""
+      - name: sales_invoice_line_quantity_mt
+        description: ""
+      - name: sales_invoice_line_uom
+        description: ""
+      - name: sales_invoice_line_amount_trans_cur
+        description: ""
+      - name: sales_invoice_line_amount_func_cur
+        description: ""
+      - name: sales_invoice_line_amount_group_cur_conso_avg
+        description: ""
+      - name: sales_invoice_line_amount_group_cur_oanda_eod
+        description: ""
+      - name: sales_invoice_line_group_cur_conso_avg_rate
+        description: ""
+      - name: sales_invoice_line_func_cur_rate
+        description: ""
+      - name: sales_invoice_line_company
+        description: ""
+      - name: sales_invoice_line_transactional_currency_code
+        description: ""
+      - name: sales_invoice_line_group_currency_code
+        description: ""
+      - name: sales_invoice_line_functional_currency_code
+        description: ""
+      - name: sales_invoice_line_ledger_voucher
+        description: ""
+      - name: sales_invoice_line_business_unit
+        description: ""
+      - name: sales_invoice_line_product_global_code
+        description: ""
+      - name: valid_from
+        description: "The date from which the site information is valid."
+      - name: valid_to
+        description: "The date until which the site information remains valid."
+      - name: is_current
+        description: "Indicates whether the site information is current and up-to-date."

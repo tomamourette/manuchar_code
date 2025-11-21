@@ -1,0 +1,180 @@
+{
+  "properties": {
+    "jobMode": "CDC",
+    "source": {
+      "type": "AzureSqlTable",
+      "connectionSettings": {
+        "type": "AzureSqlDatabase",
+        "typeProperties": {
+          "database": "BE-SQL-DATAPLATFORM-T-SQLDB-01"
+        },
+        "externalReferences": {
+          "connection": "1affdb49-130a-4457-87a4-8660721a69fb"
+        }
+      }
+    },
+    "destination": {
+      "type": "FabricSqlDatabaseTable",
+      "connectionSettings": {
+        "type": "FabricSqlDatabase",
+        "typeProperties": {
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "artifactId": "2ab845ba-4949-4267-890e-8483f50d8aec"
+        },
+        "externalReferences": {
+          "connection": "09250bc3-301d-424c-aa54-767b172fa113"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "572f75fc-2ffa-42ce-abdb-5f836d19b4be",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl1"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental",
+            "columns": [
+              {
+                "name": "DemoCDC_UpdateDate",
+                "type": "DateTime",
+                "physicalType": "datetime"
+              }
+            ]
+          }
+        },
+        "destination": {
+          "tableOption": "autoCreate",
+          "writeBehavior": "insert",
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl1"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "DemoCDC_Ident",
+                "type": "Decimal",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 18
+              },
+              "destination": {
+                "name": "DemoCDC_Ident",
+                "physicalType": "decimal",
+                "scale": 0,
+                "precision": 18
+              }
+            },
+            {
+              "source": {
+                "name": "DemoCDC_ValueField1",
+                "type": "String",
+                "physicalType": "nvarchar",
+                "length": "50"
+              },
+              "destination": {
+                "name": "DemoCDC_ValueField1",
+                "physicalType": "nvarchar",
+                "length": "50"
+              }
+            },
+            {
+              "source": {
+                "name": "DemoCDC_ValueField2",
+                "type": "String",
+                "physicalType": "nvarchar",
+                "length": "50"
+              },
+              "destination": {
+                "name": "DemoCDC_ValueField2",
+                "physicalType": "nvarchar",
+                "length": "50"
+              }
+            },
+            {
+              "source": {
+                "name": "DemoCDC_UpdateDate",
+                "type": "DateTime",
+                "physicalType": "datetime"
+              },
+              "destination": {
+                "name": "DemoCDC_UpdateDate",
+                "physicalType": "datetime"
+              }
+            },
+            {
+              "source": {
+                "name": "DemoCDC_UpdateUser",
+                "type": "String",
+                "physicalType": "nvarchar",
+                "length": "50"
+              },
+              "destination": {
+                "name": "DemoCDC_UpdateUser",
+                "physicalType": "nvarchar",
+                "length": "50"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    },
+    {
+      "id": "50a915c0-e78a-41cf-af6e-b5936781cd54",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl2"
+          },
+          "changeDataSettings": {
+            "readMethod": "SnapshotPlusIncremental",
+            "columns": [
+              {
+                "name": "DemoCDC_UpdateDate",
+                "type": "DateTime",
+                "physicalType": "datetime"
+              }
+            ]
+          }
+        },
+        "destination": {
+          "tableOption": "autoCreate",
+          "writeBehavior": "insert",
+          "datasetSettings": {
+            "schema": "demo",
+            "table": "DemoKrisT_CDC_tbl2"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator"
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}

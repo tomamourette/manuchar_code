@@ -1,0 +1,76 @@
+# Azure DevOps Deployment Pipeline with Environment-Specific SP Credentials
+
+trigger:
+  branches:
+    include:
+      - test
+      - acceptance
+      - quality
+      - production
+  paths:
+    include:
+      - integration/*
+      - transformation/*
+      - monitoring/monitoring_metadata/*
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  # Use branch-specific variable groups
+  - ${{ if eq(variables['Build.SourceBranchName'], 'test') }}:
+      - group: "variable_fabric_dbb_test"
+  - ${{ if eq(variables['Build.SourceBranchName'], 'acceptance') }}:
+      - group: "variable_fabric_dbb_acceptance"
+  - ${{ if eq(variables['Build.SourceBranchName'], 'quality') }}:
+      - group: "variable_fabric_dbb_quality"
+  - ${{ if eq(variables['Build.SourceBranchName'], 'production') }}:
+      - group: "variable_fabric_dbb_production"
+
+  # Common variables
+  - name: directory_integration
+    value: integration
+  - name: directory_transformation
+    value: transformation
+  - name: directory_monitoring
+    value: monitoring/monitoring_metadata
+
+steps:
+  # Step 1: Install azcopy
+  - task: Bash@3
+    displayName: Install azcopy
+    inputs:
+      targetType: 'inline'
+      script: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        mkdir -p $(Agent.ToolsDirectory)/azcopy
+        wget -O $(Agent.ToolsDirectory)/azcopy/azcopy_v10.zip https://github.com/Azure/azure-storage-azcopy/releases/download/v10.30.1/azcopy_linux_amd64_10.30.1.tar.gz
+        tar -xf $(Agent.ToolsDirectory)/azcopy/azcopy_v10.zip -C $(Agent.ToolsDirectory)/azcopy --strip-components=1
+        chmod +x $(Agent.ToolsDirectory)/azcopy/azcopy
+
+  # Step 2: Authenticate with azcopy using environment variables from the variable group
+  - task: Bash@3
+    displayName: Authenticate and run azcopy
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Export SP credentials from the variable group
+        export AZCOPY_AUTO_LOGIN_TYPE=$(Login_Type)
+        export AZCOPY_TENANT_ID=$(TenantID)
+        export AZCOPY_SPA_APPLICATION_ID=$(SPN_ClientID)
+        export AZCOPY_SPA_CLIENT_SECRET=$(SPN_ClientSecret)
+
+        # Construct the Lakehouse URL dynamically using variable group values
+        lakehouse_url="https://onelake.blob.fabric.microsoft.com/$(Workspace_ID)/$(Lakehouse_ID)/Files"
+
+        # Remove existing files and copy new files - Integration
+        $(Agent.ToolsDirectory)/azcopy/azcopy rm "${lakehouse_url}/$(directory_integration)" --recursive=true --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO
+        $(Agent.ToolsDirectory)/azcopy/azcopy copy "./$(directory_integration)/*" "${lakehouse_url}/$(directory_integration)" --from-to=LocalBlob --blob-type BlockBlob --check-length=true --put-md5 --follow-symlinks --disable-auto-decoding=false --recursive --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO --exclude-path ".git"
+
+        # Remove existing files and copy new files - Transformation
+        $(Agent.ToolsDirectory)/azcopy/azcopy rm "${lakehouse_url}/$(directory_transformation)" --recursive=true --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO
+        $(Agent.ToolsDirectory)/azcopy/azcopy copy "./$(directory_transformation)/*" "${lakehouse_url}/$(directory_transformation)" --from-to=LocalBlob --blob-type BlockBlob --check-length=true --put-md5 --follow-symlinks --disable-auto-decoding=false --recursive --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO --exclude-path ".git"
+
+        # Remove existing files and copy new files - Monitoring
+        $(Agent.ToolsDirectory)/azcopy/azcopy rm "${lakehouse_url}/$(directory_monitoring)" --recursive=true --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO
+        $(Agent.ToolsDirectory)/azcopy/azcopy copy "./$(directory_monitoring)/*" "${lakehouse_url}/$(directory_monitoring)" --from-to=LocalBlob --blob-type BlockBlob --check-length=true --put-md5 --follow-symlinks --disable-auto-decoding=false --recursive --trusted-microsoft-suffixes=onelake.blob.fabric.microsoft.com --log-level=INFO --exclude-path ".git"

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "integration_pipeline_source_dbb_lakehouse"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d3cee145-2486-8004-4116-cf103c61eb15"
+  }
+}

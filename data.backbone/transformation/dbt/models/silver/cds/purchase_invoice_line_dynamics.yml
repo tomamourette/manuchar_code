@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: purchase_invoice_line_dynamics
+    tags:
+      - "Purchase Invoice Line"
+      - "ERP Operations"
+      - "dynamics"
+    description: ""
+    columns:
+      - name: tkey_purchase_invoice_line_dynamics
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_purchase_invoice_line_source
+        description: ""
+      - name: bkey_purchase_invoice_line
+        description: ""
+      - name: bkey_purchase_invoice
+        description: ""
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'DYNAMICS'."
+      - name: purchase_invoice_line_number
+        description: ""
+      - name: purchase_invoice_line_description
+        description: ""
+      - name: purchase_invoice_line_quantity
+        description: ""
+      - name: purchase_invoice_line_product_id
+        description: ""
+      - name: purchase_invoice_line_amount_trans_cur
+        description: ""
+      - name: purchase_invoice_line_amount_func_cur
+        description: ""
+      - name: purchase_invoice_line_amount_group_cur_conso_avg
+        description: ""
+      - name: purchase_invoice_line_amount_group_cur_oanda_eod
+        description: ""
+      - name: purchase_invoice_line_group_cur_oanda_eod_rate
+        description: ""
+      - name: purchase_invoice_line_group_cur_conso_avg_rate
+        description: ""
+      - name: purchase_invoice_line_func_cur_rate
+        description: ""
+      - name: purchase_invoice_line_transactional_currency_code
+        description: ""
+      - name: purchase_invoice_line_group_currency_code
+        description: ""
+      - name: purchase_invoice_line_functional_currency_code
+        description: ""
+      - name: purchase_invoice_line_company
+        description: ""
+      - name: purchase_invoice_line_UOM
+        description: ""
+      - name: purchase_invoice_line_ledger_voucher
+        description: ""
+      - name: purchase_invoice_line_payment_term_id
+        description: ""
+      - name: purchase_invoice_line_closed
+        description: ""
+      - name: purchase_invoice_line_tax_amount
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

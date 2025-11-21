@@ -1,0 +1,55 @@
+
+version: 2
+
+models:
+  - name: dim_site
+    enabled: true
+    tags:
+      - "Site"
+      - "Dimension"
+    description: "This model provides a dimensional view of site data, including site attributes, location attributes, and history metadata."
+    columns:
+      - name: tkey_site
+        description: "A unique technical key for each site, generated using a row number."
+      - name: bkey_site
+        description: "The business key for the site, representing a unique identifier from the source system."
+      - name: site_code
+        description: "The code representing the site."
+      - name: site_name
+        description: "The name of the site."
+      - name: site_status
+        description: "The current status of the site."
+      - name: site_main_activity
+        description: "The main activity conducted at the site."
+      - name: site_property_type
+        description: "The type of property the site is classified as."
+      - name: site_latitude
+        description: "The latitude coordinate of the site's location."
+      - name: site_longitude
+        description: "The longitude coordinate of the site's location."
+      - name: site_is_bonded
+        description: "Indicates whether the site is bonded."
+      - name: site_location_code
+        description: "The code representing the location of the site."
+      - name: site_location_name
+        description: "The name of the site's location."
+      - name: site_location_status
+        description: "The current status of the site's location."
+      - name: site_location_type
+        description: "The type of location the site is situated in."
+      - name: site_location_property_type
+        description: "The property type of the site's location."
+      - name: site_location_size
+        description: "The size of the site's location."
+      - name: site_location_storage_type
+        description: "The type of storage available at the site's location."
+      - name: site_location_dry_storage_capacity
+        description: "The dry storage capacity available at the site's location, measured in appropriate units."
+      - name: site_location_liquid_storage_capacity
+        description: "The liquid storage capacity available at the site's location, measured in appropriate units."
+      - name: valid_from
+        description: "The start date from which the site data is valid."
+      - name: valid_to
+        description: "The end date until which the site data is valid."
+      - name: is_current
+        description: "A flag indicating whether the record is the current version."

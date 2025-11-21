@@ -1,0 +1,21 @@
+version: 2
+ 
+models:
+  - name: dim_cost_center
+    tags:
+      - "Cost Center"
+      - "Dimension"
+    description: "This model is a template for filling the dimension: Cost Center."
+    columns:
+      - name: tkey_cost_center
+        description: ""
+      - name: bkey_cost_center
+        description: ""
+      - name: cost_center_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

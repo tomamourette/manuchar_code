@@ -1,0 +1,35 @@
+version: 2
+ 
+models:
+  - name: country_mona
+    tags:
+      - "Country"
+      - "intermediate layer"
+      - "REF"
+      - "mona"
+    description: "This model fills the satellite of the business entity Country."
+    columns:
+      - name: bkey_country_source
+        description: ""
+      - name: bkey_country
+        description: ""
+      - name: bkey_source
+        description: ""
+      - name: country_name
+        description: ""
+      - name: commercial_region_code
+        description: ""
+      - name: continent
+        description: ""
+      - name: iso_alpha_3_code
+        description: ""
+      - name: iso_numeric_code
+        description: ""
+      - name: commercial_region_id
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

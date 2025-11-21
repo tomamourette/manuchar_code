@@ -1,0 +1,30 @@
+
+version: 2
+
+models:
+  - name: bv_stock_age_group
+    enabled: false
+    tags:
+      - "Stock Age Group"
+      - "business vault"
+      - "ERP"
+    description: "This model generates a timeline for stock age groups by combining entity data from different sources and creating non-overlapping time ranges for each stock age group key."
+    columns:
+      - name: bkey_stock_age_group
+        description: "Unique key representing each stock age group."
+      - name: stock_age_group_name
+        description: "Name of the stock age group."
+      - name: stock_age_group_id
+        description: "Identifier for the stock age group."
+      - name: stock_age_group_min_days
+        description: "Minimum number of days for the stock age group."
+      - name: stock_age_group_max_days
+        description: "Maximum number of days for the stock age group."
+      - name: stock_age_group_sort
+        description: "Sort order for the stock age group."
+      - name: valid_from
+        description: "Start date of the validity period for the stock age group."
+      - name: valid_to
+        description: "End date of the validity period for the stock age group."
+      - name: is_current
+        description: "Indicator if the stock age group is currently valid."

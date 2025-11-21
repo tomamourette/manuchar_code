@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_consolidated_amount
+    enabled: false
+    tags:
+      - "Consolidated Amount"
+      - "raw vault"
+      - "hub"
+      - "CON"
+    description: "This model consolidates and deduplicates source records for consolidated amounts, ensuring only the first occurrence based on valid from date is selected."
+    columns:
+      - name: bkey_consolidated_amount_source
+        description: "The business key representing the source of the consolidated amount."
+      - name: bkey_consolidated_amount
+        description: "The business key for the consolidated amount."
+      - name: bkey_source
+        description: "The business key identifying the source entity."
+      - name: ldts
+        description: "The timestamp indicating when the record is valid from."
+      - name: record_source
+        description: "The source of the record, hardcoded as 'Mona'."

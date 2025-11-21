@@ -1,0 +1,76 @@
+
+version: 2
+
+models:
+  - name: bv_sales_plan
+    enabled: false
+    tags: 
+      - "Sales Plan"
+      - "business vault"
+      - "PER"
+    description: "Model representing distinct sales plan details with various attributes including budget, category, and currency amounts."
+    columns:
+      - name: bkey_sales_plan
+        description: "Unique key identifier for the sales plan."
+      - name: bkey_source
+        description: "Source key identifier for the sales plan."
+      - name: sales_plan_budget_line_number
+        description: "Line number associated with the budget in the sales plan."
+      - name: sales_plan_category
+        description: "Category classification of the sales plan."
+      - name: sales_plan_plan
+        description: "Specific plan details within the sales plan."
+      - name: sales_plan_version
+        description: "Version number of the sales plan."
+      - name: sales_plan_company
+        description: "Company associated with the sales plan."
+      - name: sales_plan_closure_date
+        description: "Closure date for the sales plan."
+      - name: sales_plan_global_customer_code
+        description: "Global code identifying the customer in the sales plan."
+      - name: sales_plan_customer_id
+        description: "Unique identifier for the customer in the sales plan."
+      - name: sales_plan_customer_name
+        description: "Name of the customer in the sales plan."
+      - name: sales_plan_business_type
+        description: "Type of business associated with the sales plan."
+      - name: sales_plan_product_global_code
+        description: "Global code for the product in the sales plan."
+      - name: sales_plan_poduct_global_name
+        description: "Global name for the product in the sales plan."
+      - name: sales_plan_uom
+        description: "Unit of measure used in the sales plan."
+      - name: sales_plan_quantity
+        description: "Quantity specified in the sales plan."
+      - name: sales_plan_quantity_metric_ton
+        description: "Quantity in metric tons specified in the sales plan."
+      - name: sales_plan_group_currency_total_amount
+        description: "Total amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_total_amount
+        description: "Total amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_total_amount
+        description: "Total amount in budget currency for the sales plan."
+      - name: sales_plan_group_currency_cogs1_amount
+        description: "COGS1 amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_cogs1_amount
+        description: "COGS1 amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_cogs1_amount
+        description: "COGS1 amount in budget currency for the sales plan."
+      - name: sales_plan_group_currency_cogs2_amount
+        description: "COGS2 amount in group currency for the sales plan."
+      - name: sales_plan_home_currency_cogs2_amount
+        description: "COGS2 amount in home currency for the sales plan."
+      - name: sales_plan_budget_currency_cogs2_amount
+        description: "COGS2 amount in budget currency for the sales plan."
+      - name: sales_plan_home_currency
+        description: "Home currency used in the sales plan."
+      - name: sales_plan_plan_rate
+        description: "Rate applied in the sales plan."
+      - name: sales_plan_industry_type_code
+        description: "Industry type code associated with the sales plan."
+      - name: sales_plan_customer_code_cgk
+        description: "Customer code CGK in the sales plan."
+      - name: sales_plan_destination_country
+        description: "Destination country for the sales plan."
+      - name: sales_plan_currency
+        description: "Currency Code for the sales plan."

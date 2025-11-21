@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: rv_hub_product
+    tags:
+      - "Product"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model unifies product source records from Dynamics and MDS. It creates a composite key by concatenating the trimmed product key with its source identifier, unions records from both sources, and deduplicates them by selecting the earliest load timestamp."
+    columns:
+      - name: bkey_product_source
+        description: "Composite key for the product, formed by concatenating the trimmed base product key and the source (e.g., 'dynamics' or 'mds')."
+      - name: bkey_product
+        description: "Base product key from the source, trimmed and defaulting to 'N/A' if null."
+      - name: bkey_source
+        description: "Source identifier, either 'dynamics' or 'mds'."
+      - name: ldts
+        description: "Load timestamp from the source, cast as DATETIME2(6)."
+      - name: record_source
+        description: "Record source label, such as 'Dynamics 365' or 'MDS'."

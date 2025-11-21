@@ -1,0 +1,12 @@
+{
+    "table_name": "MONA_Segments",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT DISTINCT SubSegment AS segment, Segment AS sub_segment FROM mdm.[MONA Company Pov] ORDER BY segment"
+}

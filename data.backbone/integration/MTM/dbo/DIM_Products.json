@@ -1,0 +1,10 @@
+{
+    "table_name": "DIM_Products",
+    "schema_name": "dbo",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT product_id, ProdName, ProdGroup, ProdCat, epicorPartNum FROM dbo.DIM_Products"
+}

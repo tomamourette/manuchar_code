@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SQLDatabase",
+    "displayName": "ODS_Dynamics_FO-CE"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2ddbb9b6-1026-9f6d-4442-5957514398aa"
+  }
+}

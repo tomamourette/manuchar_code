@@ -1,0 +1,51 @@
+[
+  {
+    "uniqueIdentifier": "15dcc139-cca6-42bd-b845-6cfc82b86af1",
+    "payload": {
+      "name": "EventStream",
+      "metadata": {
+        "eventstreamArtifactId": "3c2f1969-e3df-43fa-965b-6dde89c0f658"
+      }
+    },
+    "type": "eventstreamSource-v1"
+  },
+  {
+    "uniqueIdentifier": "2b487136-1d62-43bd-8362-e392a91e1326",
+    "payload": {
+      "name": "dbb_orchestration_stream-stream",
+      "definition": {
+        "type": "Event",
+        "instance": "{\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.1\",\"steps\":[{\"name\":\"SourceEventStep\",\"id\":\"d6628493-d229-4db3-96fa-cbad19ed4323\",\"rows\":[{\"name\":\"SourceSelector\",\"kind\":\"SourceReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"15dcc139-cca6-42bd-b845-6cfc82b86af1\"}]}]}]}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "2b2657a4-bb7a-4b16-9920-1e8f8212cb0d",
+    "payload": {
+      "name": "dbb_orchestration_stream-stream alert",
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"steps\":[{\"id\":\"eb43ad7d-ab79-4d28-9348-9142a2af8949\",\"name\":\"FieldsDefaultsStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"2b487136-1d62-43bd-8362-e392a91e1326\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"}]},{\"id\":\"1681d449-969c-426b-beb7-94b942b67bc5\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"job_status\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsEqualTo\"},{\"name\":\"value\",\"type\":\"string\",\"value\":\"Failed\"}],\"kind\":\"TextValueCondition\",\"name\":\"TextValueCondition\"}]},{\"id\":\"5d3c415e-c5e2-4301-9f3a-154c63284f65\",\"name\":\"ActStep\",\"rows\":[{\"arguments\":[{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"fabricJobConnectionDocumentId\",\"type\":\"string\",\"value\":\"f3b14d34-7334-4ea0-9b3e-456602c0b4c0\"},{\"name\":\"parameters\",\"type\":\"array\",\"values\":[{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"pipeline_name\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"​\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"item_name\"}],\"kind\":\"EventFieldReference\",\"type\":\"complexReference\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"},{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"workspace_name\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"​\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"workspace_name\"}],\"kind\":\"EventFieldReference\",\"type\":\"complexReference\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"},{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"pipeline_run_id\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"​\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"job_instance_id\"}],\"kind\":\"EventFieldReference\",\"type\":\"complexReference\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"},{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"job_start_time\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"​\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"job_start_time_utc\"}],\"kind\":\"EventFieldReference\",\"type\":\"complexReference\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"},{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"job_end_time\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"​\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"job_end_time_utc\"}],\"kind\":\"EventFieldReference\",\"type\":\"complexReference\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"},{\"arguments\":[{\"name\":\"parameterName\",\"type\":\"string\",\"value\":\"job_status\"},{\"name\":\"parameterValue\",\"type\":\"complexArray\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"Failed\"}]},{\"name\":\"parameterType\",\"type\":\"string\",\"value\":\"String\"}],\"kind\":\"FabricItemParameter\",\"type\":\"complex\"}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"workspaceId\",\"type\":\"string\",\"value\":\"913a2dc2-5f68-4fb7-ab07-631a84561fd6\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"itemId\",\"type\":\"string\",\"value\":\"372b8caf-c120-44a1-a4d1-4706f4530a63\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"itemType\",\"type\":\"string\",\"value\":\"SynapseNotebook\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"subitemId\",\"type\":\"string\",\"value\":\"\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"jobType\",\"type\":\"string\",\"value\":\"RunNotebook\"}],\"kind\":\"FabricItemInvocation\",\"name\":\"FabricItemBinding\"}]}],\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\"}",
+        "settings": {
+          "shouldRun": true,
+          "shouldApplyRuleOnUpdate": true
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "f3b14d34-7334-4ea0-9b3e-456602c0b4c0",
+    "payload": {
+      "name": "Fabric item action",
+      "fabricItem": {
+        "itemId": "f4530a63-4706-a4d1-44a1-c120372b8caf",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "SynapseNotebook"
+      },
+      "jobType": "RunNotebook"
+    },
+    "type": "fabricItemAction-v1"
+  }
+]

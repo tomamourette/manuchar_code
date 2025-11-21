@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Warehouse",
+    "displayName": "OSS_Anaplan_MHQ_Warehouse"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2ae74a78-2a82-ad4b-492e-e09dd216b4c5"
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "table_name": "STG_val_STG_SALES_PLAN_HIST",
+    "schema_name": "ds",
+    "source_name": "DWH",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT Category, Plan, Version, Company, CLosureDate, GroupCustomerID, GroupCustomerName, BusinessType, DestinationCountry, GroupProductID, GroupProductName, UOM, Quantity, GroupCurrencyTotalAmount, GroupCurrencyCOGS1Amount, GroupCurrencyCOGS2Amount, HomeCurrency, PlanRate, ProductFix, KDP_checksum, KDP_executionId, KDP_loadDT, KDP_DQ, KDP_CLEAN, KDP_IsBlocked, ID FROM ds.STG_val_STG_SALES_PLAN_HIST WHERE CLosureDate >= DATEFROMPARTS(YEAR(GETDATE()) - 2, 1, 1)"
+}

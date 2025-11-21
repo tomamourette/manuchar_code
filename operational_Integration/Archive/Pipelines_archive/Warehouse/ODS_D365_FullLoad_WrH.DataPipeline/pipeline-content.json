@@ -1,0 +1,160 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Full Copy to Wrh databank",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "DataProcess_RunStep Start",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "additionalColumns": [
+              {
+                "name": "Ingestion_Timestamp",
+                "value": {
+                  "value": "@pipeline().TriggerTime",
+                  "type": "Expression"
+                }
+              }
+            ],
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "dbb_dynamics_lakehouse",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+                    "artifactId": "00693b59-6dcb-4f19-bbd6-2b772ce5f838",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "table": {
+                  "value": "@pipeline().parameters.tableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "allowCopyCommand": true,
+            "copyCommandSettings": {},
+            "tableOption": "autoCreate",
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "OperationalDataSources_WrH",
+                "properties": {
+                  "annotations": [],
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                    "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                  }
+                }
+              },
+              "type": "DataWarehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().parameters.targetSchemaName",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@pipeline().parameters.tableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "enableStaging": true,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "DataProcess_RunStep end Success",
+        "type": "Wait",
+        "dependsOn": [
+          {
+            "activity": "Full Copy to Wrh databank",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      },
+      {
+        "name": "DataProcess_RunStep end Failed",
+        "type": "Wait",
+        "dependsOn": [
+          {
+            "activity": "Full Copy to Wrh databank",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      },
+      {
+        "name": "DataProcess_RunStep Start",
+        "type": "Wait",
+        "dependsOn": [],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      }
+    ],
+    "parameters": {
+      "tableName": {
+        "type": "string",
+        "defaultValue": "vendtrans"
+      },
+      "source": {
+        "type": "string",
+        "defaultValue": "Dynamics"
+      },
+      "schemaName": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "targetSchemaName": {
+        "type": "string",
+        "defaultValue": "21D365_stg"
+      }
+    }
+  }
+}

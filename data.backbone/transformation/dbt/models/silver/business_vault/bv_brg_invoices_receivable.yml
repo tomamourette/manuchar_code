@@ -1,0 +1,75 @@
+
+version: 2
+
+models:
+  - name: bv_brg_invoices_receivable
+    enabled: false
+    tags:
+      - "Invoices Receivable"
+      - "business vault"
+    description: "This model combines invoice data from both on-premise and Dynamics sources, calculating open invoice amounts and last 3 weeks' sales per customer."
+    columns:
+      - name: bkey_sales_invoice
+        description: "Unique key for each sales invoice."
+      - name: bkey_source
+        description: "Source system of the sales invoice, either 'STG_AR' or 'DYNAMICS'."
+      - name: invoice_date
+        description: "Date when the invoice was issued."
+      - name: due_date
+        description: "Date when the invoice is due for payment."
+      - name: snapshot_date
+        description: "Date of the snapshot for the invoice data."
+      - name: settlement_date
+        description: "Date when the invoice was settled."
+      - name: bkey_company
+        description: "Key representing the company associated with the invoice."
+      - name: bkey_customer
+        description: "Key representing the customer associated with the invoice."
+      - name: bkey_currency
+        description: "Currency code for the invoice, adjusted for specific cases."
+      - name: bkey_payment_term
+        description: "Payment term associated with the invoice."
+      - name: bkey_customer_industry_invoice
+        description: "Industry code for the customer associated with the invoice."
+      - name: AR_invoice_amount_transactional_currency
+        description: ""
+      - name: AR_invoice_amount_functional_currency
+        description: ""
+      - name: AR_invoice_amount_group_conso_EOM_currency
+        description: ""
+      - name: AR_invoice_amount_group_OANDA_spot_currency
+        description: ""
+      - name: AR_open_amount_transactional_currency
+        description: ""
+      - name: AR_open_amount_functional_currency
+        description: ""
+      - name: AR_open_amount_group_conso_EOM_currency
+        description: ""
+      - name: AR_open_amount_group_OANDA_spot_currency
+        description: ""
+      - name: AR_settled_amount_transactional_currency
+        description: ""
+      - name: AR_settled_amount_functional_currency
+        description: ""
+      - name: AR_settled_amount_group_conso_EOM_currency
+        description: ""
+      - name: AR_settled_amount_group_OANDA_spot_currency
+        description: ""
+      - name: sales_invoice_group_cur_conso_eom_rate
+        description: ""
+      - name: sales_invoice_group_cur_conso_avg_rate
+        description: ""
+      - name: sales_invoice_func_cur_rate
+        description: ""
+      - name: invoice_number
+        description: "Identifier number for the invoice."
+      - name: legal_number
+        description: "VAT or legal number of the customer associated with the invoice."
+      - name: AR_sales_last_3_weeks_transactional_currency
+        description: ""
+      - name: AR_sales_last_3_weeks_functional_currency
+        description: ""
+      - name: AR_sales_last_3_weeks_group_conso_AVG_currency
+        description: ""
+      - name: AR_sales_last_3_weeks_group_OANDA_spot_currency
+        description: ""

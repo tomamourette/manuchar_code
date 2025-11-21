@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: rv_sat_supplier
+    tags:
+      - "Supplier"
+      - "raw vault"
+      - "satellite"
+      - "ERP"
+    description: "This model derives a composite supplier key by concatenating the base supplier key with its source. It includes supplier group codes, descriptions, names, addresses, legal numbers, and validity periods, along with an active flag."
+    columns:
+      - name: bkey_supplier_source
+        description: "Composite key for the supplier, created by concatenating bkey_supplier and bkey_source."
+      - name: supplier_group_code
+        description: "Code representing the supplier group."
+      - name: supplier_group_description
+        description: "Description of the supplier group."
+      - name: supplier_name
+        description: "Name of the supplier."
+      - name: supplier_street_address
+        description: "Supplier's street address."
+      - name: supplier_city
+        description: "City of the supplier."
+      - name: supplier_zip_code
+        description: "Zip code for the supplier."
+      - name: supplier_affiliate
+        description: ""
+      - name: supplier_country_code
+        description: ""
+      - name: supplier_legal_number
+        description: "Supplier's legal number (e.g., VAT or registration number)."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

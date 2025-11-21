@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: product_mds
+    tags:
+      - "product"
+      - "mds"
+      - "ERP Operations"
+    description: "This model builds a full product timeline by tracking product grouping details over time using SCD2 logic for historical changes and SCD1 for current product details. It consolidates product grouping, category, and business unit information from the MDS source."
+    columns:
+      - name: bkey_product_source
+        description: "Business key for the product, derived as a lowercase version of displayproductnumber plus source."
+      - name: bkey_product
+        description: "Business key for the product, derived as a lowercase version of displayproductnumber."
+      - name: bkey_source
+        description: "Source identifier for the record, statically set to 'mds'."
+      - name: product_name
+        description: "Product name from the product grouping history."
+      - name: product_group
+        description: "Product group name as defined in the grouping details."
+      - name: product_group_category
+        description: "Product category derived from the product grouping hierarchy."
+      - name: product_group_subcategory
+        description: "Product subcategory from the grouping history."
+      - name: business_unit
+        description: "Business unit associated with the product, derived from raw or parent business unit fields."
+      - name: product_grouping_code
+        description: "Product grouping code, here reusing bkey_product."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active (1 if valid_to equals '2999-12-31 23:59:59.999999', otherwise 0)."

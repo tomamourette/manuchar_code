@@ -1,0 +1,20 @@
+relationship 6375751a-f4aa-d136-ff80-d0ec0f39c88b
+	fromColumn: monitoring_integration.workspace
+	toColumn: environments.workspace_id
+
+relationship 2b43734b-499e-c252-0785-15833d1dbde8
+	fromColumn: monitoring_transformation.workspace
+	toColumn: environments.workspace_id
+
+relationship AutoDetected_13b94967-0d71-428a-adff-20227eb03f34
+	fromColumn: monitoring_maintenance.environment
+	toColumn: environments.environment
+
+relationship AutoDetected_12e774a0-18f5-4ae7-8272-9ce2f678a65e
+	fromColumn: monitoring_transformation_dbt.environment
+	toColumn: environments.environment
+
+relationship AutoDetected_72dc3478-0037-4ee9-82e1-94b8ade542ed
+	fromColumn: monitoring_integration_validation.workspace
+	toColumn: environments.workspace_id
+

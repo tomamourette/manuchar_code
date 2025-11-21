@@ -1,0 +1,35 @@
+
+version: 2
+
+models:
+  - name: rv_sat_currency_rate
+    enabled: false
+    tags:
+      - "Currency Rate"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model selects all columns from the currency_rate table, which includes various currency rate attributes and their validity periods."
+    columns:
+      - name: bkey_currency_rate_source
+        description: "The source key for the currency rate."
+      - name: consolidation_id
+        description: "Identifier for the consolidation process."
+      - name: consolidation_code
+        description: "Code representing the consolidation."
+      - name: currency_code
+        description: "Code representing the currency."
+      - name: reference_currency_code
+        description: "Code for the reference currency used in the rate."
+      - name: closing_rate
+        description: "The closing rate of the currency."
+      - name: average_rate
+        description: "The average rate of the currency over a period."
+      - name: average_month
+        description: "The month for which the average rate is calculated."
+      - name: valid_from
+        description: "The start date from which the currency rate is valid."
+      - name: valid_to
+        description: "The end date until which the currency rate is valid."
+      - name: is_current
+        description: "Indicator if the currency rate is currently valid."

@@ -1,0 +1,6 @@
+CREATE USER [adm_asc@manuchar.com]
+    WITH SID = 0x40584056A821DE4E9E1D5F7EF45AF098, TYPE = E;
+
+
+GO
+

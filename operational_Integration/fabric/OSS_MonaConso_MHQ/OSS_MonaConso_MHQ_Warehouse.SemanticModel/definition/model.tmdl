@@ -1,0 +1,15 @@
+model 753d7854-c51c-437e-9f52-733a6bb612fa
+	culture: en-US
+	collation: Latin1_General_100_BIN2_UTF8
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["exec_requests_history","long_running_queries","frequently_run_queries","exec_sessions_history","V_CONSO__ODS","V_DATA_CONSO__ODS","V_CONSO_CODE__ODS","V_COMPANY__ODS","TS096S0__ODS","TS014M1__ODS","V_DIMENSIONGROUP__ODS","TS017R0__ODS","TS014C0__ODS","TS010S0__ODS","TD030E0__ODS","TD030I2__ODS","V_DIMENSIONDETAIL__ODS","TD030E2__ODS","V_CALC_LOCALADJUSTED_BUNDLES__ODS","V_CALC_LOCALADJUSTED_BUNDLES__STG","TD030B1__ODS","REF_CONSO_REPORTING_CATEGORY","Config_SourceList","TS096N0__ODS","TS017R2__ODS","TS024C1__ODS","TS024C0__ODS","TS098S0__ODS","TS096S0__STG","TD030I2__STG","TS014C0__STG","TS017R0__STG","V_CONSO__STG","V_COMPANY__STG","V_DIMENSIONGROUP__STG","TS014M1__STG","V_CONSO_CODE__STG","TS010S0__STG","V_TD035C2__ODS","TD055C2__STG","TD055C2__ODS","V_DATA_CONSO__STG","V_DIMENSIONDETAIL__STG","V_TD035C2__STG","TD030E0__STG","TD030B1__STG","TD030E2__STG"]
+
+annotation SourceLineageTagType = DatabaseFullyQualifiedName
+

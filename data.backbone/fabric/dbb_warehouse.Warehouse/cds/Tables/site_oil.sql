@@ -1,0 +1,26 @@
+CREATE TABLE [cds].[site_oil] (
+
+	[bkey_site_source] varchar(8000) NULL, 
+	[bkey_site] varchar(8000) NULL, 
+	[bkey_source] varchar(5) NOT NULL, 
+	[site_code] varchar(8000) NULL, 
+	[site_name] varchar(8000) NULL, 
+	[site_status] varchar(8000) NULL, 
+	[site_main_activity] varchar(8000) NULL, 
+	[site_property_type] varchar(8000) NULL, 
+	[site_latitude] decimal(38,12) NULL, 
+	[site_longitude] decimal(38,12) NULL, 
+	[site_is_bonded] bit NULL, 
+	[site_location_code] varchar(8000) NULL, 
+	[site_location_name] varchar(8000) NULL, 
+	[site_location_status] varchar(8000) NULL, 
+	[site_location_type] varchar(8000) NULL, 
+	[site_location_property_type] varchar(8000) NULL, 
+	[site_location_size] decimal(20,2) NULL, 
+	[site_location_storage_type] varchar(8000) NULL, 
+	[site_location_dry_storage_capacity] decimal(20,2) NULL, 
+	[site_location_liquid_storage_capacity] decimal(20,2) NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

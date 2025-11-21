@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stock_dynamics
+    tags:
+      - "stock"
+      - "dynamics"
+      - "ERP"
+    description: "This model processes current stock snapshots from Dynamics (InventSum table) and prepares them for integration with historical stock data (STG). It applies SCD2 logic using modifieddatetime, maps product codes via affiliate mapping, and outputs fields aligned with stock_stg_stock."
+
+    columns:
+      - name: bkey_stock_source
+        description: "Business key for the stock record, constructed as product_id + company + 'DYNAMICS_STOCK'."
+      - name: stock_company
+        description: "Company/site code where the stock is held (inventsiteid)."
+      - name: stock_closure_date
+        description: "SCD2 valid_from based on modifieddatetime, representing the date of the snapshot."
+      - name: stock_entry_date
+        description: "Modifieddatetime from InventSum used as the entry moment of the snapshot."
+      - name: stock_warehouse_name
+        description: "Warehouse or location code from inventlocationid."
+      - name: stock_lot_number
+        description: "Lot or batch number from inventbatchid."
+      - name: bkey_product
+        description: "Mapped master product code via site + itemid using productaffiliatemapping."
+      - name: stock_product_id
+        description: "Original product ID (itemid) as reported in Dynamics."
+      - name: stock_product_name
+        description: "Not available in InventSum; set to NULL for structural alignment."
+      - name: stock_quantity
+        description: "Available physical quantity in warehouse (availphysical)."
+      - name: stock_uom
+        description: "Unit of measure (inventdimension2)."
+      - name: stock_amount
+        description: "Physical value of the stock (physicalvalue)."
+      - name: stock_committed
+        description: "Statically set to 'No'; Dynamics does not expose commitment per stock row."
+      - name: file_name
+        description: "Not available for Dynamics source; set to NULL for compatibility."
+      - name: valid_from
+        description: "Start timestamp of the validity period (SCD2) based on modifieddatetime."
+      - name: valid_to
+        description: "End timestamp of the SCD2 validity period; set to '2999-12-31' for current records."
+      - name: is_current
+        description: "Boolean flag indicating if the record is currently valid (valid_to = '2999-12-31')."

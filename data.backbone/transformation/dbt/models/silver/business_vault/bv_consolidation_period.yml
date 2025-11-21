@@ -1,0 +1,32 @@
+version: 2
+ 
+models:
+  - name: bv_consolidation_period
+    tags:
+      - "Consolidation Period"
+      - "business vault"
+      - "CON"
+    description: "This model fills the business entity Consolidation Period."
+    columns:
+      - name: bkey_consolidation_period
+        description: ""
+      - name: consolidation_period_id
+        description: ""
+      - name: consolidation_period_name
+        description: ""
+      - name: consolidation_period_year
+        description: ""
+      - name: consolidation_period_month
+        description: ""
+      - name: consolidation_period_date
+        description: ""
+      - name: consolidation_period_sequence
+        description: ""
+      - name: category_code
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

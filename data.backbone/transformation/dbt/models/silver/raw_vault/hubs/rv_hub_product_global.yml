@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_product_global
+    enabled: true
+    tags: 
+      - "Product Global"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model consolidates product global data from Dynamics 365 and MDS, deduplicating entries to retain the earliest record for each product."
+    columns:
+      - name: bkey_product_global_source
+        description: "The unique business key identifying the source of the global product."
+      - name: bkey_product_global
+        description: "The unique business key identifying the global product."
+      - name: bkey_source
+        description: "The unique business key identifying the source system."
+      - name: ldts
+        description: "The timestamp indicating when the record was valid from, formatted as DATETIME2(6)."
+      - name: record_source
+        description: "The source system from which the record originates, either 'Dynamics 365' or 'MDS'."

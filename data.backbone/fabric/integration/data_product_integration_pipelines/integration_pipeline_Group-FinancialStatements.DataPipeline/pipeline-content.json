@@ -1,0 +1,278 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "integration_lakehouse",
+          "value": "a3c7dd8f-25f9-4aa9-aaad-981087e7d0d4"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_integration_lakehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "transformation_warehouse",
+          "value": "86563906-0212-4c50-9019-45c93eae5671"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_transformation_warehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "sql_connection_string",
+          "value": "hm4kihleqcae3ljgp3reucweo4-yiwtvelil63u7kyhmmniivq72y.datawarehouse.fabric.microsoft.com"
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_sql_connection_string",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "ingestion_timestamp",
+          "value": {
+            "value": "@{formatDateTime(utcNow(), 'yyyy-MM-dd HH:mm:ss.ffffff')}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_ingestion_timestamp",
+        "dependsOn": [
+          {
+            "activity": "set_variable_integration_lakehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_transformation_warehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_sql_connection_string",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "set_variable_orchestration_run_id",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "source_name": {
+              "value": "MDS",
+              "type": "Expression"
+            },
+            "integration_lakehouse": {
+              "value": "@variables('integration_lakehouse')",
+              "type": "Expression"
+            },
+            "ingestion_timestamp": {
+              "value": "@variables('ingestion_timestamp')",
+              "type": "Expression"
+            },
+            "database_name": "MDS",
+            "data_product": {
+              "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "orchestration_run_id": {
+              "value": "@variables('orchestration_run_id')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "4e2fe9e7-daf5-accc-466d-384a0f01e201",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_source_MDS",
+        "dependsOn": [
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "cae4480c-60f3-49b1-8f87-5e2f027ea7bc",
+          "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+          "parameters": {
+            "workspace_id": {
+              "value": {
+                "value": "@pipeline().DataFactory",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_id": {
+              "value": {
+                "value": "@variables('integration_lakehouse')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "artifact_type": {
+              "value": {
+                "value": "lakehouses",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "maintenance_notebook_metadata_refresh",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "integration_pipeline_source_MDS",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          },
+          {
+            "activity": "integration_pipeline_source_Mona",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "Data_Product": {
+              "value": "@replace(pipeline().PipelineName, 'integration_pipeline_', '')",
+              "type": "Expression"
+            },
+            "Orchestration_Run_Id": {
+              "value": "@variables('orchestration_run_id')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+          "pipelineId": "b8b1722c-17ec-4324-94ba-de5abd55ed6d",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "integration_pipeline_source_Mona",
+        "dependsOn": [
+          {
+            "activity": "set_variable_ingestion_timestamp",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "orchestration_run_id",
+          "value": {
+            "value": "@{pipeline().parameters.orchestration_run_id}",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "set_variable_orchestration_run_id",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "orchestration_run_id": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "integration_lakehouse": {
+        "type": "String"
+      },
+      "transformation_warehouse": {
+        "type": "String"
+      },
+      "sql_connection_string": {
+        "type": "String"
+      },
+      "environment": {
+        "type": "String"
+      },
+      "ingestion_timestamp": {
+        "type": "String"
+      },
+      "maintenance_notebook_metadata_refresh": {
+        "type": "String",
+        "defaultValue": "cae4480c-60f3-49b1-8f87-5e2f027ea7bc"
+      },
+      "monitoring_notebook_integration_validation": {
+        "type": "String",
+        "defaultValue": "91851b8c-7af0-4d10-89bd-e1d119276409"
+      },
+      "orchestration_run_id": {
+        "type": "String"
+      }
+    }
+  }
+}

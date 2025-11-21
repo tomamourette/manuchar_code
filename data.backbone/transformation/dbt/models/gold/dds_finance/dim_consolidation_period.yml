@@ -1,0 +1,38 @@
+version: 2
+ 
+models:
+  - name: dim_consolidation_period
+    tags:
+      - "Consolidation Period"
+      - "Dimension"
+      - "Group-FinancialStatements"
+    description: "This model is a template for filling the dimension: Consolidation Period."
+    columns:
+      - name: tkey_consolidation_period
+        description: ""
+      - name: bkey_consolidation_period
+        description: ""
+      - name: consolidation_period_id
+        description: ""
+      - name: consolidation_period_code
+        description: ""
+      - name: consolidation_period_name
+        description: ""
+      - name: consolidation_period_year
+        description: ""
+      - name: consolidation_period_month
+        description: ""
+      - name: consolidation_period_date
+        description: ""
+      - name: consolidation_period_version
+        description: ""
+      - name: consolidation_period_category
+        description: ""
+      - name: consolidation_period_category_description
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""
+      - name: is_current
+        description: ""

@@ -1,0 +1,254 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "typeProperties": {
+              "schema": "DataSys",
+              "table": "Config_SourceList"
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "OSS_MonaConso_MHQ_Warehouse",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup Config Data SourceList",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": false,
+          "items": {
+            "value": "@activity('Lookup Config Data SourceList').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Switch",
+              "typeProperties": {
+                "on": {
+                  "value": "@item().LoadType",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "Incremental",
+                    "activities": [
+                      {
+                        "type": "InvokePipeline",
+                        "typeProperties": {
+                          "parameters": {
+                            "Schema": {
+                              "value": "@item().Schema",
+                              "type": "Expression"
+                            },
+                            "TableName": {
+                              "value": "@item().Table",
+                              "type": "Expression"
+                            },
+                            "Watermark": {
+                              "value": "@item().Watermark_Column",
+                              "type": "Expression"
+                            },
+                            "DestinationSchema": {
+                              "value": "@item().TargetSchema",
+                              "type": "Expression"
+                            }
+                          },
+                          "waitOnCompletion": true,
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "pipelineId": "49f42fb4-0f9e-9440-4c89-94cba69f1900",
+                          "operationType": "InvokeFabricPipeline"
+                        },
+                        "externalReferences": {
+                          "connection": "cb52e88a-02d1-4e13-a048-679c44734240"
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "Invoke Initial Load",
+                        "dependsOn": []
+                      }
+                    ]
+                  },
+                  {
+                    "value": "Full",
+                    "activities": [
+                      {
+                        "type": "Copy",
+                        "typeProperties": {
+                          "source": {
+                            "type": "SqlServerSource",
+                            "partitionOption": "None",
+                            "queryTimeout": "02:00:00",
+                            "additionalColumns": [
+                              {
+                                "name": "ODSKey",
+                                "value": "1"
+                              },
+                              {
+                                "name": "ODSModifiedOn",
+                                "value": {
+                                  "value": "@pipeline().TriggerTime",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSModifiedBy",
+                                "value": {
+                                  "value": "@pipeline().PipelineName",
+                                  "type": "Expression"
+                                }
+                              },
+                              {
+                                "name": "ODSIngestionDate",
+                                "value": {
+                                  "value": "@pipeline().TriggerTime",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "datasetSettings": {
+                              "type": "SqlServerTable",
+                              "typeProperties": {
+                                "schema": {
+                                  "value": "@item().Schema",
+                                  "type": "Expression"
+                                },
+                                "table": {
+                                  "value": "@item().Table",
+                                  "type": "Expression"
+                                },
+                                "database": "Mona"
+                              },
+                              "schema": [],
+                              "externalReferences": {
+                                "connection": "d645f75d-9fd8-4e67-910d-22fee4b0900c"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "sink": {
+                            "type": "DataWarehouseSink",
+                            "tableOption": "autoCreate",
+                            "allowCopyCommand": true,
+                            "copyCommandSettings": {},
+                            "datasetSettings": {
+                              "type": "DataWarehouseTable",
+                              "typeProperties": {
+                                "schema": {
+                                  "value": "@item().TargetSchema",
+                                  "type": "Expression"
+                                },
+                                "table": {
+                                  "value": "@concat(item().Table, '__ODS')",
+                                  "type": "Expression"
+                                }
+                              },
+                              "schema": [],
+                              "linkedService": {
+                                "name": "OSS_MonaConso_MHQ_Warehouse",
+                                "properties": {
+                                  "type": "DataWarehouse",
+                                  "typeProperties": {
+                                    "artifactId": "1c7cc4d3-d8ad-438c-97e7-ad43cec7c9d2",
+                                    "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                                    "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                                  },
+                                  "annotations": []
+                                }
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            }
+                          },
+                          "enableStaging": true
+                        },
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureInput": false,
+                          "secureOutput": false
+                        },
+                        "name": "Copy data from Source to ODS",
+                        "dependsOn": []
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": [
+                  {
+                    "type": "Wait",
+                    "typeProperties": {
+                      "waitTimeInSeconds": 1
+                    },
+                    "name": "Wait1",
+                    "dependsOn": []
+                  }
+                ]
+              },
+              "name": "Switch LoadType",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach Mona Table",
+        "dependsOn": [
+          {
+            "activity": "Lookup Config Data SourceList",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "DataLoadQuery": {
+        "type": "String",
+        "defaultValue": "((vconso.ConsoYear = year(getdate()) and vconso.consomonth = month(getdate())) OR (vconso.ConsoYear = year(dateadd(month,-1,getdate())) and vconso.consomonth = month(dateadd(month,-1,getdate()))))"
+      }
+    },
+    "concurrency": 1
+  }
+}

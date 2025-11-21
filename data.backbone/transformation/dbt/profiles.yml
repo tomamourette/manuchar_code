@@ -1,0 +1,30 @@
+Databackbone:
+  target: tst
+  outputs:    
+    tst:
+      type: fabric
+      driver: ODBC Driver 18 for SQL Server
+      host: "{{ env_var('FAB_DBB_DBT_ENDPOINT') }}.datawarehouse.fabric.microsoft.com"
+      database: dbb_warehouse
+      schema: dbo
+      threads: 10
+      port: 1433
+      authentication: environment
+    acc:
+      type: fabric
+      driver: ODBC Driver 18 for SQL Server
+      host: "{{ env_var('FAB_DBB_DBT_ENDPOINT') }}.datawarehouse.fabric.microsoft.com"
+      database: dbb_warehouse
+      schema: dbo
+      threads: 20
+      port: 1433
+      authentication: environment
+    prd:
+      type: fabric
+      driver: ODBC Driver 18 for SQL Server
+      host: "{{ env_var('FAB_DBB_DBT_ENDPOINT') }}.datawarehouse.fabric.microsoft.com"
+      database: dbb_warehouse
+      schema: dbo
+      threads: 30
+      port: 1433
+      authentication: environment

@@ -1,0 +1,393 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "DataProcess_RunStep Update Success",
+        "type": "Wait",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "Update Watermark Value",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "waitTimeInSeconds": 1
+        }
+      },
+      {
+        "name": "If Watermark Value Exists",
+        "type": "IfCondition",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [],
+        "typeProperties": {
+          "expression": {
+            "value": "@equals(pipeline().parameters.watermarkValue, '')",
+            "type": "Expression"
+          },
+          "ifFalseActivities": [
+            {
+              "name": "Full Copy to WrH databank",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "AzureSqlSource",
+                  "sqlReaderQuery": {
+                    "value": "@concat('SELECT * FROM ', pipeline().parameters.tableName)",
+                    "type": "Expression"
+                  },
+                  "queryTimeout": "02:00:00",
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "type": "AzureSqlTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "database": "dbb_dynamics_lakehouse"
+                    },
+                    "externalReferences": {
+                      "connection": "9c650803-becc-4ad9-8556-90114c7bd86f"
+                    }
+                  }
+                },
+                "sink": {
+                  "type": "DataWarehouseSink",
+                  "allowCopyCommand": true,
+                  "copyCommandSettings": {},
+                  "tableOption": "autoCreate",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "linkedService": {
+                      "name": "OperationalDataSources_WrH",
+                      "properties": {
+                        "annotations": [],
+                        "type": "DataWarehouse",
+                        "typeProperties": {
+                          "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                          "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                        }
+                      }
+                    },
+                    "type": "DataWarehouseTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.targetSchemaName",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@pipeline().parameters.tableName",
+                        "type": "Expression"
+                      }
+                    }
+                  }
+                },
+                "enableStaging": true,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              }
+            }
+          ],
+          "ifTrueActivities": [
+            {
+              "name": "Copy Incremental from Source to STG",
+              "type": "Copy",
+              "state": "Inactive",
+              "onInactiveMarkAs": "Succeeded",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "LakehouseTableSource",
+                  "additionalColumns": [
+                    {
+                      "name": "Ingestion_Timestamp",
+                      "value": {
+                        "value": "@pipeline().TriggerTime",
+                        "type": "Expression"
+                      }
+                    }
+                  ],
+                  "datasetSettings": {
+                    "annotations": [],
+                    "linkedService": {
+                      "name": "dbb_dynamics_lakehouse",
+                      "properties": {
+                        "annotations": [],
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "workspaceId": "913a2dc2-5f68-4fb7-ab07-631a84561fd6",
+                          "artifactId": "00693b59-6dcb-4f19-bbd6-2b772ce5f838",
+                          "rootFolder": "Tables"
+                        }
+                      }
+                    },
+                    "type": "LakehouseTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "table": {
+                        "value": "@pipeline().parameters.tableName",
+                        "type": "Expression"
+                      }
+                    }
+                  }
+                },
+                "sink": {
+                  "type": "FabricSqlDatabaseSink",
+                  "preCopyScript": {
+                    "value": "@concat('TRUNCATE TABLE IF EXISTS',pipeline().parameters.targetSchemaName, '.', pipeline().parameters.tableName)",
+                    "type": "Expression"
+                  },
+                  "writeBehavior": "insert",
+                  "sqlWriterUseTableLock": false,
+                  "tableOption": "autoCreate",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "connectionSettings": {
+                      "name": "OperationalDataSources_Sql",
+                      "properties": {
+                        "annotations": [],
+                        "type": "FabricSqlDatabase",
+                        "typeProperties": {
+                          "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1",
+                          "artifactId": "6abf6d4e-d280-44cd-879b-22e93fb97969"
+                        },
+                        "externalReferences": {
+                          "connection": "7fabbca4-0ca2-4f48-b999-09b7214445fc"
+                        }
+                      }
+                    },
+                    "type": "FabricSqlDatabaseTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@pipeline().parameters.targetSchemaName",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@pipeline().parameters.tableName",
+                        "type": "Expression"
+                      }
+                    }
+                  }
+                },
+                "enableStaging": false,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              }
+            },
+            {
+              "name": "Wait1 Incremental",
+              "type": "Wait",
+              "dependsOn": [],
+              "typeProperties": {
+                "waitTimeInSeconds": 1
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "SP DataProcess_Run Failed",
+        "type": "SqlServerStoredProcedure",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "If Watermark Value Exists",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_DataProcess_Run]",
+          "storedProcedureParameters": {
+            "DataProc_Run_Id": {
+              "value": ""
+            },
+            "DataProc_Id": {
+              "value": ""
+            },
+            "undefined": {
+              "value": ""
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OperationalDataSources_WrH",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            }
+          }
+        }
+      },
+      {
+        "name": "Update Watermark Value",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Lookup MaxDate from Table",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[03DataSys].[SP_Update_Config_SourceList_Watermark_Value]",
+          "storedProcedureParameters": {
+            "watermarkValue": {
+              "value": {
+                "value": "@formatDateTime(activity('Lookup MaxDate from Table').output.firstRow)",
+                "type": "Expression"
+              }
+            },
+            "tableName": {
+              "value": {
+                "value": "@pipeline().parameters.tableName",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OperationalDataSources_WrH",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            }
+          }
+        }
+      },
+      {
+        "name": "Lookup MaxDate from Table",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "If Watermark Value Exists",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "@concat('SELECT MAX(', pipeline().parameters.watermarkColumn, ') FROM [', pipeline().parameters.targetSchemaName, '].[', pipeline().parameters.tableName, ']')",
+              "type": "Expression"
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "linkedService": {
+              "name": "OperationalDataSources_WrH",
+              "properties": {
+                "annotations": [],
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+                  "artifactId": "43ae0d7d-2aaa-40af-95e2-993557e4cd05",
+                  "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+                }
+              }
+            },
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "typeProperties": {}
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "tableName": {
+        "type": "string",
+        "defaultValue": "custinvoicejour"
+      },
+      "source": {
+        "type": "string",
+        "defaultValue": "Dynamics"
+      },
+      "schemaName": {
+        "type": "string",
+        "defaultValue": "dbo"
+      },
+      "targetSchemaName": {
+        "type": "string",
+        "defaultValue": "21D365_stg"
+      },
+      "watermarkColumn": {
+        "type": "string",
+        "defaultValue": "modifiedon"
+      },
+      "watermarkValue": {
+        "type": "string"
+      }
+    }
+  }
+}

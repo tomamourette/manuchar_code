@@ -1,0 +1,112 @@
+version: 2
+
+models:
+  - name: rv_sat_sales_invoice_line_cogs
+    tags:
+      - "Sales Invoice Line COGS"
+      - "ERP Operations"
+      - "dynamics"
+    description: "This model fills the satellite sales invoice line COGS."
+    columns:
+      - name: tkey_sales_invoice_line_cogs
+        description: "technical key consisting of the recid field from the source system."
+      - name: bkey_sales_invoice_line_cogs_source
+        description: ""
+      - name: bkey_sales_invoice
+        description: ""
+      - name: sales_invoice_line_cogs_company
+        description: ""
+      - name: sales_invoice_line_cogs_invoice_id
+        description: ""
+      - name: sales_invoice_line_cogs_line_num
+        description: ""
+      - name: sales_invoice_line_cogs_quantity
+        description: ""
+      - name: sales_invoice_line_cogs_uom
+        description: ""
+      - name: sales_invoice_line_cogs_currency_code
+        description: ""
+      - name: sales_invoice_line_product_id
+        description: ""
+      - name: csv_sales_amount_m_local
+        description: ""
+      - name: csv_sales_amount_m_home
+        description: ""
+      - name: ERP_Sales_Amount_M_Local
+        description: ""
+      - name: ERP_Sales_Amount_M_Home
+        description: ""
+      - name: ERP_Cost_Amount_Posted
+        description: ""
+      - name: ERP_COGS1_Purchase_Amount_M_Local
+        description: ""
+      - name: ERP_COGS1_Purchase_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS1_Purchase_Amount_M_Home
+        description: ""
+      - name: ERP_COGS1_Purchase_Amount_M_Group
+        description: ""
+      - name: ERP_COGS1_Freight_Amount_M_Local
+        description: ""
+      - name: ERP_COGS1_Freight_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS1_Freight_Amount_M_Home
+        description: ""
+      - name: ERP_COGS1_Freight_Amount_M_Group
+        description: ""
+      - name: ERP_COGS1_Other_Amount_M_Local
+        description: ""
+      - name: ERP_COGS1_Other_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS1_Other_Amount_M_Home
+        description: ""
+      - name: ERP_COGS1_Other_Amount_M_Group
+        description: ""
+      - name: ERP_COGS1_Amount_M_Local
+        description: ""
+      - name: ERP_COGS1_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS1_Amount_M_Home
+        description: ""
+      - name: ERP_COGS1_Amount_M_Group
+        description: ""
+      - name: ERP_COGS2_InternalTransport_Amount_M_Local
+        description: ""
+      - name: ERP_COGS2_InternalTransport_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS2_InternalTransport_Amount_M_Home
+        description: ""
+      - name: ERP_COGS2_InternalTransport_Amount_M_Group
+        description: ""
+      - name: ERP_COGS2_ExternalTransport_Amount_M_Local
+        description: ""
+      - name: ERP_COGS2_ExternalTransport_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS2_ExternalTransport_Amount_M_Home
+        description: ""
+      - name: ERP_COGS2_ExternalTransport_Amount_M_Group
+        description: ""
+      - name: ERP_COGS2_Other_Amount_M_Local
+        description: ""
+      - name: ERP_COGS2_Other_Amount_M_LocalCurrency
+        description: ""
+      - name: ERP_COGS2_Other_Amount_M_Home
+        description: ""
+      - name: ERP_COGS2_Other_Amount_M_Group
+        description: ""
+      - name: csv_cogs1_amount
+        description: ""
+      - name: csv_external_transport_amount
+        description: ""
+      - name: csv_internal_transport_amount
+        description: ""
+      - name: csv_other_cogs2_amount
+        description: ""
+      - name: csv_cogs2_amount
+        description: ""
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

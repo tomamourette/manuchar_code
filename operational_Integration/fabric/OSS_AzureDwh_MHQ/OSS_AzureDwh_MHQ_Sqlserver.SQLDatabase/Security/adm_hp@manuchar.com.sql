@@ -1,0 +1,6 @@
+CREATE USER [adm_hp@manuchar.com]
+    WITH SID = 0x0F90D30C78929C46899556C85B67B3B9, TYPE = E;
+
+
+GO
+

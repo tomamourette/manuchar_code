@@ -1,0 +1,33 @@
+
+version: 2
+
+models:
+  - name: dim_age_group
+    enabled: true
+    tags: 
+      - "Age Group"
+      - "Dimension"
+    description: "This model represents the dimension table for age groups, including keys, attributes, and history metadata for the latest version of each age group."
+    columns:
+      - name: tkey_age_group
+        description: "A technical key for the age group, generated as a row number."
+      - name: bkey_age_group
+        description: "The business key for the age group, representing a unique identifier."
+      - name: age_group_code
+        description: "A code representing the age group, derived from the business key."
+      - name: age_group_name
+        description: "The name of the age group."
+      - name: age_group_id
+        description: "An identifier for the age group."
+      - name: age_group_min_days
+        description: "The minimum number of days for the age group."
+      - name: age_group_max_days
+        description: "The maximum number of days for the age group."
+      - name: age_group_sort
+        description: "A value used to sort the age groups."
+      - name: valid_from
+        description: "The date and time from which the age group record is valid."
+      - name: valid_to
+        description: "The date and time until which the age group record is valid."
+      - name: is_current
+        description: "A flag indicating whether the age group record is the current version."

@@ -1,0 +1,12 @@
+{
+    "table_name": "UOMMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, Company_Code, Company_Name, Company_ID, [Local UOM Code] AS Local_UOM_Code, [Group UOM Code_Code] AS Group_UOM_Code_Code, [Group UOM Code_Name] AS Group_UOM_Code_Name, [Group UOM Code_ID] AS Group_UOM_Code_ID, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM [mdm].[UOM Mapping]"
+}

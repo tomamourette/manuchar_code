@@ -1,0 +1,100 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "aae8a35c-85b8-b8d5-45ea-2afea3e05bd6",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Load_OSS_MSEntra_Groups_Members",
+        "dependsOn": [
+          {
+            "activity": "Truncate table MS_Entra_GroupMembers",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Truncate table MS_Entra_Groups",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[Exec_TruncateTable]",
+          "storedProcedureParameters": {
+            "TableName": {
+              "value": "REF_Entra.MS_Entra_GroupMembers"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OSS_GenericData_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "55458af9-f16a-4e4e-a886-fae76d51c555",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Truncate table MS_Entra_GroupMembers",
+        "description": "OSS_GenericData_MHQ_Warehouse.REF_Entra.MS_Entra_GroupMembers",
+        "dependsOn": []
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[Exec_TruncateTable]",
+          "storedProcedureParameters": {
+            "TableName": {
+              "value": "REF_Entra.MS_Entra_Groups"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "OSS_GenericData_MHQ_Warehouse",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "55458af9-f16a-4e4e-a886-fae76d51c555",
+              "endpoint": "hm4kihleqcae3ljgp3reucweo4-k4fukxfyx7de7m2m437estqsye.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "5c450b57-bfb8-4fc6-b34c-e6fe494e12c1"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Truncate table MS_Entra_Groups",
+        "description": "OSS_GenericData_MHQ_Warehouse.REF_Entra.MS_Entra_GroupMembers",
+        "dependsOn": []
+      }
+    ]
+  }
+}

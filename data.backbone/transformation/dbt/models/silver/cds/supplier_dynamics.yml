@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: supplier_dynamics
+    tags:
+      - "supplier"
+      - "dynamics"
+      - "ERP Operations"
+    description: "This model builds a full supplier timeline by combining historical data from VendTable, VendGroup, and DirPartyTable (SCD2) with current address details from LogisticsPostalAddress (SCD1). It tracks supplier group codes, names, addresses, and legal numbers over time."
+    columns:
+      - name: bkey_supplier_source
+        description: "Business key for the supplier, derived as LOWER(CONCAT(dataareaid, '_', accountnum)) plus source."
+      - name: bkey_supplier
+        description: "Business key for the supplier, derived as LOWER(CONCAT(dataareaid, '_', accountnum))."
+      - name: bkey_source
+        description: "Source identifier for the supplier record, statically set to 'dynamics'."
+      - name: supplier_group_code
+        description: "Supplier group code from VendTable history."
+      - name: supplier_group_description
+        description: "Supplier group description from VendGroup history."
+      - name: supplier_name
+        description: "Supplier name from DirPartyTable history."
+      - name: supplier_street_address
+        description: "Supplier street address from current address data."
+      - name: supplier_city
+        description: "Supplier city from current address data."
+      - name: supplier_zip_code
+        description: "Supplier zip code from current address data."
+      - name: supplier_country_code
+        description: ""
+      - name: supplier_legal_number
+        description: "Supplier legal number (VAT number) from VendTable history."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active (1 if valid_to equals '2999-12-31 23:59:59.999999', otherwise 0)."

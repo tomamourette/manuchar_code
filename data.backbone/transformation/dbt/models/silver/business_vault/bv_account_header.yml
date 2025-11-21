@@ -1,0 +1,32 @@
+version: 2
+ 
+models:
+  - name: bv_account_header
+    tags:
+      - "Account Header"
+      - "business vault"
+      - "CON"
+    description: "This model is a template for filling business entity: Account Header."
+    columns:
+      - name: bkey_account_header
+        description: "The business key field."
+      - name: bkey_account
+        description: ""
+      - name: subheader
+        description: ""
+      - name: subheader2
+        description: ""
+      - name: reporting_view
+        description: ""
+      - name: header
+        description: ""
+      - name: detail
+        description: ""
+      - name: sort_order
+        description: ""
+      - name: calculation_type
+        description: ""
+      - name: valid_from
+        description: ""
+      - name: valid_to
+        description: ""

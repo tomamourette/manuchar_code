@@ -1,0 +1,10 @@
+{
+    "table_name": "SD",
+    "schema_name": "staging",
+    "source_name": "MTM",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT id, salesDelivery_id, salesOrder_id, delivery_num, latestShipmDate, placeOfDischarge, countryOfDischarge, shipmentType, countryOfOrigin, paymentTerms, incoterm, incotermPlace, countryOfFinalDestination, placeOfFinalDestination, file_id, mainTransportMode FROM staging.SD"
+}

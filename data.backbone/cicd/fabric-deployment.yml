@@ -1,0 +1,90 @@
+trigger: 
+  branches:
+    include:
+      - acceptance
+      - quality
+      - production
+  paths:
+    include:
+      - fabric/*
+    exclude:
+      - fabric/dbb_warehouse.Warehouse/*
+      - fabric/archive/*
+
+pool:
+  vmImage: ubuntu-22.04
+
+variables:
+  # Acceptance
+  - ${{ if eq(variables['Build.SourceBranchName'], 'acceptance') }}:
+      - group: "variable_fabric_dbb_acceptance"
+      - name: UPDATE_PIPELINE_METADATA_ID
+        value: '15502b20-12ff-4cf0-b42c-41796044ee82'
+  # Quality
+  - ${{ if eq(variables['Build.SourceBranchName'], 'quality') }}:
+      - group: "variable_fabric_dbb_quality"
+      - name: UPDATE_PIPELINE_METADATA_ID
+        value: '0560b205-aa30-4870-af00-ccba5e4da0d1'
+  # Production
+  - ${{ if eq(variables['Build.SourceBranchName'], 'production') }}:
+      - group: "variable_fabric_dbb_production"
+      - name: UPDATE_PIPELINE_METADATA_ID
+        value: '33333333-3333-3333-3333-333333333333'
+
+steps:
+  - script: |
+      set -e
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      uv venv
+      source .venv/bin/activate
+      uv pip install -r requirements.txt
+      cp -f fabric_cicd_constants.py ./.venv/lib/python3.10/site-packages/fabric_cicd/constants.py
+      cp -f fabric_cicd_constants.py ./.venv/lib64/python3.10/site-packages/fabric_cicd/constants.py
+      deactivate
+    displayName: Installing uv and requirements
+    workingDirectory: cicd
+
+  - script: |
+      set -e
+      source .venv/bin/activate
+      uv run deploy_workspace_items.py
+      deactivate
+    displayName: Deploy ${{ variables['Build.SourceBranchName'] }}
+    workingDirectory: cicd
+    env:
+      AZURE_TENANT_ID: $(TenantID)
+      AZURE_CLIENT_ID: $(SPN_ClientID)
+      AZURE_CLIENT_SECRET: $(SPN_ClientSecret)
+      FABRIC_WORKSPACE_ID: $(Workspace_ID)
+      FABRIC_TARGET_ENV: ${{ variables['Build.SourceBranchName'] }}
+
+  # Trigger 'update_pipeline_metadata'
+  - script: |
+      set -e
+
+      echo "Requesting Fabric access token..."
+      ACCESS_TOKEN=$(curl -s -X POST "https://login.microsoftonline.com/${AZURE_TENANT_ID}/oauth2/v2.0/token" \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        -d "client_id=${AZURE_CLIENT_ID}&scope=https%3A%2F%2Fapi.fabric.microsoft.com%2F.default&client_secret=${AZURE_CLIENT_SECRET}&grant_type=client_credentials" \
+        | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")
+
+      echo "Triggering 'update_pipeline_metadata' pipeline (${UPDATE_PIPELINE_METADATA_ID})..."
+
+      PAYLOAD="{}"
+
+      curl -i -X POST "https://api.fabric.microsoft.com/v1/workspaces/${FABRIC_WORKSPACE_ID}/items/${UPDATE_PIPELINE_METADATA_ID}/jobs/instances?jobType=Pipeline" \
+        -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+        -H "Content-Type: application/json" \
+        -d "${PAYLOAD}"
+    displayName: Trigger update_pipeline_metadata (update Last Modified By)
+    workingDirectory: cicd
+    env:
+      AZURE_TENANT_ID: $(TenantID)
+      AZURE_CLIENT_ID: $(SPN_ClientID)
+      AZURE_CLIENT_SECRET: $(SPN_ClientSecret)
+      FABRIC_WORKSPACE_ID: $(Workspace_ID)
+      UPDATE_PIPELINE_METADATA_ID: $(UPDATE_PIPELINE_METADATA_ID)
+
+  - publish: cicd/fabric_cicd.error.log
+    artifact: fabricLogs
+    condition: always()

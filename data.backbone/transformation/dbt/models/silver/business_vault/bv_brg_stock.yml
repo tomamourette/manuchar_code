@@ -1,0 +1,51 @@
+
+version: 2
+
+models:
+  - name: bv_brg_stock
+    enabled: true
+    tags:
+      - "Stock"
+      - "business vault"
+    description: "This model calculates the sales for the last 3 months per product and combines stock data from both ONPREM and DYNAMICS sources."
+    columns:
+      - name: bkey_stock
+        description: "Unique identifier for the stock entry."
+      - name: bkey_source
+        description: "Source system identifier for the stock data."
+      - name: snapshot_date
+        description: "Date of the stock snapshot."
+      - name: entry_date
+        description: "Date when the stock entry was recorded."
+      - name: bkey_company
+        description: "Identifier for the company associated with the stock."
+      - name: bkey_customer
+        description: "Concatenated identifier for the company and customer."
+      - name: bkey_currency
+        description: "Currency code associated with the stock."
+      - name: bkey_product
+        description: "Concatenated identifier for the company and product."
+      - name: bkey_product_global
+        description: "Global product code for the stock item."
+      - name: bkey_site
+        description: "Identifier for the site location of the stock."
+      - name: stock_committed
+        description: "Quantity of stock that is committed."
+      - name: stock_in_transit
+        description: "Quantity of stock that is in transit."
+      - name: stock_quantity
+        description: "Total quantity of stock available."
+      - name: stock_quantity_mt
+        description: "Quantity of stock measured in metric tonnes."
+      - name: stock_home_amount
+        description: "Home currency amount of the stock."
+      - name: product_in_stock_home_amount
+        description: "Total home currency amount of the product in stock."
+      - name: sales_last_3_months_home_amount
+        description: "Total home currency sales amount for the last 3 months."
+      - name: stock_warehouse_name
+        description: "Name of the warehouse where the stock is stored."
+      - name: stock_uom
+        description: "Unit of measure for the stock."
+      - name: stock_lot_number
+        description: "Lot number associated with the stock."

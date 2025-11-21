@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: rv_sat_vessel
+    tags:
+      - "Vessel"
+      - "raw vault"
+      - "satellite"
+      - "REF"
+    description: "This model fills the satellite vessel."
+    columns:
+      - name: bkey_vessel_source
+        description: "Composite key for the vessel, created by concatenating bkey_vessel and bkey_source."
+      - name: vessel_id
+        description: "vessel id, sourced from the base shipvesselid."
+      - name: vessel_description
+        description: "Description of the vessel."
+      - name: valid_from
+        description: "Start timestamp for the record's validity period."
+      - name: valid_to
+        description: "End timestamp for the record's validity period."
+      - name: is_current
+        description: "Flag indicating if the record is active."

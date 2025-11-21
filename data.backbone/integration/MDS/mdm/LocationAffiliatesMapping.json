@@ -1,0 +1,12 @@
+{
+    "table_name": "LocationAffiliatesMapping",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT [ID], [MUID], [VersionName], [VersionNumber], [Version_ID], [VersionFlag], [Name], [Code], [ChangeTrackingMask], [Company], [Local Location Code] AS [Local_Location_Code], [Group Location Code_Code] AS [Group_Location_Code_Code], [Group Location Code_Name] AS [Group_Location_Code_Name], [Group Location Code_ID] AS [Group_Location_Code_ID], [EnterDateTime], [EnterUserName], [EnterVersionNumber], [LastChgDateTime], [LastChgUserName], [LastChgVersionNumber], [ValidationStatus] FROM [MDS].[mdm].[Location Affiliates Mapping]"
+}

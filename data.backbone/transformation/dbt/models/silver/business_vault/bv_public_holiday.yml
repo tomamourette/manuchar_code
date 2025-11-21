@@ -1,0 +1,25 @@
+
+version: 2
+
+models:
+  - name: bv_public_holiday
+    enabled: false
+    tags: 
+      - "Public Holiday"
+      - "business vault"
+    description: "Model for selecting public holiday details from the source table."
+    columns:
+      - name: tkey_publicholiday_lakehouse
+        description: "Unique key for each public holiday record in the lakehouse."
+      - name: date
+        description: "The date of the public holiday."
+      - name: country_region_code
+        description: "Code representing the country or region of the public holiday."
+      - name: country_or_region
+        description: "Name of the country or region where the public holiday is observed."
+      - name: holiday_name
+        description: "The name of the public holiday."
+      - name: normalized_holiday_name
+        description: "Standardized name of the public holiday for consistency."
+      - name: is_paid_time_off
+        description: "Indicates if the public holiday is considered paid time off."

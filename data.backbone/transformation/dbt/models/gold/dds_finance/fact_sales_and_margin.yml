@@ -1,0 +1,102 @@
+
+version: 2
+models:
+  - name: fact_sales_and_margin
+    enabled: false
+    tags:
+      - "Sales and Margin"
+      - "Fact"
+    description: "Aggregates sales and margin data including invoice amounts, volumes, and budget measures, with currency conversion rates."
+    columns:
+      - name: tkey_invoice_date
+        description: "The date key for the invoice date."
+      - name: tkey_closuredate
+        description: "The date key for the closure date."
+      - name: tkey_shippingdate
+        description: "The date key for the shipping date."
+      - name: tkey_company
+        description: "The key representing the company dimension."
+      - name: tkey_currency
+        description: "The key representing the currency dimension."
+      - name: tkey_country
+        description: "The key representing the country dimension."
+      - name: tkey_customer
+        description: "The key representing the customer dimension."
+      - name: tkey_product
+        description: "The key representing the product dimension."
+      - name: tkey_product_global
+        description: "The key representing the global product dimension."
+      - name: tkey_payment_term
+        description: "The key representing the payment term dimension."
+      - name: tkey_business_unit
+        description: "The key representing the business unit dimension."
+      - name: tkey_customer_industry_invoice
+        description: "The key representing the customer industry for the invoice."
+      - name: tkey_cost_center
+        description: "The key representing the cost center dimension."
+      - name: tkey_profit_center
+        description: "The key representing the profit center dimension."
+      - name: tkey_site
+        description: "The key representing the site dimension."
+      - name: invoice_number
+        description: "The number identifying the invoice."
+      - name: invoice_line_number
+        description: "The line number within the invoice."
+      - name: credit_note_id
+        description: "The identifier for the credit note."
+      - name: uom_original
+        description: "The original unit of measure."
+      - name: order_value
+        description: "The value of the order."
+      - name: actual_budget
+        description: "Indicates whether the budget is actual."
+      - name: bkey_source
+        description: "The source key for the data."
+      - name: invoice_amount
+        description: "The total amount of the invoice."
+      - name: invoice_volume_original
+        description: "The original volume of the invoice."
+      - name: invoice_volume_mt
+        description: "The invoice volume in metric tons."
+      - name: sales_accrual_amount
+        description: "The accrued sales amount."
+      - name: sales_accrual_volume
+        description: "The accrued sales volume."
+      - name: sales_accrual_volume_mt
+        description: "The accrued sales volume in metric tons."
+      - name: csv_cogs1_amount
+        description: "The cost of goods sold amount for COGS1."
+      - name: csv_external_transport_amount
+        description: "The amount for external transport costs."
+      - name: csv_internal_transport_amount
+        description: "The amount for internal transport costs."
+      - name: csv_other_cogs2_amount
+        description: "The amount for other COGS2 costs."
+      - name: csv_cogs2_amount
+        description: "The cost of goods sold amount for COGS2."
+      - name: budget_quantity
+        description: "The budgeted quantity."
+      - name: budget_quantity_metric_ton
+        description: "The budgeted quantity in metric tons."
+      - name: budget_amount_group_currency
+        description: "The budget amount in group currency."
+      - name: budget_amount_home_currency
+        description: "Total budget amount in home currency."
+      - name: budget_amount_budget_currency
+        description: "Total budget amount in budget currency."
+      - name: version
+        description: "Version identifier for the budget records."
+      - name: forecast_quantity
+        description: "Total forecasted quantity."
+      - name: forecast_quantity_metric_ton
+        description: "Total forecasted quantity in metric tons."
+      - name: forecast_amount_group_currency
+        description: "Total forecast amount in group currency."
+      - name: forecast_amount_home_currency
+        description: "Total forecast amount in home currency."
+      - name: forecast_amount_forecast_currency
+        description: "Total forecast amount in forecast currency."
+      - name: conversion_rate_local_home
+        description: "Maximum conversion rate from local to home currency."
+      - name: conversion_rate_local_group
+        description: "Maximum conversion rate from local to group currency."

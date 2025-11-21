@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_stock_age_group
+    enabled: true
+    tags:
+      - "Stock Age Group"
+      - "raw vault"
+      - "hub"
+      - "ERP"
+    description: "This model deduplicates stock age group records by selecting the earliest valid record from the source."
+    columns:
+      - name: bkey_stock_age_group_source
+        description: "The business key for the stock age group source, used to uniquely identify records from the source."
+      - name: bkey_stock_age_group
+        description: "The business key for the stock age group, representing the unique identifier for the stock age group entity."
+      - name: bkey_source
+        description: "The business key for the source, indicating the origin of the data record."
+      - name: ldts
+        description: "The timestamp indicating when the record became valid, used for ordering and deduplication."
+      - name: record_source
+        description: "The source of the record, indicating the system or process that provided the data."

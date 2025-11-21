@@ -1,0 +1,2 @@
+table_name,schema_name,load_enabled
+ValidationApprovalLog,dbo,yes

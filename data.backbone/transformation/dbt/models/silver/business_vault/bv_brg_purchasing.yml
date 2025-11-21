@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: bv_brg_purchasing
+    tags:
+      - "Purchasing"
+      - "business vault"
+    description: "This model is a template for filling the Bridge: Purchasing."
+    columns:
+      - name: bkey_purchase_order
+        description: ""
+      - name: bkey_date
+        description: ""
+      - name: bkey_closure_date
+        description: ""
+      - name: bkey_product
+        description: ""
+      - name: bkey_supplier
+        description: ""
+      - name: bkey_currency_transactional
+        description: ""
+      - name: bkey_currency_group
+        description: ""
+      - name: bkey_currency_functional
+        description: ""
+      - name: bkey_company
+        description: ""
+      - name: bkey_incoterm
+        description: ""
+      - name: bkey_payment_term
+        description: ""
+      - name: bkey_country_origin
+        description: ""
+      - name: bkey_country_destination
+        description: ""
+      - name: file_number
+        description: ""
+      - name: lot_number
+        description: ""
+      - name: invoice_supplier_id
+        description: ""
+      - name: local_supplier_id
+        description: ""
+      - name: local_product
+        description: ""
+      - name: internal_invoice_id
+        description: ""
+      - name: line_number
+        description: ""
+      - name: invoice_amount_transactional_currency
+        description: ""
+      - name: invoice_amount_functional_currency
+        description: ""
+      - name: invoice_amount_group_currency_oanda_eod
+        description: ""
+      - name: group_cur_oanda_eod_rate
+        description: ""
+      - name: func_cur_rate
+        description: ""
+      - name: quantity
+        description: ""
+      - name: quantity_mt
+        description: ""
+      - name: unit_of_measure
+        description: ""

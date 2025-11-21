@@ -1,0 +1,28 @@
+CREATE TABLE [cds].[logistic_file_dynamics] (
+
+	[tkey_logistic_file] bigint NULL, 
+	[bkey_logistic_file] varchar(8000) NULL, 
+	[bkey_logistic_file_source] varchar(8000) NULL, 
+	[bkey_source] varchar(8) NULL, 
+	[logfile_company] varchar(8000) NULL, 
+	[logfile_filenumber] varchar(8000) NULL, 
+	[logfile_etsdate] datetime2(6) NULL, 
+	[logfile_etadate] datetime2(6) NULL, 
+	[logfile_bidate] datetime2(6) NULL, 
+	[logfile_cust_ref] varchar(8000) NULL, 
+	[logfile_transport_doc_nb] varchar(8000) NULL, 
+	[logfile_vesselid] varchar(8000) NULL, 
+	[logfile_voyage_number] varchar(8000) NULL, 
+	[logfile_loading_location] varchar(8000) NULL, 
+	[logfile_loading_countrycode] varchar(8000) NULL, 
+	[logfile_destination_location] varchar(8000) NULL, 
+	[logfile_destination_countrycode] varchar(8000) NULL, 
+	[logfile_finaldestincation_location] varchar(8000) NULL, 
+	[logfile_finaldestination_countrycode] varchar(8000) NULL, 
+	[logfile_purchase_order_id] varchar(8000) NULL, 
+	[logfile_sales_order_id] varchar(8000) NULL, 
+	[logfile_shipment_uom] varchar(8000) NULL, 
+	[valid_from] datetime2(6) NULL, 
+	[valid_to] datetime2(6) NULL, 
+	[is_current] int NOT NULL
+);

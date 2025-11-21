@@ -1,0 +1,189 @@
+table monitoring_transformation_dbt
+	lineageTag: 7efc66d4-5dc4-49c3-a0f7-c4dee7c2f0ba
+
+	measure transformation_dbt_loads = COUNTROWS(monitoring_transformation_dbt)
+		formatString: 0
+		lineageTag: 16246491-9c16-4a26-9044-e3c75c6fae13
+
+	column item_name
+		dataType: string
+		lineageTag: 2ba3d332-d531-429d-9298-54efe15cb8f5
+		summarizeBy: none
+		sourceColumn: item_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column invocation_id
+		dataType: string
+		lineageTag: f240555d-4e3c-49a7-8eee-889a2ea2cf76
+		summarizeBy: none
+		sourceColumn: invocation_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: f66b2db7-a5a5-4308-9b58-03035fa7ef79
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column thread_id
+		dataType: string
+		lineageTag: 30284c0b-afa5-44fd-8d6f-eac8f82056e8
+		summarizeBy: none
+		sourceColumn: thread_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column execution_time
+		dataType: double
+		lineageTag: ac3a970f-5939-4b6d-9614-0e889e6ca970
+		summarizeBy: sum
+		sourceColumn: execution_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column failures
+		dataType: string
+		lineageTag: 0f1eb000-5165-4216-bd5f-1ee0289bd5fa
+		summarizeBy: none
+		sourceColumn: failures
+
+		annotation SummarizationSetBy = Automatic
+
+	column compiled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 077de073-a43a-4a7f-98fd-e10e33cd0aa0
+		summarizeBy: none
+		sourceColumn: compiled
+
+		annotation SummarizationSetBy = Automatic
+
+	column relation_name
+		dataType: string
+		lineageTag: af53a65a-74b0-4e65-be8b-311d6c0d0630
+		summarizeBy: none
+		sourceColumn: relation_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column adapter_message
+		dataType: string
+		lineageTag: 96541b96-fb49-40b4-bffd-48aea29ce0fe
+		summarizeBy: none
+		sourceColumn: adapter_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column rows_affected
+		dataType: int64
+		formatString: 0
+		lineageTag: c8fcaa0a-5e9a-46d5-8d3c-755e62375da6
+		summarizeBy: sum
+		sourceColumn: rows_affected
+
+		annotation SummarizationSetBy = Automatic
+
+	column process_stage
+		dataType: string
+		lineageTag: 7b3582f6-c165-409b-85ba-4be48ad76322
+		summarizeBy: none
+		sourceColumn: process_stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column process_started_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9dbeb6f7-0c12-4fe8-acb4-6f098f3a15d8
+		summarizeBy: none
+		sourceColumn: process_started_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column process_completed_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5eb12a62-34e2-4eb4-a41e-931392b4e112
+		summarizeBy: none
+		sourceColumn: process_completed_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column generated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 60a60145-7f4f-453c-8e27-b52d291a17ac
+		summarizeBy: none
+		sourceColumn: generated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7a73ec85-8550-4d50-83c4-4e667711f8e7
+		summarizeBy: none
+		sourceColumn: timestamp_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column timestamp_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 74bf0441-89f6-48eb-8e07-64a4ebbfa427
+		summarizeBy: none
+		sourceColumn: timestamp_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column environment
+		dataType: string
+		lineageTag: ecceccee-affe-46f5-b05b-706e631f1196
+		summarizeBy: none
+		sourceColumn: environment
+
+		annotation SummarizationSetBy = Automatic
+
+	column build_models
+		dataType: string
+		lineageTag: e27d0685-9f73-4164-ab4a-ac49c9f7f977
+		summarizeBy: none
+		sourceColumn: build_models
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration
+		dataType: int64
+		formatString: 0
+		lineageTag: a256f86a-259c-4db9-992f-e8c88d1baca2
+		summarizeBy: sum
+		sourceColumn: duration
+
+		annotation SummarizationSetBy = Automatic
+
+	partition monitoring_transformation_dbt = m
+		mode: import
+		queryGroup: MONITORING
+		source =
+				let
+				    Source = Sql.Database(ServerParameter, WarehouseParameter),
+				    monitoring = Source{[Schema="meta",Item="monitoring_transformation_dbt"]}[Data],
+				    timestamp_date = Table.AddColumn(monitoring, "timestamp_date", each DateTime.Date([process_started_at]), type date),
+				    timestamp_time = Table.AddColumn(timestamp_date, "timestamp_time", each DateTime.Time([process_started_at]), type time)
+				in
+				    timestamp_time
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

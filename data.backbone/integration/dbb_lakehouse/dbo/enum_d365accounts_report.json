@@ -1,0 +1,11 @@
+{
+    "file_name": "enum_d365accounts_report",
+    "schema_name": "dbo",
+    "source_name": "dbb_lakehouse",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT mona, mona_description, d365_bcoa_hq_maneur, d365_affiliates_e_g_pakistan, d365_description, report FROM [dbo].[enum_d365accounts_report]"
+}
+  

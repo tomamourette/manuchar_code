@@ -1,0 +1,10 @@
+{
+    "table_name": "Locations",
+    "schema_name": "dbo",
+    "source_name": "Boomi",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "FULL",
+    "update_field": "",
+    "query": "SELECT * FROM dbo.Locations"
+}

@@ -1,0 +1,23 @@
+
+version: 2
+
+models:
+  - name: rv_hub_sales_plan
+    enabled: false
+    tags:
+      - "Sales Plan"
+      - "raw vault"
+      - "hub"
+      - "PER"
+    description: "This model selects the first occurrence of each sales plan source record, ensuring deduplication based on the valid_from date."
+    columns:
+      - name: bkey_sales_plan_source
+        description: "Business key for the sales plan source, used to uniquely identify each source record."
+      - name: bkey_sales_plan
+        description: "Business key for the sales plan, representing the unique identifier for each sales plan."
+      - name: bkey_source
+        description: "Business key for the source, indicating the origin of the sales plan data."
+      - name: ldts
+        description: "Timestamp indicating when the record is valid from, used for deduplication purposes."
+      - name: record_source
+        description: "Source of the record, indicating the origin system of the data, in this case, 'DWH'."

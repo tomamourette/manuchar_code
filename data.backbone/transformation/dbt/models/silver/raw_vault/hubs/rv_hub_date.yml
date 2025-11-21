@@ -1,0 +1,22 @@
+
+version: 2
+
+models:
+  - name: rv_hub_date
+    enabled: true
+    tags: 
+      - "Date"
+      - "raw vault"
+      - "hub"
+    description: "This model deduplicates and selects the earliest record for each date source key from the DBB Lakehouse."
+    columns:
+      - name: bkey_date_source
+        description: "The unique business key for the date source, used to identify each record uniquely."
+      - name: bkey_date
+        description: "The business key for the date, representing the specific date associated with the record."
+      - name: bkey_source
+        description: "The business key for the source, indicating the origin of the data."
+      - name: ldts
+        description: "The load timestamp, indicating when the record was loaded into the system, cast to DATETIME2(6)."
+      - name: record_source
+        description: "The source of the record, labeled as 'DBB Lakehouse'."

@@ -1,0 +1,12 @@
+{
+    "table_name": "BusinessPartner",
+    "schema_name": "mdm",
+    "source_name": "MDS",
+    "source_type": "SQL",
+    "load_enabled": "yes",
+    "load_type": "INCREMENTAL",
+    "update_field": "LastChgDateTime",
+    "unique_bkey": "",
+    "unique_tkey": "",
+    "query": "SELECT ID, MUID, VersionName, VersionNumber, Version_ID, VersionFlag, Name, Code, ChangeTrackingMask, [Legal Number Original] as Legal_Number_Original, [Legal Number Cleansed] as Legal_Number_Cleansed, Country_Code, Country_Name, Country_ID, [Is Intercompany_Code] as Is_Intercompany_Code, [Is Intercompany_Name] as Is_Intercompany_Name, [Is Intercompany_ID] as Is_Intercompany_ID, [Industry Type_Code] as Industry_Type_Code, [Industry Type_Name] as Industry_Type_Name, [Industry Type_ID] as Industry_Type_ID, [Multinational Parent_Code] as Multinational_Parent_Code, [Multinational Parent_Name] as Multinational_Parent_Name, [Multinational Parent_ID] as Multinational_Parent_ID, [Multinational Business Partner_Code] as Multinational_Business_Partner_Code, [Multinational Business Partner_Name] as Multinational_Business_Partner_Name, [Multinational Business Partner_ID] as Multinational_Business_Partner_ID, Address, City, Zip, EnterDateTime, EnterUserName, EnterVersionNumber, LastChgDateTime, LastChgUserName, LastChgVersionNumber, ValidationStatus FROM mdm.[Business Partner]"
+}
