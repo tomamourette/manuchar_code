@@ -1,0 +1,80 @@
+task id;task;Title;Description;Data Productowner;Functional Analyst;Source owner/ Application supporter;Data Domain Architectss Integration & Reporting/;Data Governance Manager;Infra  MHQ/Region;Design;BI Data Engineer;Data Engineer;DevOps Engineer/ Automation Expert;Reporting expert;Scrum Master;PM
+1.1;Requirements gathering and approval;Business Requirements;Document dimensions and facts making up the logical datamodel, high level list of sources, KPI definitions & business rules, security requirements, non-functional expectations, risks&issues;5;9;;0,5;;;;;;;;1,125;2
+1.2;Define process of change requirements;CR process flow;Process flow indicating how a new request is processed and who needs to decide on it in a governed way;;1;;;;;;;;;;0,125;2
+1.3;KPI´s & SLA´s documented and agreed;Service Level Agreement;Defines the terms, services and conditions for the services provides by IT BI to Manuchar's internal stakeholders;0.5;0.5;;;;;;;;;;0;1
+1.4;Document review & approval (deliverable: Sign off);Signoff document;Document with signoff by stakeholders indicating project expectations are met and project-mode can be closed;0.5;0;;;;;;;;;;0;1
+2.1;Dependency identification;Affiliate Application Catalog (for data integration);This document desccribe de affiliate/application and how they connected to the data-landscape;;0,5;2,4;6;;2,4;0,5;;;;;0,125;1
+2.2;Documentation control ;Affiliate Application Catalog (for data integration);This document desccribe de affiliate/application and how they connected to the data-landscape;;;;;;;0,5;;;;;0,0625;1
+2.3;Define data access & security requirements;Infra Network & security design for each Source;This document describe infra/network technical design & security ;;;;2,4;;;0,5;;;;;0,0625;1
+2.4;Define ownership per bron (business vs. IT). ==>Task for IT & Business Management;Affiliate Application Catalog (for data integration);This document desccribe de affiliate/application and how they connected to the data-landscape;;;;;;;0,5;;;;;0,0625;1
+2.5;Define change tracking for source data;Source Integration Agreement;This document align on (specific) agreements vor this affiliate/application integartion with data-landscape;;;;2,4;;;0,5;;;;;0,0625;0,5
+2.6;Define temporary solutions if needed;Source Integration Agreement;This document align on (specific) agreements vor this affiliate/application integartion with data-landscape;;;;;;;0,5;;;;;0,0625;0,5
+2.7;Compliance & privacy check;Source Integration Agreement;This document align on (specific) agreements vor this affiliate/application integartion with data-landscape;;;;1;;;0,5;;;;;0,0625;0,5
+2.8;Data Source impact;Affiliate Application Catalog (for data integration);This document desccribe de affiliate/application and how they connected to the data-landscape;;0,5;;1;;;0,5;;;;;0,125;0,5
+3.1;Design of the checklist:  integration with existing data platforms, high-light “Manuchar Information Model” change requirements;Catalog-Manuchar Information Model;Overview on Manuchar Harmonized data-model + Checklist;;0,3;;2;;;;;;;;0,0375;1
+3.2;Define document data process (layer definititions, layer requirements and expectations, naming standards, interface agreements, templates);Solution Concept -  Manuchar Data Capability & services;This document describe solution concept for all capabilities, required from business & DataOps requirements, is NOT solution Design;;1;;6;;;2;;;;;0,375;1
+3.3;Define non-functionals & principals;Solution Concept -  Manuchar Data Capability & services;This document describe solution concept for all capabilities, required from business & DataOps requirements, is NOT solution Design;;0,3;;1;;;;;;;;0,0375;0,5
+3.4;Security & compliance design (generieke desing-patronen);Solution Concept -  Manuchar Data Capability & services;This document describe solution concept for all capabilities, required from business & DataOps requirements, is NOT solution Design;;0,3;;2;;;0,5;;;;;0,1;0,5
+3.5;Define on infra & technology (technology-evaluation of proof of concept, create overview infrastructure changes, impact to other IT-delivery teams & Business departments, …);Solution Concept -  Manuchar Data Capability & services;This document describe solution concept for all capabilities, required from business & DataOps requirements, is NOT solution Design;;;;0,5;;;;;;;;0;0,5
+3.6;Define software development lifecycle changes & CI/CD;CI/CD deployment requirements guidelines;This document descibe requirements for Managed Deployment and release, is NOT solution design on technical processes to enable this.;;;;1;;;1;;;2;;0,375;0,5
+3.7;Define data governance requirements  (Steven will work 5 days as Data Governance Manager on the governance requirements);Solution Concept -  Manuchar Data Products;This document describe the solution concept & guidelines for the different data-Products;;;;2;5;;;;;;;0;0,5
+3.8;Organize data-Product impact and high-level solution for Semantic model & reports;Catalog - Business Data-Products (Managed & Supported);This document describe the solution concept & guidelines for the different data-Products;;0,3;;1;;;;;;;;0,0375;0,5
+3.9;Define job-Orchestration, exception handling & process and Quality impact;Solution Concept -  Manuchar Data Capability & services;;;;;1;;;1;;;;;0,125;0,5
+3.10;High level solution delivery (step) plan;Solution Concept -  Manuchar Data Capability & services;;;;;1;;;1;;;;;0,125;0,5
+3.11;Receiving input/requirements of the data-model from BI-expert of legacy reports ;Architecture - Data Transition impact analyses (decomissioning roadmap);This document describe transition planning for legacy data processes and reporting;;;;1;;;;;;;1;0;0,5
+3.12;Architecture planning within current and future landscape Manuchar;;;;;;1;;;1;;;;;0,125;0,5
+3.13;Sit & regression testing;SIT & Regression testing requirements guidelines;;;;;1;;;2;;;;;0,25;0,5
+4.1;(Functionele) scope: business requirements, gap analyses with available data-capabilities on data backbone & define sources ;Functional Design Document.docx;Document gaps between business requirements and technical capabilities, sources. Detailed functional behavior of the system (inputs, outputs, validations, rules, UI requirements, etc.).;2;2;;2;;;2;;;;;0,5;2
+4.2;Test approach/requirements + list of testers;UAT Methodology &  Unit tests;Document describing types of UAT tests and what is expected from the user + listing of users File. Listing tests per dimension and fact , performance tests, report crosschecks;3;4;;;;;;;;;;0,5;2
+4.3;Business readiness and rollout requirements;;;;2;;;;;;;;;;0,25;2
+4.4;Data-Quality checks required to monitor business data-health;Data Quality.docx;Overview of dataquality checks & reconciliation checks;1;1,5;;1;;;0,5;;;;;0,25;1
+4.5;Requirements on training of functional analyst/developers on business process & technical background;;;0,3;1;;;;;;;;;;0,125;1
+4.6;Resource (=capacity)  impact for each deliverable;;"Resource plan by role and sprint; constraints/contingency; DevOps Definition of Ready (DoR) documented for Features supporting this deliverable; question set/checklist for application supporter completed (access, environments, data, releases, support windows); DoR applied and referenced on Feature(s) (IDs/links).";0,3;0,5;;;;;1;;;;;0,1875;1
+4.7;Risks & dependencies;;;;;;;;;0,5;;;;;0,0625;1
+4.8;Budget & benefits estimation;;;0,3;0,5;;;;;;;;;;0,0625;1
+4.9;Task prioritization & Sign-off;;"Prioritized backlog with rationale (MoSCoW/WSJF); dependency flags; release candidates; Go/No-Go decision and sign-off by Product Owner and Sponsor (line manager); approval/decision";0,3;1;;;;;0,3;;;;;0,1625;1
+4.10;Job orchestration impact & approach for UC;;UC-specific orchestration changes;;;;0,3;;;0,3;;;;;0,0375;1
+4.11;Define Manuchar readiness;;First view on closure;0,3;0,3;;0,3;;;;;;;;0,0375;1
+5.1;Detail Analysis;Detailed user stories;"Groomed and prioritized backlog; Definition of Ready/Done checklists; refinement notes; estimation updated.";;;;;;;;;;;;0;
+5.1.1;Define effort on use story level (DOR-Definition of Ready);;"Estimation records (story points/hours); DoR checklist applied per story; capacity alignment notes.";;;;;;;2;;;;;0,25;0,5
+5.1.2;Define acceptance criteria;;"Acceptance Criteria (Gherkin or bullet) per story; negative cases; test data needs; linkage to validation tests.";;;;;;;0,5;;;;;0,0625;0,5
+5.1.3;Task prioritization;;"Prioritization and ordering; dependency markers; release goals; approvals where needed.";;;;;;;0,5;;;;;0,0625;0,3
+5.2;Source 2 MIM data-BackBone ;Required data is available in MIM /(Data-BackBone  - Source-MIM mapping file table/columns/rules?;;;;;;;;;;;;;0;0,3
+5.2.1;"Clarify ‘Source 2 MIM’ development specification & guidelines (Joined effort Data-Engineer with Application-owner/supporter)
+>>A. Data SourceSync replication (One time only for all use case) for 12 Main/Affiliate applications=> APP-OWNER + INFRA (+ DATA)
+>>B. Data-Definitions (Requirements UC8) Manuchar Information Model (See 4.1 impact analyses for UC8)
+";;Alignment pack from our team to application owners covering expected Source?MIM outcome: scope and success criteria, target data contract (schemas, SLAs, semantics), DQ expectations, and change control;;;;;;4;;;2;;;0;0,3
+5.2.2;"Data-Source (application) Analysis and mapping to (Harmonized) Manuchar Information Model (=Data Contract)
+>>C. SoureceApplication Supporters translate "" Data-Definitions (Requirements UC8) Manuchar Information Model"" to SourceDB-Queries => APP-Suporter + DataTeam
+>> Including Harmonisation with GlobalParty & GlobalProduct (transition solution supporting new & history)";;"Data contract document (schemas, data types, SLAs, semantics); versioning approach; approval from source owner.";;;56;;;;;;14;;;1,75;0,3
+5.2.3;Source-MIM mapping file (table/columns/rules);;"Mapping artifact (tables/columns/transform rules); data quality rules per attribute; lineage notes.";;4;;;;;;;1;;;0,5;1
+5.2.4.1;"Infrastructure system installation (Technical System Integration Testing) for scope ‘Source 2 MIM data-BackBone’
+>>A. Data SourceSync replication (One time only for all use case) for 12 Main/Affiliate applications=> APP-OWNER + INFRA (+ DATA)";;"ETL/ELT code and configs; integration tests and results; deployment notes.";;;;;;40;;;;;;0;0,3
+5.2.4.2;"Back-end data engineering for scope ‘Source 2 MIM data-BackBone’ (Qlik cloud integration Config)
+>>A. Data SourceSync replication (One time only for all use case) for 12 Main/Affiliate applications=> APP-OWNER + INFRA (+ DATA)";;;;;;;;;;;12;;;1,5;
+5.2.5;Execute testing;;"Test plan execution records; defects log; coverage summary";;;;;;;;;2;;;0,25;0,3
+5.3;End-User data-product ( = semantic model & reports on the front-end);;;;;;;;;;;;;;0;0,3
+5.3.1;Data-Product analyses and mapping semantic model requirements ;Report Requirements Document.docx;Description of the goal ,business value, features, mapping to semantic model and visual mockup;4;6;;;;;;;;;;0,75;2
+5.3.2;Clarify ‘Data-Product’ development specification & guidelines;;;;;;;;1;;;;;;0;0,3
+5.3.3;Back-end data engineering for scope End-User data-product;;"Dataset/model build ; validation tests.";;;;;;;;;2;;;0,25;0,3
+5.3.4;Create semantic model (= use case) on the front-end development;;"Published semantic model; report/dashboard pages; navigation and bookmarks; dataset refresh settings. (in orchestration)";;;;;;;;;0,5;;4;0,0625;0,3
+5.3.5;Pre-UAT on the content;Devops userstory and tasks;Communication between pre-UAT tester and devops to solve obvious issues;1;3;;;;;;;;;1;0,375;2
+5.3.6;Security setup complete check ;Security Guidelines.pptx;Guide for business security owners;;0,5;;;;;;0,5;;;;0,125;1
+5.3.7;Create Reporting (dashboards) on semantic model on the front-end development;;;1;1;;;;;;;;;15;0,125;1
+5.4;Job-Orchestration & Process/Quality monitoring;Solution Design Data-Monitor for process & quality;;;;;;;;;;;;;0;0,5
+5.4.1;Implement or append data-processes in parent Job-Orchestration;;"Implemented flows with schedules and dependencies;";;;;;;;;;3;;;0,375;0,5
+5.4.2;Develop / integrated quality control to confirm Data-environment is correct & complete (reconciliation);;"Automated DQ checks and reconciliation jobs; alert thresholds;";;;;;;;;;3;;;0,375;0,5
+5.4.3;Develop / integrate Business Quality checks required to confirm business quality & exceptions monitoring;;"Business rule checks; exception queues; triage/resolution workflow; ownership assignments.";;;;;;;;;1;;;0,125;0,5
+5.5;User acceptance Testing ;;;;;;;;;;;;;;0;
+5.5.1;UAT Section in Devops;UAT section in Devops;;;2;;;;;;;1;;2;0,25;2
+5.5.2;Organize review with stakeholders;Stakeholder review sessions (retro & demo);;2;2;;;;;;;;;;0,25;2
+5.6;Production Deployment;;;;;;;;;;;1;;;0;
+6.1;Finalize documentation;Data Definition Glossary.xls   Data Product Sheet.docx;List of key concepts with definition and calculation rules.  Description of dataproducts, URLS,logical dataflows in DFD, update frequency, contact and links to documentation;0,3;2;;;;;;;;;;0,25;1
+6.2;Develop guidelines: governance, data ownership/quality/access, required Data & Analytics capabilities & usage, team roles & sizing;;;;;;;;;;;;;;0;0,5
+6.3;Finalize SLA/SLA activation (per UC);;;;0,3;;0,3;;;0,3;;;;0,5;0,075;0,5
+6.4;Organize aftercare: post-implementation review & lessons learned (business oriented);Lessons learned.docx; Post-implementation review & lessons learned (business oriented);1;3;;;;;;1;;;;0,5;1
+6.5;Project closure checklist;Project Closure Checklist.xlsx;Sign off list with criteria to close the project;0,3;0,3;;;;;;0,5;0,5;;;0,1625;0,5
+6.6;Final documentation;;Final review of all documents;1;1;;;;;; ;;;;0,125;1
+6.7;Operational, functional & technical handover;;;;1;;;;;;;2;;;0,375;1
+6.8;Hypercare and support ;;;;2;;;;;;2;;;1;0,5;1
+6.9;Support activation;;Activation of regular IT-support;;;;;;;;1;1;;;0,25;2
