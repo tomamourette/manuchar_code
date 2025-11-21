@@ -97,10 +97,10 @@ This section is for the next worker or automation using the Azure DevOps MCP.
 | 3.4 | Task | 79965 | 79960 | 3.4 | \[UC8] 3.4 \[PM] — Security & compliance design… | Role: PM | 1.6 |
 | 3.5 | User Story | 79966 | 79177 |  | \[UC8] 3.5 Define infra & technology changes (PoC evaluation, infra impact) | Infra/technology PoC evaluation & infra impact |  |
 | 3.5 | Task | 79967 | 79966 | 3.5 | \[UC8] 3.5 \[Data Domain Architect Integration & Reporting/] — Define infra & technology changes… | Role: Data Domain Architect Integration & Reporting/ | 4.0 |
-| 3.5 | Task | 79968 | 79966 | 3.5 | \[UC8] 3.5 \[Infra  MHQ/Region] — Define infra & technology changes… | Role: Infra  MHQ/Region | 16.0 |
+| 3.5 | Task | 79968 | 79966 | 3.5 | \[UC8] 3.5 \[Infra  MHQ/Region] — Define infra & technology changes… | Role: Infra  MHQ/Region | 16.0 |PM/UC8-DevOps-WBS-Mapping.md
 | 3.5 | Task | 79969 | 79966 | 3.5 | \[UC8] 3.5 \[PM] — Define infra & technology changes… | Role: PM | 1.6 |
 | 3.6 | User Story | 79970 | 79177 |  | \[UC8] 3.6 Define software development lifecycle changes & CI/CD | SDLC changes & CI/CD requirements |  |
-| 3.6 | Task |  | 79970 | 3.6 | \[UC8] 3.6 \[Data Domain Architect Integration & Reporting/] — Define SDLC changes & CI/CD | Role: Data Domain Architect Integration & Reporting/ | 4.0 |
+| 3.6 | Task |  | 79970 | 3.6 | \[UC8] 3.6 \[Data Domain Architect Integration & Reporting/] — Define SDLC changes & CI/CD | Role: Data Domain Architect Integration & Reporting/ PM/UC8-DevOps-WBS-Mapping.md| 4.0 |
 | 3.6 | Task |  | 79970 | 3.6 | \[UC8] 3.6 \[Design review] — Define SDLC changes & CI/CD | Role: Design review | 8.0 |
 | 3.6 | Task |  | 79970 | 3.6 | \[UC8] 3.6 \[BI Data Engineer] — Define SDLC changes & CI/CD | Role: BI Data Engineer | 4.0 |
 | 3.6 | Task |  | 79970 | 3.6 | \[UC8] 3.6 \[DevOps Engineer/ Automation Expert] — Define SDLC changes & CI/CD | Role: DevOps Engineer/ Automation Expert | 16.0 |
